@@ -32,7 +32,6 @@ Route::get('/', function () {
 });
 Route::get('/login', [AuthController::class, 'form'])->name('auth.form');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
-Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'login'], function () {
     Route::get("/", function () {
@@ -85,8 +84,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'login'], function () {
     Route::post('/users/update', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/delete/{id}', [UserController::class, 'index'])->name('users.destroy');
 
-    //Login
- 
+    //logout
+    Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+
 
 });
 Route::get('/get-provinces', [LocationController::class, 'getProvinces'])->name('provinces');
