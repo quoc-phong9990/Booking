@@ -68,9 +68,9 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => ['required', 'email', Rule::unique('users')->ignore(Auth::user()->id)],
+            'email' => ['required', 'email', Rule::unique('users')->ignore(auth()->user()->id)],
             'file' => 'nullable|image',
-            'date_of_birth' => 'nullable|date|after:' . now()->toDateString(). "'",
+            'date_of_birth' => 'nullable|date|after:' . now()->toDateString() . "'",
             'phone' => 'nullable|regex:/^(0[0-9]{9,10})$/',
             'address' => 'nullable',
         ]);
@@ -78,21 +78,25 @@ class UserController extends Controller
         if ($validator->fails()) {
             return $this->response->responseFailed($validator->errors()->first());
         }
-        if (Hash::check(Auth::user()->id, $token)) {
+        if (Hash::check(auth()->user()->id, $token)) {
+            $user = User::find(auth()->user()->id);
             if ($request->hasFile('file')) {
                 $image = $request->file('file');
                 $imageName = "storage/users/" . time() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('storage/users'), $imageName);
                 $request->merge(['avarta' => $imageName]);
-                $user = User::find(Auth::user()->id)->update($request->all());
+                $user->update($request->all());
+
                 if ($user) {
-                    return $this->response->responseSuccess($request->all(), 'Cập nhật thành công');
+                    $user->token = Hash::make($user->id);
+                    return $this->response->responseSuccess($user, 'Cập nhật thành công');
                 }
                 return $this->response->responseFailed('Cập nhật thất bại');
             } else {
-                $user = User::find(Auth::user()->id)->update($request->all());
+                $user->update($request->all());
                 if ($user) {
-                    return $this->response->responseSuccess($request->all(), 'Cập nhật thành công');
+                    $user->token = Hash::make($user->id);
+                    return $this->response->responseSuccess($user, 'Cập nhật thành công');
                 }
                 return $this->response->responseFailed('Cập nhật thất bại');
 
@@ -102,6 +106,28 @@ class UserController extends Controller
         }
 
 
+    }
+    public function changePass(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'old_password' => 'required',
+            'new_password' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return $this->response->responseFailed($validator->errors()->first());
+        }
+        if (Hash::check(auth()->user()->id, $request->token)) {
+            $user = User::find(auth()->user()->id);
+            if ($user) {
+                if (Hash::check($request->old_password, auth()->user()->password)) {
+                    $user->update(['password' => Hash::make($request->new_password)]);
+                    return $this->response->responseSuccess('Đổi mật khẩu thành công');
+                }
+                return $this->response->responseFailed('Mật khẩu cũ không đúng');
+            }
+            return $this->response->responseFailed('Không tìm thấy tài khoản');
+        }
+        return $this->response->responseFailed('Token không hợp lệ');
     }
     public function logout()
     {
