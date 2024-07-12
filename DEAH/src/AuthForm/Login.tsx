@@ -12,14 +12,12 @@ const Login = () => {
   const navigate = useNavigate()
   const { register, handleSubmit } = useForm<Input>()
   function onSubmit(data: Input) {
-    fetch('http://localhost:3000/login', {
+    fetch('http://127.0.0.1:8000/api/client/user/login', {
       method: "POST",
       headers: {
-
         "Content-Type": 'Application/json'
       },
       body: JSON.stringify(data)
-
     })
       .then(async (resdata) => {
         if (resdata.ok) {
@@ -32,13 +30,23 @@ const Login = () => {
         }
       })
       .then(resData => {
-        if (resData.accessToken) {
-          localStorage.setItem('token', resData.accessToken);
+        console.log(resData);
 
-          if (resData.user) {
-            sessionStorage.setItem('user', JSON.stringify({ name: resData.user.name, email: resData.user.email, photo: resData.user.photo || '' }));
+        if (resData.data.token) {
+          localStorage.setItem('token', resData.data.token);
+
+          if (resData.data) {
+            sessionStorage.setItem('user', JSON.stringify({
+              avatar: resData.data.avatar,
+              id: resData.data.id, 
+              token: resData.data.token, 
+              name: resData.data.name, 
+              email: resData.data.email, 
+              phone: resData.data.phone, 
+              address: resData.data.address, 
+              password: resData.data.password || '' }));
           }
-
+          alert('Đăng Nhập thành công')
           navigate('/index-two');
         }
       })

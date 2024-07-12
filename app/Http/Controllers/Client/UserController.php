@@ -40,6 +40,7 @@ class UserController extends Controller
         ];
         if (Auth::attempt($user)) {
             // $request->session()->regenerate();
+     
             Auth::user()->token = Hash::make(Auth::user()->id);
             return $this->response->responseSuccess(Auth::user());
         } else {
@@ -75,8 +76,10 @@ class UserController extends Controller
             return $this->response->responseFailed('Đăng ký thất bại');
         }
     }
-    public function update(Request $request, $token)
+    public function update(Request $request)
     {
+  
+   
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => ['required', 'email', Rule::unique('users')->ignore(auth()->user()->id)],
@@ -89,6 +92,7 @@ class UserController extends Controller
         if ($validator->fails()) {
             return $this->response->responseFailed($validator->errors()->first());
         }
+
         if (Hash::check(auth()->user()->id, $token)) {
             $user = User::find(auth()->user()->id);
             if ($request->hasFile('file')) {
@@ -98,6 +102,7 @@ class UserController extends Controller
                 $request->merge(['avarta' => $imageName]);
                 $user->update($request->all());
 
+
                 if ($user) {
                     $user->token = Hash::make($user->id);
                     return $this->response->responseSuccess($user, 'Cập nhật thành công');
@@ -105,6 +110,7 @@ class UserController extends Controller
                 return $this->response->responseFailed('Cập nhật thất bại');
             } else {
                 $user->update($request->all());
+
                 if ($user) {
                     $user->token = Hash::make($user->id);
                     return $this->response->responseSuccess($user, 'Cập nhật thành công');

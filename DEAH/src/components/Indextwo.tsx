@@ -1,6 +1,6 @@
 
 import "../assets/js/main.js"
-import { useQuery } from '@tanstack/react-query'
+
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import 'react-date-range/dist/styles.css'; // main style file
@@ -436,10 +436,11 @@ const Indextwo = () => {
                         <a href="destination-details" className="destination-banner-two h-calc wow fadeInUp" data-wow-delay="0.s">
                           <img src={'http://127.0.0.1:8000/' + (tours.images ? tours.images : '')} alt="travello" />
                           <div className="destination-content-two">
-                            
+
                             <div className="destination-info-two">
                               <div className="destination-name line-clamp-2">
-                                <p className="pera">{tours.title}</p>
+
+                                <Link className="pera" to={`/tour-details/${tours.id}`}>{tours.title}</Link>
                               </div>
                               <div className="button-section">
                                 <div className="arrow"><i className="ri-arrow-right-line" /></div>
@@ -632,14 +633,14 @@ const Indextwo = () => {
                       <a href={"news-details/" + post.id}>
                         <article className="news-card-two wow fadeInUp" data-wow-delay="0.0s">
                           <figure className="news-banner-two imgEffect">
-                            <img className="image" src={'http://127.0.0.1:8000/' + post.thumbnail} alt="travello" />
+                            <img className="images" src={'http://127.0.0.1:8000/' + post.thumbnail} alt="travello" />
                           </figure>
                           <div className="news-content">
                             <div className="heading line-clamp-1">
                               <span className="heading-pera"> {post.title}</span>
                             </div>
                             <h4 className="title line-clamp-2">
-                            
+
                               <Link to={`/news-details/${post.id}`}>{post.body} </Link>
                             </h4>
                             <div className="news-info">

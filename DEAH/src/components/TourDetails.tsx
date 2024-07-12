@@ -8,10 +8,14 @@ import Footer from './Footer';
 import Header from './Header';
 import TourSbar from '../FunctionComponentContext/TourSbar';
 import { Slide } from 'react-slideshow-image';
+import { useState } from 'react';
+
+
 
 
 const TourDetails = () => {
   const { id } = useParams();
+  const [mainImage, setMainImage] = useState(null)
   console.log(id);
 
   const { data, isLoading, error } = useQuery({
@@ -30,11 +34,18 @@ const TourDetails = () => {
   // Ensure data is defined and is an array
   const tourDetail = data ? (Array.isArray(data) ? data : [data]) : [];
   console.log(tourDetail);
+  if (tourDetail.length > 0 && !mainImage) {
+    setMainImage(tourDetail[0].tour.images[0].image)
+  }
+  const handleImageClick = (image: any) => {
+    setMainImage(image)
+  }
 
   return (
     <div>
       <div>
         <Header />
+  
         <main>
           {/* Breadcrumbs S t a r t */}
           <section className="breadcrumbs-area breadcrumb-bg">
@@ -57,31 +68,32 @@ const TourDetails = () => {
           <section className="tour-details-section section-padding2">
             <div className="tour-details-area">
               {/* Details Banner Slider */}
-
-              <Slide>
-                <div className="each-slide-effect mr-3">
-                  <div className="image-group">
-                    {data.tour.images && data.tour.images.length > 0 && (
-                      <div className="image-item">
-                        <img
-                          src={'http://127.0.0.1:8000/' + (data.tour.images[0] ? data.tour.images[0].image : '')}
-                          alt="travello"
-                        />
-                      </div>
-                    )}
+              {data.tour.images && data.tour.images.length > 0 && (
+                <>
+                  <Slide>
+                    <div className="main-image">
+                      <img className='images' src={`http://127.0.0.1:8000/${mainImage}`} alt="Main" />
+                    </div>
+                  </Slide>
+                  <div className="thumbnail-images">
+                    {data.tour.images.map((imageObj: any, index: any) => (
+                      <img
+                        key={index}
+                        src={`http://127.0.0.1:8000/${imageObj.image}`}
+                        alt={`Thumbnail ${index}`}
+                        onClick={() => handleImageClick(imageObj.image)}
+                        className="thumbnail"
+                      />
+                    ))}
                   </div>
-                </div>
-              </Slide>
+                </>
+              )}
               <div className="tour-details-banner ">
-
-
-
               </div>
               {/* / Slider*/}
               <div className="tour-details-container">
                 <div className="container">
                   {/* Details Heading */}
-
                   <div className="details-heading" key={data.tour.id}>
                     <div className="d-flex flex-column">
                       <h4 className="title">{data.tour.title}</h4>
@@ -105,17 +117,19 @@ const TourDetails = () => {
                     </div>
                     <div className="price-review">
                       <div className="d-flex gap-10 align-items-end">
-                        <p className="light-pera ">Từ</p>
-                        <p className="pera mt-2 text-danger">{data.tour.price} VND</p>
+                        <p className="light-pera ">Chỉ từ :</p>
+                        <div className="price mb-3 d-flex justify-content-center ml-4  ">
+                          <h6 className="text-danger fw-bold mr-2">Giá mới: {data.tour.promotion}VND</h6> <h6 className="text-muted text-decoration-line-through  ">Giá cũ: {data.tour.price}VND</h6>
+                        </div>
+
                       </div>
+
                       <div className="rating">
                         <p className="pera mr-5">Đánh giá: {data.rates ? data.rates.qty : 0}</p> <p className="pera"> {data.rates ? data.rates.rate : 0}   </p> <i className="ri-star-s-fill  mb-3"></i>
 
                       </div>
                     </div>
                   </div>
-
-
                   {/* / Details Heading */}
                   <div className="mt-30">
                     <div className="row g-4">
@@ -124,62 +138,26 @@ const TourDetails = () => {
                         {/* About tour */}
                         <div className="tour-details-content">
                           <h4 className="title">Về</h4>
-                          <p className="pera">Lorem rất cà rốt, nhà phát triển đại học cà chua, nhưng làm
-                            inique
-                            sự cố
-                            để làm việc hoặc đau đớn.Làm thế nào để bạn làm một sự tha thứ kỳ lạ, người đã
-                            Tập thể dục Ullamco
-                            thuê người làm
-                            Ngoại trừ việc yêu cầu từ cô ấy xin vui lòng công thức.Bài tập về nhà tự động trong một irre
-                            bị chỉ trích trong niềm vui xin vui lòng
-                            được
-                            Cura Pain Football không chạy nữa.Ngoại trừ là người da đen
-                            Không ủng hộ
-                            lỗi
-                            Các dịch vụ đó từ bỏ việc làm mềm là một món ăn nhẹ. "</p>
-                          <p className="pera">Nhưng tôi phải gặp phải sai lầm rằng mọi người đều là một niềm vui
-                            Công tố viên
-                            nỗi đau
-                            Ca ngợi, toàn bộ điều cần mở, và những điều từ người phát minh ra sự thật đó
-                            Và là một kiến ​​trúc sư
-                            Hạnh phúc
-                            Cuộc sống đã được nói để giải thích.Không ai là niềm vui của niềm vui
-                            từ chối hoặc ghét hoặc
-                            chạy trốn,
-                            Nhưng bởi vì họ dẫn đến những nỗi đau lớn, những người có niềm vui để theo dõi
-                            không biết.Hoặc hơn nữa
-                            bất cứ ai;
-                            Chính nỗi đau vì cà rốt, cà chua muốn, nhưng bởi vì
-                            Tôi chưa bao giờ có chế độ của nó
-                            Thời gian sự cố để làm việc và đau đớn để tìm kiếm một số niềm vui.ĐẾN
-                            Đối với người nhỏ bé tôi sẽ đến
-                            Ai
-                            Việc đào tạo của chúng tôi là một sự nhạy cảm về thể chất của một sự dữ dội trừ khi họ làm điều gì đó
-                            của lợi thế
-                            hậu quả?
-                            Một hoặc quyền của cô ấy để chỉ trích niềm vui là nhiều hơn
-                            Không khó chịu
-                            Hậu quả
-                            Hay đó là nỗi đau của anh ta để chạy trốn mà niềm vui của số 0 được chuẩn bị?"</p>
+
+                          <p className="pera" >
+
+                            <div dangerouslySetInnerHTML={{ __html: data.tour.description }} />
+
+                          </p>
                         </div>
                         {/* / About tour */}
                         {/* Tour Include Loại trừ */}
                         <div className="tour-include-exclude radius-6">
                           <div className="includ-exclude-point">
                             <h4 className="title">Thuộc tính</h4>
-                            <ul>
+                            {data.tour.attributes?.map((attr: any) => {
+                              return (
+                                <li className='' key={attr.id}>
+                                  {attr.attribute}<br />
+                                </li>
+                              )
+                            })}
 
-                              {data.tour.attributes?.map((attr: any) => {
-                                return (
-                                  <li className='' key={attr.id}>
-                                    {attr.attribute}<br />
-                                    {attr.created_at}<br />
-                                    {attr.updated_at}<br />
-                                    {attr.deleted_at}<br />
-                                  </li>
-                                )
-                              })}
-                            </ul>
                           </div>
                           <div className="divider" />
 
@@ -189,83 +167,81 @@ const TourDetails = () => {
                         <div className="tour-details-content mb-30">
                           <h4 className="title">Kế hoạch du lịch</h4>
                           <div className="accordion" id="accordionExample">
-                            {data.tour.itineraries?.map((day: any, index: any) => (
-                              <div className="accordion-item" key={index}>
-                                <h2 className="accordion-header" id={`heading${index}`}>
-                                  <button
-                                    className="accordion-button"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target={`#collapse${index}`}
-                                    aria-expanded={index === 0 ? "true" : "false"}
-                                    aria-controls={`collapse${index}`}
+
+                            {data.tour && data.tour.itineraries && data.tour.itineraries.length > 0 ? (
+                              data.tour.itineraries.map((day: any, index: any) => (
+                                <div className="">
+                                  <h2 className="accordion-header" >
+                                    <button
+                                      className="accordion-button text-black"
+                                    >
+                                      Ngày {day.day}: {day.title}
+                                    </button>
+
+                                  </h2>
+                                  <div className='ml-4 text-black' dangerouslySetInnerHTML={{ __html: day.itinerary }} />
+                                  <div
+                                    id={`collapse${index}`}
+                                    className={`accordion-collapse collapse ${index === 1 ? "show" : ""}`}
+                                    aria-labelledby={`heading${index}`}
+                                    data-bs-parent="#accordionExample"
                                   >
-                                    Ngày {day.day}: {day.title}
-                                  </button>
-                                </h2>
-                                <div
-                                  id={`collapse${index}`}
-                                  className={`accordion-collapse collapse ${index === 0 ? "show" : ""}`}
-                                  aria-labelledby={`heading${index}`}
-                                  data-bs-parent="#accordionExample"
-                                >
-                                  {/* <div className="accordion-body">
-                                    <div dangerouslySetInnerHTML={{ __html: day.itinerary }} />
-                                    <p>{day.itinerary}</p>
-                                  </div> */}
+                                    <div className="accordion-body">
+
+                                    </div>
+                                  </div>
 
                                 </div>
-                                <p>{day.itinerary}</p>
-                              </div>
-                            ))}
+                              ))
+                            ) : (
+                              <p>Lịch trình không có sẵn.</p>
+                            )}
+
                           </div>
+
                         </div>
 
 
+
                         {/* / Tour Plan accordion*/}
+
                         {/* Tour Privacy Policy */}
-                        <div className="tour-details-content">
-                          <h4 className="title">Khách Sạn</h4>
-                          <div className="tab-content" id="pills-tabContent">
-                            <div className="tab-pane fade show active" id="pills-london" role="tabpanel" aria-labelledby="pills-london-tab">
-                              <div className="row g-4">
-                                {data.tour.hotels?.map((hotel: any, index: any) => (
-                                  <div className="" key={index}>
-                                    <div className="package-card">
-                                      <div className="package-img">
-                                        <a href="tour-details">
-                                          <img className='image' src={'http://127.0.0.1:8000/' + (hotel.images ? hotel.images : '')} alt="travello" />
-                                        </a>
+
+                        <div className="container">
+                          <div className="row justify-content-center">
+                            <div className="col-xl-7 col-lg-7">
+                              <div className="section-title text-center mx-605 mx-auto position-relative mb-60">
+                                <span className="highlights">Khách Sạn</span>
+                                <h4 className="title">
+                                  Hãy lựa chọn Khách sạn mà bạn yêu thích nhất
+                                </h4>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="row g-4 hotel">
+                            {data.tour.hotels?.map((hotel: any, index: any) => {
+                              return (
+                                <div className="col-xl-6 col-lg-3 col-sm-6" key={index}>
+                                  <a href={"news-details/" + hotel.id}>
+                                    <article className="news-card-two wow fadeInUp" data-wow-delay="0.0s">
+                                      <figure className="news-banner-two imgEffect">
+                                        <img className='images' src={'http://127.0.0.1:8000/' + hotel.images} alt="travello" />
+                                      </figure>
+                                      <div className="price mb-2 d-flex justify-content-center ml-4 ">
+                                        <h6 className="text-danger fw-bold  mr-2 ">Giá mới: {hotel.promotion}VND</h6>  <h6 className="text-muted text-decoration-line-through">Giá cũ: {hotel.price}VND</h6>
+
+
                                       </div>
-                                      <div className="package-content">
-                                        <h1 className="area-name line-clamp-1">
-                                          <Link to={`/tour-details/${hotel.id}`}>{hotel.name}</Link>  <i className="ri-map-pin-line" />
+                                      <div className="news-content">
 
-                                        </h1>
 
-                                        <p>{hotel.address}</p>
+                                        <h5>Khách Sạn</h5>
+                                        <div className="heading line-clamp-1">
 
-                                        <div className="location">
 
-                                          <p>{hotel.description}</p>
+                                          <span className="heading-pera"> <h6>{hotel.name}</h6></span>
                                         </div>
-                                        <div className="packages-person">
-                                          <div className="count">
-                                            <i className="ri-time-line" />
-                                            {/* Thêm thông tin về số ngày và đêm nếu cần */}
-                                          </div>
-                                        </div>
-                                        <div className="price-review">
-                                          <div className="d-flex gap-10">
-                                            <p>
-                                              Giá khuyến mãi : <span className="text-danger">{hotel.promotion}</span>.VND   -{'     '}
-                                              Giá cũ : <span className="text-decoration-line-through text-danger">{hotel.price}</span>.VND
-                                            </p>
 
-
-
-                                          </div>
-                                        </div>
                                       </div>
                                     </div>
                                   </div>
@@ -284,18 +260,34 @@ const TourDetails = () => {
                               </div>
 
 
-                            </div>
-                            <div className="tab-pane fade" id="pills-bangkok" role="tabpanel" aria-labelledby="pills-bangkok-tab">
+                                          <div />
+                                          {/* <p dangerouslySetInnerHTML={{ __html: hotel.description }}></p> */}
+                                        </h4>
 
+                                      </div>
+                                    </article>
+                                  </a>
+                                </div>
 
-                            </div>
-
-
+                              )
+                            })}
 
                           </div>
-
-
+                          <div className="col-12 text-center">
+                            <div className="section-button d-inline-block wow fadeInUp" data-wow-delay="0.3s">
+                              <a href="news">
+                                <div className="btn-primary-icon-sm pt-3">
+                                  <p className="pera">Xem tất cả Các khách sạn </p>
+                                  {/* <i className="ri-arrow-right-up-line" /> */}
+                                </div>
+                              </a>
+                            </div>
+                          </div>
                         </div>
+
+
+
+
                         {/* / Tour Privacy Policy */}
                       </div>
                       {/* Right content */}
