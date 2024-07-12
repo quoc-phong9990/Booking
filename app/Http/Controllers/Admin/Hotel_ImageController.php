@@ -45,7 +45,7 @@ class Hotel_ImageController extends Controller
             return redirect()->back()->with('error', $validator->errors()->first());
         }
         foreach ($request->file('images') as $image) {
-            $imageName = "storage/hotels/" . time() . '.' . $image->getClientOriginalExtension();
+            $imageName = "storage/hotels/" . uniqid() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('storage/hotels'), $imageName);
             HotelImage::create([
                 'hotel_id' => $request->hotel_id,

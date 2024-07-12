@@ -2,35 +2,164 @@
 <!-- Vertical Overlay-->
 @include('admin.layout.header')
 @yield('styles')
-@include('admin.layout.sidebar')
-<!-- ============================================================== -->
-<!-- Start right Content here -->
-<!-- ============================================================== -->
-<div class="main-content">
-    <div class="page-content">
-        @yield('content')
-    </div>
-</div>
-<!-- End Page-content -->
+<div id="layout-wrapper">
 
-<footer class="footer">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-6">
-                <script>
-                    document.write(new Date().getFullYear())
-                </script> © Velzon.
-            </div>
-            <div class="col-sm-6">
-                <div class="text-sm-end d-none d-sm-block">
-                    Design & Develop by Themesbrand
+    <header id="page-topbar">
+        <div class="layout-width">
+            <div class="navbar-header">
+                <div class="d-flex">
+                    <!-- LOGO -->
+                    <div class="navbar-brand-box horizontal-logo">
+                        <a href="{{ route('admin.index') }}" class="logo logo-dark">
+                            <span class="logo-sm">
+                                <img src="{{ url('assets/images/logo-sm.png') }} " alt="" height="22">
+                            </span>
+                            <span class="logo-lg">
+                                <img src="{{ url('assets/images/logo-dark.png') }} " alt="" height="17">
+                            </span>
+                        </a>
+
+                        <a href="{{ route('admin.index') }}" class="logo logo-light">
+                            <span class="logo-sm">
+                                <img src="{{ url('assets/images/logo-sm.png') }} " alt="" height="22">
+                            </span>
+                            <span class="logo-lg">
+                                <img src="{{ url('assets/images/logo-light.png') }} " alt="" height="17">
+                            </span>
+                        </a>
+                    </div>
+
+                    <button type="button" class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger"
+                        id="topnav-hamburger-icon">
+                        <span class="hamburger-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </button>
+
+                    <!-- App Search-->
+                    <form class="app-search d-none d-md-block">
+                        <div class="position-relative">
+                            <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
+                                id="search-options" value="">
+                            <span class="mdi mdi-magnify search-widget-icon"></span>
+                            <span class="mdi mdi-close-circle search-widget-icon search-widget-icon-close d-none"
+                                id="search-close-options"></span>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="d-flex align-items-center">
+
+
+
+
+
+                    <div class="ms-1 header-item d-none d-sm-flex">
+                        <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
+                            data-toggle="fullscreen">
+                            <i class='bx bx-fullscreen fs-22'></i>
+                        </button>
+                    </div>
+
+                    <div class="ms-1 header-item d-none d-sm-flex">
+                        <button type="button"
+                            class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle light-dark-mode">
+                            <i class='bx bx-moon fs-22'></i>
+                        </button>
+                    </div>
+
+
+
+                    <div class="dropdown ms-sm-3 header-item topbar-user">
+                        <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <span class="d-flex align-items-center">
+                                <img class="rounded-circle header-profile-user"
+                                    src="{{ asset(auth()->user()->avatar) }} " alt="Header Avatar">
+                                <span class="text-start ms-xl-2">
+                                    <span
+                                        class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{ auth()->user()->name }}
+                                    </span>
+                                    <span class="d-none d-xl-block ms-1 fs-12 user-name-sub-text">Admin</span>
+                                </span>
+                            </span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <!-- item-->
+                            <h6 class="dropdown-header">Welcome {{ auth()->user()->name }}</h6>
+
+                            <a class="dropdown-item" href="{{ route('auth.logout') }}"><i
+                                    class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span
+                                    class="align-middle" data-key="t-logout">Logout</span></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </header>
+
+    <!-- removeNotificationModal -->
+    <!-- /.modal -->
+    <!-- ========== App Menu ========== -->
+    <div class="app-menu navbar-menu">
+        <!-- LOGO -->
+        <div class="navbar-brand-box">
+            <!-- Dark Logo-->
+            <a href="{{ route('admin.index') }}" class="logo logo-dark">
+                <span class="logo-sm">
+                    <img src=" {{ url('assets/images/logonew-nobg.png') }} " alt="" height="80">
+                </span>
+                <span class="logo-lg">
+                    <img src="{{ url('assets/images/logonew-nobg.png') }} " alt="" height="80">
+                </span>
+            </a>
+            <!-- Light Logo-->
+            <a href="{{ route('admin.index') }}" class="logo logo-light">
+                <span class="logo-sm">
+                    <img src="{{ url('assets/images/logonew-nobg.png') }} " alt="" height="80">
+                </span>
+                <span class="logo-lg">
+                    <img src="{{ url('assets/images/logonew-nobg.png') }} " alt="" height="80">
+                </span>
+            </a>
+            <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
+                id="vertical-hover">
+                <i class="ri-record-circle-line"></i>
+            </button>
+        </div>
+
+        @include('admin.layout.sidebar')
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+            <div class="page-content">
+                @yield('content')
+            </div>
+        </div>
+        <!-- End Page-content -->
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script> © DEAH.
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="text-sm-end d-none d-sm-block">
+                            Design & Develop by Themesbrand
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
-</footer>
-</div>
-<!-- end main content-->
+    <!-- end main content-->
 
 </div>
 <!-- END layout-wrapper -->
@@ -52,12 +181,7 @@
     </div>
 </div>
 
-<div class="customizer-setting d-none d-md-block">
-    <div class="btn-info rounded-pill shadow-lg btn btn-icon btn-lg p-2" data-bs-toggle="offcanvas"
-        data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas">
-        <i class='mdi mdi-spin mdi-cog-outline fs-22'></i>
-    </div>
-</div>
+
 
 @include('admin.layout.footer')
 @yield('scripts')

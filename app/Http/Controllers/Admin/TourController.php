@@ -56,12 +56,12 @@ class TourController extends Controller
                     'itinerary' => $request->itineraries[$i],
                 ]);
             }
-            foreach ($request->file('images') as $image) {
-                $imageName = "storage/tours/" . time() . '.' . $image->getClientOriginalExtension();
+            foreach ($request->images as $image) {
+                $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('storage/tours'), $imageName);
                 TourImage::create([
                     'tour_id' => $tour->id,
-                    'image' => $imageName
+                    'image' => "storage/tours/" . $imageName
                 ]);
             }
             foreach ($request->input('attributes') as $attribute) {
@@ -227,7 +227,8 @@ class TourController extends Controller
             'images.*' => 'required|image|mimes:jpeg,png,jpg,gif'
         ]);
         foreach ($request->file('images') as $image) {
-            $imageName = "storage/tours/" . time() . '.' . $image->getClientOriginalExtension();
+            $imageName = "storage/tours/" . uniqid() . '.' . $image->getClientOriginalExtension();
+            // dd($imageName);
             $image->move(public_path('storage/tours'), $imageName);
             TourImage::create([
                 'tour_id' => $request->tour_id,
@@ -244,7 +245,7 @@ class TourController extends Controller
         if ($del) {
             return redirect()->back()->with('success', 'Delete image tour successfully');
         }
-        return redirect()->back()->with('error', 'Delete image tour faild');
+        return redirect()->back()->with('error', 'Delete image tour failed');
 
     }
     public function addAttributes(Request $request)
@@ -279,7 +280,7 @@ class TourController extends Controller
         if ($del) {
             return redirect()->back()->with('success', 'Delete rate successfully');
         }
-        return redirect()->back()->with('error', 'Delete rate faild');
+        return redirect()->back()->with('error', 'Delete rate failed');
 
     }
     public function delComment($id)
@@ -288,7 +289,7 @@ class TourController extends Controller
         if ($del) {
             return redirect()->back()->with('success', 'Delete comment successfully');
         }
-        return redirect()->back()->with('error', 'Delete comment faild');
+        return redirect()->back()->with('error', 'Delete comment failed');
 
     }
     public function destroy($id)

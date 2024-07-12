@@ -79,20 +79,11 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link menu-link" href="#sidebarBooking" data-bs-toggle="collapse" role="button"
+                <a class="nav-link menu-link" href="{{ route('bookings.index') }}" data-bs-toggle="" role="button"
                     aria-expanded="false" aria-controls="sidebarHotels">
-                    <i class="ri-pages-line"></i> <span data-key="t-apps">Bookings</span>
+                    <i class="ri-list-ordered"></i> <span data-key="t-apps">Bookings</span>
                 </a>
-                <div class="collapse menu-dropdown" id="sidebarBooking">
-                    <ul class="nav nav-sm flex-column">
-                        <li class="nav-item">
-                            <a href="{{ route('bookings.index') }}" class="nav-link" role="button" aria-expanded="false"
-                                aria-controls="sidebarCalendar" data-key="t-calender">
-                                Booking
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+               
             </li>
             <li class="nav-item">
                 <a class="nav-link menu-link" href="{{ route('vouchers.index') }}" role="button" aria-expanded="false"

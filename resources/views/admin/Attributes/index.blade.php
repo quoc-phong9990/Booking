@@ -64,7 +64,7 @@
                     <div>
                         <label for="date-field" class="form-label">Attribute
                         </label>
-                        <input type="text" class="form-control" name="attribute">
+                        <input type="text" class="form-control" name="attribute" > 
                         @error('attribute')
                             <span class="text-danger fw-light "><i>{{ $message }}</i></span>
                         @enderror

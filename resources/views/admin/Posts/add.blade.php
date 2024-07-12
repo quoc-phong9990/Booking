@@ -29,7 +29,7 @@
                                         </label>
 
                                         <input type="text" id="customername-field" class="form-control" name="title"
-                                            value="">
+                                            value="{{old('title')}}">
                                         @error('title')
                                             <span class="text-danger fw-light "><i>{{ $message }}</i></span>
                                         @enderror
@@ -60,7 +60,7 @@
                                 <div class="mt-3">
                                     <label for="customername-field" class="form-label">Body
                                     </label>
-                                    <textarea name="body" class="ckeditor-classic form-control">
+                                    <textarea name="body" class="ckeditor-classic form-control">{{old('description')}}
                                                 </textarea>
                                     @error('body')
                                         <span class="text-danger fw-light "><i>{{ $message }}</i></span>

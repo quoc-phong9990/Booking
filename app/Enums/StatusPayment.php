@@ -10,20 +10,19 @@ use BenSampo\Enum\Enum;
  */
 class StatusPayment extends Enum
 {
-    public const UNPAID = 0;
+    public const PENDING = 0;
     public const PAID = 1;
-    public const REFUND = 2;
-    public const REFUNDED = 3;
-    public const EXPIRES = 4;
+    public const CANCEL = 2;
+    public const REFUND = 3;
 
     public static function getArrayView(): array
     {
         return [
-            self::UNPAID => 'Chưa thanh toán',
-            self::PAID => 'Đã thanh toán',
-            self::REFUND => 'Hoàn tiền',
-            self::REFUNDED => 'Đã hoàn tiền',
-            self::EXPIRES => 'Quá hạn',
+            self::PENDING => '<span class="badge bg-warning">Pending</span>',
+            self::PAID => '<span class="badge bg-success">Paid</span>',
+            self::CANCEL => '<span class="badge bg-danger">Cancel</span>',
+            self::REFUND => '<span class="badge bg-info">Refund</span>'
+
         ];
     }
 

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BookingSuccess;
 use App\Models\Booking;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Number;
 
 class VNPayController extends Controller
@@ -62,13 +64,17 @@ class VNPayController extends Controller
 
         $vnp_Url = $vnp_Url . "?" . $query;
         if (isset($vnp_HashSecret)) {
-            $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret); //  
+            $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret); //  
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
         $returnData = array(
-            'code' => '00', 'message' => 'success', 'data' => $vnp_Url
+            'code' => '00',
+            'message' => 'success',
+            'data' => $vnp_Url
         );
-        Booking::create($request->all());
+        $booking = Booking::create($request->all());
+        Mail::to($request->email)->send(new BookingSuccess($booking));
+
         if (isset($_POST['redirect'])) {
             header('Location: ' . $vnp_Url);
             die();

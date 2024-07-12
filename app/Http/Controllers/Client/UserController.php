@@ -24,6 +24,11 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required'
+        ], [
+            'email.required' => 'Email không được để trống',
+            'email.email' => 'Email không đúng định dạng',
+            'password.required' => 'Mật khẩu không được để trống',
+
         ]);
         if ($validator->fails()) {
             return $this->response->responseFailed($validator->errors()->first());
@@ -50,6 +55,12 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6'
+        ], [
+            'name.required' => 'Tên không được để trống',
+            'email.required' => 'Email không được để trống',
+            'email.email' => 'Email không đúng định dạng',
+            'email.unique' => 'Email đã tồn tại',
+            'password.required' => 'Mật khẩu không được để trống',
         ]);
         if ($validator->fails()) {
             return $this->response->responseFailed($validator->errors()->first());
@@ -71,9 +82,9 @@ class UserController extends Controller
    
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => ['required', 'email', Rule::unique('users')->ignore($request ->id)],
+            'email' => ['required', 'email', Rule::unique('users')->ignore(auth()->user()->id)],
             'file' => 'nullable|image',
-            'date_of_birth' => 'nullable|date|after:' . now()->toDateString(). "'",
+            'date_of_birth' => 'nullable|date|after:' . now()->toDateString() . "'",
             'phone' => 'nullable|regex:/^(0[0-9]{9,10})$/',
             'address' => 'nullable',
         ]);
@@ -81,22 +92,28 @@ class UserController extends Controller
         if ($validator->fails()) {
             return $this->response->responseFailed($validator->errors()->first());
         }
-        if (Hash::check($request ->id, $request->token)) {
+
+        if (Hash::check(auth()->user()->id, $token)) {
+            $user = User::find(auth()->user()->id);
             if ($request->hasFile('file')) {
                 $image = $request->file('file');
-                $imageName = "storage/avatar/" . time() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('storage/avatar'), $imageName);
-                $request->merge(['avatar' => $imageName]);
-               
-                $user = User::find($request ->id)->update($request->all());
+                $imageName = "storage/users/" . time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('storage/users'), $imageName);
+                $request->merge(['avarta' => $imageName]);
+                $user->update($request->all());
+
+
                 if ($user) {
-                    return $this->response->responseSuccess($request->all(), 'Cập nhật thành công');
+                    $user->token = Hash::make($user->id);
+                    return $this->response->responseSuccess($user, 'Cập nhật thành công');
                 }
                 return $this->response->responseFailed('Cập nhật thất bại');
             } else {
-                $user = User::find($request->id)->update($request->all());
+                $user->update($request->all());
+
                 if ($user) {
-                    return $this->response->responseSuccess($request->all(), 'Cập nhật thành công');
+                    $user->token = Hash::make($user->id);
+                    return $this->response->responseSuccess($user, 'Cập nhật thành công');
                 }
                 return $this->response->responseFailed('Cập nhật thất bại');
 

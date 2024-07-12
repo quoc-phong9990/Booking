@@ -189,7 +189,7 @@
                         </div><!-- end card header -->
 
                         <div class="card-body">
-                            <textarea name="description" class="ckeditor-classic"></textarea>
+                            <textarea name="description" class="ckeditor-classic">{{old('description')}}</textarea>
                         </div><!-- end card-body -->
                     </div><!-- end card -->
                 </div>

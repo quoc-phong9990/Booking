@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\BookingController;
+use App\Http\Controllers\Admin\DashBoardController;
 use App\Http\Controllers\Admin\Hotel_CommentController;
 use App\Http\Controllers\Admin\Hotel_ImageController;
 use App\Http\Controllers\Admin\HotelController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Admin\TourTypeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VoucherController;
 use App\Http\Controllers\Admin\HotelServiceController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,12 +29,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', function () {
-    return redirect()->route('admin.index');
+    return redirect()->route('auth.form');
 });
-Route::group(['prefix' => 'admin'], function () {
-    Route::get("/", function () {
-        return view('admin.dashboard', ['title' => "Dashboard"]);
-    })->name('admin.index');
+Route::get('/login', [AuthController::class, 'form'])->name('auth.form');
+Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+
+Route::group(['prefix' => 'admin', 'middleware' => 'login'], function () {
+    Route::get("/",[DashBoardController::class,'index'])->name('admin.index');
     //Hotels
     Route::resource('/hotels', HotelController::class);
     Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
@@ -66,11 +69,22 @@ Route::group(['prefix' => 'admin'], function () {
     //Vouchers
     Route::resource('/vouchers', VoucherController::class);
     //Bookings
-    Route::resource('/bookings', BookingController::class);
+    Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
+    Route::get('/bookings/{id}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
+    ;
+    Route::put('/bookings/update', [BookingController::class, 'update'])->name('bookings.update');
+    ;
+    Route::get('/bookings/show/{id}', [BookingController::class, 'show'])->name('bookings.show');
+    ;
+    Route::delete('/bookings/{booking}', [BookingController::class, 'destroy'])->name('bookings.destroy');
+    ;
     //User
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::post('/users/update', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/delete/{id}', [UserController::class, 'index'])->name('users.destroy');
+
+    //logout
+    Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 
 });

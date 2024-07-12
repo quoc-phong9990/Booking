@@ -59,12 +59,12 @@ class HotelController extends Controller
                     'service_id' => $service,
                 ]);
             }
-            foreach ($request->file('images') as $image) {
-                $imageName = "storage/hotels/" . time() . '.' . $image->getClientOriginalExtension();
+            foreach ($request->images as $image) {
+                $imageName =  uniqid() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('storage/hotels'), $imageName);
                 HotelImage::create([
                     'hotel_id' => $hotel->id,
-                    'image' => $imageName
+                    'image' => "storage/hotels/" .$imageName
                 ]);
             }
         }
@@ -86,7 +86,7 @@ class HotelController extends Controller
     }
 
 
-    public function update(HotelRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
@@ -105,7 +105,7 @@ class HotelController extends Controller
         }
         $request->status ? $request->status : $request->merge(['status' => 0]);
         $request->is_active ? $request->is_active : $request->merge(['is_active' => 0]);
-        $hotel = Hotel::findOrFail($id);
+        $hotel = Hotel::find($id);
         $hotel->update($request->all());
         return redirect()->back()->with('success', 'Updated hotel successfully!');
 

@@ -167,6 +167,7 @@ const TourDetails = () => {
                         <div className="tour-details-content mb-30">
                           <h4 className="title">Kế hoạch du lịch</h4>
                           <div className="accordion" id="accordionExample">
+
                             {data.tour && data.tour.itineraries && data.tour.itineraries.length > 0 ? (
                               data.tour.itineraries.map((day: any, index: any) => (
                                 <div className="">
@@ -189,6 +190,7 @@ const TourDetails = () => {
 
                                     </div>
                                   </div>
+
                                 </div>
                               ))
                             ) : (
@@ -228,8 +230,10 @@ const TourDetails = () => {
                                       <div className="price mb-2 d-flex justify-content-center ml-4 ">
                                         <h6 className="text-danger fw-bold  mr-2 ">Giá mới: {hotel.promotion}VND</h6>  <h6 className="text-muted text-decoration-line-through">Giá cũ: {hotel.price}VND</h6>
 
+
                                       </div>
                                       <div className="news-content">
+
 
                                         <h5>Khách Sạn</h5>
                                         <div className="heading line-clamp-1">
@@ -237,7 +241,24 @@ const TourDetails = () => {
 
                                           <span className="heading-pera"> <h6>{hotel.name}</h6></span>
                                         </div>
-                                        <h4 className="title line-clamp-2">
+
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="container">
+                            <div className="row">
+                              <hr className="mb-4" />
+                              <div className="d-grid gap-2">
+                                <a href={`/payment/${id}`} className="btn btn-primary btn-lg" type="button">
+                                  Đặt Lịch Ngay
+                                </a>
+                              </div>
+
 
                                           <div />
                                           {/* <p dangerouslySetInnerHTML={{ __html: hotel.description }}></p> */}
