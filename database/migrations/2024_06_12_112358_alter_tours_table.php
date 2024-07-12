@@ -24,7 +24,7 @@ return new class extends Migration {
     {
         //
         Schema::table('tours', function (Blueprint $table) {
-            $table->dropColumn('type_id');
+            $table->dropConstrainedForeignId('type_id');
 
         });
     }

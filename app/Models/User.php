@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -36,6 +37,10 @@ class User extends Model implements Authenticatable
   public function tour_comments()
   {
     return $this->hasMany(User::class);
+  }
+  public function bookings()
+  {
+    return $this->hasMany(Booking::class);
   }
 
 }

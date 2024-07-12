@@ -15,6 +15,7 @@ const PaymentSuccess = () => {
     const response = await axios.post(`http://127.0.0.1:8000/api/client/update-payment-status/${params.vnp_TxnRef}`, {
       'status_payment': 1
     })
+    console.log(response);
     return response;
   }
   useEffect(() => {
@@ -63,7 +64,7 @@ const PaymentSuccess = () => {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-black dark:text-gray-400">Giá:</span>
-                  <span className="font-medium text-black dark:text-gray-50">{<CurrencyFormatter amount={params.vnp_Amount} />} Đồng</span>
+                  <span className="font-medium text-black dark:text-gray-50">{<CurrencyFormatter amount={(params.vnp_Amount)/100} />} Đồng</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-black dark:text-gray-400">Phương thức thanh toán:</span>

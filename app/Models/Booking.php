@@ -11,34 +11,40 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Booking extends Model
 {
     use HasFactory;
-    
+    use SoftDeletes;
     protected $table = 'bookings';
     protected $fillable = [
         'booking_code',
-         'user_name',
-         'email',
-         'tour_name',
-         'tour_price',
-         'tour_address',
-         'hotel_name',
-         'hotel_price',
-         'hotel_address',
-         'book_price',
-         'promotion_price',
-         'total_price',
-         'people',
-         'start',
-         'end',
-         'status_payment',
-         'status_tour',
-         'statusPayment',
-         'statusTour'
+        'user_name',
+        'email',
+        'tour_name',
+        'tour_price',
+        'tour_address',
+        'hotel_name',
+        'hotel_price',
+        'hotel_address',
+        'book_price',
+        'promotion_price',
+        'total_price',
+        'people',
+        'start',
+        'end',
+        'status_payment',
+        'status_tour',
+        'statusPayment',
+        'statusTour'
 
     ];
-    public function getNameStatusPayment(){
+    public function getNameStatusPayment()
+    {
         return StatusPayment::getValueByKey($this->status_payment);
     }
-    public function getNameStatusTour(){
+    public function getNameStatusTour()
+    {
         return StatusTour::getValueByKey($this->status_tour);
+    }
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

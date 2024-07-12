@@ -189,7 +189,7 @@ const TourDetails = () => {
                         <div className="tour-details-content mb-30">
                           <h4 className="title">Kế hoạch du lịch</h4>
                           <div className="accordion" id="accordionExample">
-                            {data.tour.itineraries?.map((day:any, index:any) => (
+                            {data.tour.itineraries?.map((day: any, index: any) => (
                               <div className="accordion-item" key={index}>
                                 <h2 className="accordion-header" id={`heading${index}`}>
                                   <button
@@ -213,7 +213,7 @@ const TourDetails = () => {
                                     <div dangerouslySetInnerHTML={{ __html: day.itinerary }} />
                                     <p>{day.itinerary}</p>
                                   </div> */}
-                                
+
                                 </div>
                                 <p>{day.itinerary}</p>
                               </div>
@@ -246,7 +246,7 @@ const TourDetails = () => {
                                         <p>{hotel.address}</p>
 
                                         <div className="location">
-                                      
+
                                           <p>{hotel.description}</p>
                                         </div>
                                         <div className="packages-person">
@@ -270,6 +270,9 @@ const TourDetails = () => {
                                     </div>
                                   </div>
                                 ))}
+                              </div>
+                            </div>
+                          </div>
 
                           <div className="container">
                             <div className="row">
