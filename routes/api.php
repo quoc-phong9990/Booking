@@ -44,7 +44,8 @@ Route::group(['middleware' => 'cors'], function () {
         Route::group(['prefix' => 'user'], function () {
             Route::post('login', [UserController::class, 'login']);
             Route::post('signup', [UserController::class, 'signup']);
-            Route::post('update/{token}', [UserController::class, 'update']);
+            Route::post('update', [UserController::class, 'update']);
+            Route::post('change-pass', [UserController::class, 'changePass']);
             Route::get('logout', [UserController::class, 'logout']);
         });
 

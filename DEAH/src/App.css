@@ -305,7 +305,7 @@ height: auto;
 margin-left: 20px;
 width: 50px;
 }
-<<<<<<< HEAD
+
 .image-group {
   display: flex;
   flex-direction: column;
@@ -339,7 +339,7 @@ width: 50px;
 
 .thumbnail:hover {
   border-color: #007bff;
-=======
+
 ._failed{ border-bottom: solid 4px red !important; }
 ._failed i{  color:red !important;  }
 
@@ -370,6 +370,30 @@ width: 50px;
     font-size: 18px;
     color: #495057;
     font-weight: 500;
->>>>>>> 9b10302ca30304092a39c10bb5474688c725d654
+
+}
+body{
+  margin-top:20px;
+  background:#f8f8f8
+}
+.price-container {
+  display: flex;
+  align-items: center;
 }
 
+.old-price {
+  text-decoration: line-through;
+  color: grey;
+  margin-right: 10px;
+}
+
+.new-price {
+  font-weight: bold;
+  color: red;
+}
+/* avatar */
+.avatar {
+  border-radius: 50%;
+}
+
+}

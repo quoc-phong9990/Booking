@@ -19,16 +19,9 @@ import Indextwo from './components/Indextwo';
 import SlideShow from './FunctionComponentContext/SlideShow';
 import SlideShowpost from './FunctionComponentContext/SlideShowpost';
 import ProfileUser from './AuthForm/ProfileUser';
-<<<<<<< HEAD
-import Test from './components/Test';
-
-=======
-
-import Test from './FunctionComponentContext/test';
->>>>>>> 9b10302ca30304092a39c10bb5474688c725d654
-
-
 import PaymentSuccess from './components/PaymentSuccess';
+import Password from './AuthForm/Password';
+import Test from './components/Test';
 
 
 
@@ -57,9 +50,14 @@ function App() {
         <Route path="/slide" element={<SlideShow />} />
         <Route path='/paymentSuccess' element={<PaymentSuccess/>} />
         <Route path="/slidepost" element={<SlideShowpost />} />
+
+
+        {/* user */}
         <Route path="/profile" element={<ProfileUser />} />
-        <Route path="/test" element={<Test />} />
- 
+            {/* user */}
+            <Route path="/pass" element={<Password />} />
+       
+            <Route path="/t" element={<Test/>} />
       </Routes>
     </>
   );
