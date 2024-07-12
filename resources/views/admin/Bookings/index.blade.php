@@ -2,6 +2,21 @@
 
 @section('content')
     <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                    <h4 class="mb-sm-0">Bookings</h4>
+
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="{{ route('bookings.index') }}">Bookings</a></li>
+                            <li class="breadcrumb-item active"><a href="{{ route('bookings.index') }}">List</a></li>
+                        </ol>
+                    </div>
+
+                </div>
+            </div>
+        </div>
         <h1>Bookings</h1>
         <table class="table">
             <thead>
@@ -40,8 +55,8 @@
                             <button class="btn btn-sm btn-primary edit-item-btn showDetail" data-bs-toggle="modal"
                                 data-bs-target="#showDetail" data-detail-id="{{ $booking->id }}">View</button>
                             {{-- @if ($booking->status_payment == 0 || $booking->status_tour == 0) --}}
-                                <button class="btn btn-sm btn-warning edit-item-btn showEdit" data-bs-toggle="modal"
-                                    data-bs-target="#showModal" data-edit-id="{{ $booking->id }}">Edit</button>
+                            <button class="btn btn-sm btn-warning edit-item-btn showEdit" data-bs-toggle="modal"
+                                data-bs-target="#showModal" data-edit-id="{{ $booking->id }}">Edit</button>
                             {{-- @endif --}}
 
 
