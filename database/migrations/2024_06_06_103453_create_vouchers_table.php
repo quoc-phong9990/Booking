@@ -18,10 +18,9 @@ return new class extends Migration
             $table->integer('qty');
             $table->integer('value');
             $table->string('discount_type');
-            $table->string('max');
+            $table->string('max')->nullable();
             $table->date('start');
             $table->date('end');
-            $table->boolean('status');
             $table->boolean('is_active');
             $table->softDeletes();
             $table->timestamps();
