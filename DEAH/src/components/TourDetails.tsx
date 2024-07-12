@@ -168,6 +168,7 @@ const TourDetails = () => {
                           <h4 className="title">Kế hoạch du lịch</h4>
                           <div className="accordion" id="accordionExample">
 
+
                             {data.tour && data.tour.itineraries && data.tour.itineraries.length > 0 ? (
                               data.tour.itineraries.map((day: any, index: any) => (
                                 <div className="">
@@ -231,6 +232,7 @@ const TourDetails = () => {
                                         <h6 className="text-danger fw-bold  mr-2 ">Giá mới: {hotel.promotion}VND</h6>  <h6 className="text-muted text-decoration-line-through">Giá cũ: {hotel.price}VND</h6>
 
 
+
                                       </div>
                                       <div className="news-content">
 
@@ -240,12 +242,14 @@ const TourDetails = () => {
 
 
                                           <span className="heading-pera"> <h6>{hotel.name}</h6></span>
+
                                         </div>
 
                                       </div>
                                     </div>
                                   </div>
                                 ))}
+
                               </div>
                             </div>
                           </div>
@@ -257,6 +261,7 @@ const TourDetails = () => {
                                 <a href={`/payment/${id}`} className="btn btn-primary btn-lg" type="button">
                                   Đặt Lịch Ngay
                                 </a>
+
                               </div>
 
 
