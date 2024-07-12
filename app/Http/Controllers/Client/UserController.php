@@ -24,6 +24,11 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required'
+        ], [
+            'email.required' => 'Email không được để trống',
+            'email.email' => 'Email không đúng định dạng',
+            'password.required' => 'Mật khẩu không được để trống',
+
         ]);
         if ($validator->fails()) {
             return $this->response->responseFailed($validator->errors()->first());
@@ -49,6 +54,12 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6'
+        ], [
+            'name.required' => 'Tên không được để trống',
+            'email.required' => 'Email không được để trống',
+            'email.email' => 'Email không đúng định dạng',
+            'email.unique' => 'Email đã tồn tại',
+            'password.required' => 'Mật khẩu không được để trống',
         ]);
         if ($validator->fails()) {
             return $this->response->responseFailed($validator->errors()->first());
@@ -116,10 +127,10 @@ class UserController extends Controller
         if ($validator->fails()) {
             return $this->response->responseFailed($validator->errors()->first());
         }
-        if (Hash::check(auth()->user()->id, $request->token)) {
-            $user = User::find(auth()->user()->id);
+        if (Hash::check($request->id, $request->token)) {
+            $user = User::find($request->id);
             if ($user) {
-                if (Hash::check($request->old_password, auth()->user()->password)) {
+                if (Hash::check($request->old_password, $user->password)) {
                     $user->update(['password' => Hash::make($request->new_password)]);
                     return $this->response->responseSuccess('Đổi mật khẩu thành công');
                 }

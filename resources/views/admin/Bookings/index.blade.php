@@ -40,8 +40,8 @@
                             <button class="btn btn-sm btn-primary edit-item-btn showDetail" data-bs-toggle="modal"
                                 data-bs-target="#showDetail" data-detail-id="{{ $booking->id }}">View</button>
                             {{-- @if ($booking->status_payment == 0 || $booking->status_tour == 0) --}}
-                                <button class="btn btn-sm btn-warning edit-item-btn showEdit" data-bs-toggle="modal"
-                                    data-bs-target="#showModal" data-edit-id="{{ $booking->id }}">Edit</button>
+                            <button class="btn btn-sm btn-warning edit-item-btn showEdit" data-bs-toggle="modal"
+                                data-bs-target="#showModal" data-edit-id="{{ $booking->id }}">Edit</button>
                             {{-- @endif --}}
 
 
@@ -105,6 +105,7 @@
                         <option value="0" ${data.status_payment ==0?'selected':'' }>Pending</option>
                         <option value="1" ${data.status_payment ==1?'selected':'' }>Paid</option>
                         <option value="2" ${data.status_payment ==2?'selected':'' }>Cancel</option>
+                        <option value="3" ${data.status_payment ==3?'selected':'' }>Refund</option>
                                 </select>
                                 
                                 
@@ -116,6 +117,7 @@
                         <option value="0" ${data.status_tour ==0?'selected':'' }>Waiting</option>
                         <option value="1" ${data.status_tour ==1?'selected':'' }>Done</option>
                         <option value="2" ${data.status_tour ==2?'selected':'' }>Cancel</option>
+
                                 </select>
                                 
                                 

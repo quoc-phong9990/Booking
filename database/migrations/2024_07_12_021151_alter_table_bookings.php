@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->text('thumbnail');
-           
+        //
+        Schema::table('bookings',function(Blueprint $table){
+            $table->bigInteger('user_id')->nullable()->unsigned()->after('booking_code');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -22,9 +23,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->dropColumn('thumbnail');
-           
+        //
+        Schema::table('bookings',function(Blueprint $table){
+            $table->dropConstrainedForeignId('user_id');
         });
     }
 };

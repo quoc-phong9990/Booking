@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\BookingController;
+use App\Http\Controllers\Admin\DashBoardController;
 use App\Http\Controllers\Admin\Hotel_CommentController;
 use App\Http\Controllers\Admin\Hotel_ImageController;
 use App\Http\Controllers\Admin\HotelController;
@@ -34,9 +35,7 @@ Route::get('/login', [AuthController::class, 'form'])->name('auth.form');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'login'], function () {
-    Route::get("/", function () {
-        return view('admin.dashboard', ['title' => "Dashboard"]);
-    })->name('admin.index');
+    Route::get("/",[DashBoardController::class,'index'])->name('admin.index');
     //Hotels
     Route::resource('/hotels', HotelController::class);
     Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
