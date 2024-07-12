@@ -21,6 +21,7 @@ class Hotel extends Model
         'ward_id',
         'address',
         'status',
+        'location',
         'is_active'
     ];
     public function province()

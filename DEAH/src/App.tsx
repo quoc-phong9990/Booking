@@ -20,10 +20,11 @@ import SlideShow from './FunctionComponentContext/SlideShow';
 import SlideShowpost from './FunctionComponentContext/SlideShowpost';
 import ProfileUser from './AuthForm/ProfileUser';
 
-
-
-import PaymentSuccess from './components/PaymentSuccess';
 import ListBill from './components/ListBill';
+import PaymentSuccess from './components/PaymentSuccess';
+import Password from './AuthForm/Password';
+import Test from './components/Test';
+
 
 
 
@@ -52,9 +53,19 @@ function App() {
         <Route path="/slide" element={<SlideShow />} />
         <Route path='/paymentSuccess' element={<PaymentSuccess/>} />
         <Route path="/slidepost" element={<SlideShowpost />} />
+
+
+        {/* user */}
         <Route path="/profile" element={<ProfileUser />} />
+
        <Route path="/listbill" element={<ListBill/>}/>
  
+
+            {/* user */}
+            <Route path="/pass" element={<Password />} />
+       
+            <Route path="/t" element={<Test/>} />
+
       </Routes>
     </>
   );

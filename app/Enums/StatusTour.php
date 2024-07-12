@@ -20,6 +20,7 @@ class StatusTour extends Enum
             self::WAITING => '<span class="badge bg-warning">Waiting</span>',
             self::DONE => '<span class="badge bg-success">Done</span>',
             self::CANCEL => '<span class="badge bg-danger">Canel</span>'
+
         ];
     }
 

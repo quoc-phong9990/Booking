@@ -120,6 +120,7 @@
                         <option value="0" ${data.status_payment ==0?'selected':'' }>Pending</option>
                         <option value="1" ${data.status_payment ==1?'selected':'' }>Paid</option>
                         <option value="2" ${data.status_payment ==2?'selected':'' }>Cancel</option>
+                        <option value="3" ${data.status_payment ==3?'selected':'' }>Refund</option>
                                 </select>
                                 
                                 
@@ -131,6 +132,7 @@
                         <option value="0" ${data.status_tour ==0?'selected':'' }>Waiting</option>
                         <option value="1" ${data.status_tour ==1?'selected':'' }>Done</option>
                         <option value="2" ${data.status_tour ==2?'selected':'' }>Cancel</option>
+
                                 </select>
                                 
                                 

@@ -20,7 +20,7 @@ const Register = () => {
     const { name, password, email } = data;
     // Check if there are any validation errors
     if (Object.keys(errors).length === 0) {
-      fetch('http://localhost:3000/register', {
+      fetch('http://127.0.0.1:8000/api/client/user/signup', {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'

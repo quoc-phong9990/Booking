@@ -12,7 +12,7 @@ class AttributeController extends Controller
     //
     public function index()
     {
-
+      
         $attributes = Attribute::orderByDesc('created_at')->paginate(10);
         $title = 'Attributes';
         return view('admin.Attributes.index', compact('attributes', 'title'));

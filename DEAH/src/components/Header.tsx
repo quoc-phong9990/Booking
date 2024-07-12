@@ -1,24 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../App.css'
+import '../App.css';
+
 const Header = () => {
-  const navigate = useNavigate()
-  const [userName, setUserName] = useState<{ name: String, photo: String } | null>(null);
+  const navigate = useNavigate();
+  const [userName, setUserName] = useState<{ name: String, avatar: String } | null>(null);
 
   useEffect(() => {
-    const userData = sessionStorage.getItem('user')
+    const userData = sessionStorage.getItem('user');
     if (userData) {
       setUserName(JSON.parse(userData));
-      // console.log(userData);
-
     }
-  }, [])
-  const handlelogout = () => {
-    sessionStorage.removeItem('user'),
-      localStorage.removeItem('token'),
-      setUserName(null)
-    navigate('/login')
-  }
+  }, []);
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('user');
+    localStorage.removeItem('token');
+    setUserName(null);
+    alert('Bạn đã đăng xuất');
+    navigate('/login');
+  };
+
   return (
     <div>
       <header>
@@ -34,7 +36,14 @@ const Header = () => {
                       <div className="top-header-left d-flex align-items-center">
                         {/* Logo*/}
                         <div className="logo">
-                          <a href="index-two" ><img width="80px"  src="/src/assets/images/logo/logonew-nobg.png" alt="logo" className="changeLogo" /></a>
+                          <a href="index-two">
+                            <img
+                              width="80px"
+                              src="/src/assets/images/logo/logonew-nobg.png"
+                              alt="logo"
+                              className="changeLogo"
+                            />
+                          </a>
                         </div>
                         {/* search box */}
                         <div className="search-box search-bar d-none d-lg-block">
@@ -62,7 +71,6 @@ const Header = () => {
                             </button>
                           </div>
                         </div>
-                        {/* / Mobile Device Seach & Theme Mode*/}
                       </div>
                       {/*Top Right Side */}
                       <div className="top-header-right">
@@ -108,16 +116,13 @@ const Header = () => {
                             <ul className="listing" id="navigation">
                               <li className="single-list">
                                 <a href="/index-two" className="single">Trang Chủ </a>
-
                               </li>
-                              <li className="single-list ">
+                              <li className="single-list">
                                 <a href="/about" className="single">Về Chúng Tôi</a>
                               </li>
-
                               <li className="single-list">
                                 <a href="/tour-list" className="single">Gói Du Lịch</a>
                               </li>
-
                               <li className="single-list">
                                 <a href="/news" className="single">Tin tức</a>
                               </li>
@@ -133,30 +138,33 @@ const Header = () => {
                                     <div className="divider gradient-divider" />
                                     <div className="money">
                                       <p className="pera">Login</p>
-
                                     </div>
                                   </div>
-
                                 </div>
                               </li>
                             </ul>
                             <div className="header-right">
                               {userName ? (
-                                <div>
-                                  <Link to={'/profile'}><p className='mt-3 user-name '>Chào mừng, {userName.name}!</p></Link>
-                                  <p>{userName.photo}</p>
-
-
+                                <div className='d-flex'>
+                                  <Link to={'/profile'}>
+                                    <p className='mt-3 mr-2 user-name '>Chào mừng, {userName.name}!</p>  
+                                  </Link>
+                                  <img className='rounded-circle' width={60} height={100} src={'http://127.0.0.1:8000/' + (userName.avatar ? userName.avatar : '')} alt="" />
+                                
                                 </div>
                               ) : (
                                 <p className='mt-3'>Chào mừng, bạn vui lòng đăng nhập!</p>
                               )}
-                              <div className="sign-btn">
-                                <a type='button' onClick={handlelogout} className="btn-secondary-sm">Đăng xuất</a>
-                              </div>
-                              <div className="sign-btn">
-                                <a href="/login" className="btn-secondary-sm">Đăng nhập</a>
-                              </div>
+
+                              {!userName && (
+                                <div className="sign-btn">
+                                  <a href="/login" className="btn-secondary-sm">Đăng nhập</a>
+                                </div>
+                              )}
+                             
+                             <div className="sign-btn">
+                                  <a type='submit' className="btn-secondary-sm " onClick={handleLogout}>Đăng xuất</a>
+                                </div>
                               {/* Theme Mode */}
                               <li className="single-list">
                                 <button className="ToggleThemeButton change-theme-mode m-0 p-0 border-0">
@@ -225,14 +233,13 @@ const Header = () => {
                           </div>
                           <div className="content">
                             <h4 className="title line-clamp-1">
-                              Dubai: cồn cát đỏ cao cấp, lạc đà, Stargazing & amp;5*
-                              BBQ tại Al Khayma Camp ™
+                              Private Khu Phố Đồ Da Màu Vàng Tại Hà Nội
                             </h4>
                             <p className="pera line-clamp-2">
-                              Kết thúc tuyệt vời cho ngày của bạn ở Dubai với
-                              buổi tối cao cấp red dune sa mạc safari.Cho một tuyệt vời
-                              Kết thúc một ngày của bạn ở Dubai với buổi tối cao cấp của chúng tôi
-                              Safari sa mạc Red Dune.
+                              buổi Tối Tuyệt Vời Esc apade Bắt Đầu Từ Madinat
+                              jumeirah Đến Đài Phun Nước Âm Nhạc Để Xem Người Khác.
+                              buổi Tối Tuyệt VờiEscapade Bắt Đầu Từ Madinat
+                              jumeirah Đến Các Đài Phun Nước Âm Nhạc Để Xem Người Khác
                             </p>
                           </div>
                         </div>
@@ -246,20 +253,17 @@ const Header = () => {
                           </div>
                           <div className="content">
                             <h4 className="title line-clamp-1">
-                              Admission to Global Village in Dubai
+                              Bảo Tàng Hoàng Gia Cổ Tích Du Lịch
                             </h4>
                             <p className="pera line-clamp-2">
-                              Admission to Dubai’s biggest, multicultural festival
-                              park with replicas of iconic landmarks. Admission to
-                              Dubai’s biggest, multicultural festival park with
-                              replicas of iconic landmarks
+                              buổi Tối Tuyệt Vời Esc apade Bắt Đầu Từ Madinat
+                              jumeirah Đến Đài Phun Nước Âm Nhạc Để Xem Người Khác.
+                              buổi Tối Tuyệt VờiEscapade Bắt Đầu Từ Madinat
+                              jumeirah Đến Các Đài Phun Nước Âm Nhạc Để Xem Người Khác
                             </p>
                           </div>
                         </div>
                       </a>
-                    </li>
-                    <li>
-                      <h4 className="search-label">Gần đây</h4>
                     </li>
                     <li className="single-list">
                       <a href="tour-details">
@@ -269,54 +273,13 @@ const Header = () => {
                           </div>
                           <div className="content">
                             <h4 className="title line-clamp-1">
-                              Dubai by Night City Tour với Fountain Show
+                              Bảo Tàng Hoàng Gia Cổ Tích Du Lịch
                             </h4>
                             <p className="pera line-clamp-2">
-                              Buổi tối tuyệt vời Escapade bắt đầu từ Madinat
-                              Jumeirah đến đài phun nước âm nhạc để xem người khác.
-                              Buổi tối tuyệt vời Escapade bắt đầu từ Madinat
-                              Jumeirah đến các đài phun nước âm nhạc để xem người khác
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <li className="single-list">
-                      <a href="tour-details">
-                        <div className="search-flex">
-                          <div className="content-img">
-                            <img src="/src/assets/images/gallery/search-img-2.jpeg" alt="travello" />
-                          </div>
-                          <div className="content">
-                            <h4 className="title line-clamp-1">
-                              Dubai: cồn cát đỏ cao cấp, lạc đà, Stargazing & amp;5*
-                              BBQ tại Al Khayma Camp ™
-                            </h4>
-                            <p className="pera line-clamp-2">
-                              Kết thúc tuyệt vời cho ngày của bạn ở Dubai với
-                              buổi tối cao cấp red dune sa mạc safari.Cho một tuyệt vời
-                              Kết thúc một ngày của bạn ở Dubai với buổi tối cao cấp của chúng tôi
-                              Safari sa mạc Red Dune.
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <li className="single-list">
-                      <a href="tour-details">
-                        <div className="search-flex">
-                          <div className="content-img">
-                            <img src="/src/assets/images/gallery/search-img-3.jpeg" alt="travello" />
-                          </div>
-                          <div className="content">
-                            <h4 className="title line-clamp-1">
-                              Nhập học vào làng toàn cầu ở Dubai
-                            </h4>
-                            <p className="pera line-clamp-2">
-                              Nhập học vào lễ hội đa văn hóa lớn nhất Dubai Dubai
-                              Công viên với bản sao của các địa danh mang tính biểu tượng.Nhập vào
-                              Công viên lễ hội đa văn hóa lớn nhất Dubai với
-                              bản sao của các địa danh mang tính biểu tượng
+                              buổi Tối Tuyệt Vời Esc apade Bắt Đầu Từ Madinat
+                              jumeirah Đến Đài Phun Nước Âm Nhạc Để Xem Người Khác.
+                              buổi Tối Tuyệt VờiEscapade Bắt Đầu Từ Madinat
+                              jumeirah Đến Các Đài Phun Nước Âm Nhạc Để Xem Người Khác
                             </p>
                           </div>
                         </div>
@@ -325,171 +288,79 @@ const Header = () => {
                   </ul>
                 </div>
                 <div className="col-md-4">
-                  <div className="right-section" id="filterMenu">
-                    <h4 className="title">tùyChọnLọc</h4>
-                    {/* List of Filter */}
-                    <ul className="listing">
-                      <li>
-                        <h4 className="search-label">Loại bài </h4>
-                      </li>
-                      <li className="single-list">
-                        <div className="d-flex align-items-center gap-8">
-                          <label className="checkbox-label">
-                            <input className="checkbox-style" type="checkbox" defaultValue="remember" name="remember" />
-                            <span className="checkmark-style" />
-                          </label>
+                  <ul className="listing">
+                    <li>
+                      <h4 className="search-label">Popular Search</h4>
+                    </li>
+                    <li className="single-list">
+                      <a href="tour-details">
+                        <div className="search-flex">
+                          <div className="content-img">
+                            <img src="/src/assets/images/gallery/search-img-4.jpeg" alt="travello" />
+                          </div>
                           <div className="content">
-                            <p className="pera">Bài viết (3)</p>
+                            <h4 className="title line-clamp-1">
+                              Private Khu Phố Đồ Da Màu Vàng Tại Hà Nội
+                            </h4>
+                            <p className="pera line-clamp-2">
+                              buổi Tối Tuyệt Vời Esc apade Bắt Đầu Từ Madinat
+                              jumeirah Đến Đài Phun Nước Âm Nhạc Để Xem Người Khác.
+                              buổi Tối Tuyệt VờiEscapade Bắt Đầu Từ Madinat
+                              jumeirah Đến Các Đài Phun Nước Âm Nhạc Để Xem Người Khác
+                            </p>
                           </div>
                         </div>
-                      </li>
-                      <li className="single-list">
-                        <div className="d-flex align-items-center gap-8">
-                          <label className="checkbox-label">
-                            <input className="checkbox-style" type="checkbox" defaultValue="remember" name="remember" />
-                            <span className="checkmark-style" />
-                          </label>
+                      </a>
+                    </li>
+                    <li className="single-list">
+                      <a href="tour-details">
+                        <div className="search-flex">
+                          <div className="content-img">
+                            <img src="/src/assets/images/gallery/search-img-5.jpeg" alt="travello" />
+                          </div>
                           <div className="content">
-                            <p className="pera">Bài viết (3)</p>
+                            <h4 className="title line-clamp-1">
+                              Private Khu Phố Đồ Da Màu Vàng Tại Hà Nội
+                            </h4>
+                            <p className="pera line-clamp-2">
+                              buổi Tối Tuyệt Vời Esc apade Bắt Đầu Từ Madinat
+                              jumeirah Đến Đài Phun Nước Âm Nhạc Để Xem Người Khác.
+                              buổi Tối Tuyệt VờiEscapade Bắt Đầu Từ Madinat
+                              jumeirah Đến Các Đài Phun Nước Âm Nhạc Để Xem Người Khác
+                            </p>
                           </div>
                         </div>
-                      </li>
-                      <li className="single-list">
-                        <div className="d-flex align-items-center gap-8">
-                          <label className="checkbox-label">
-                            <input className="checkbox-style" type="checkbox" defaultValue="remember" name="remember" />
-                            <span className="checkmark-style" />
-                          </label>
+                      </a>
+                    </li>
+                    <li className="single-list">
+                      <a href="tour-details">
+                        <div className="search-flex">
+                          <div className="content-img">
+                            <img src="/src/assets/images/gallery/search-img-6.jpeg" alt="travello" />
+                          </div>
                           <div className="content">
-                            <p className="pera">Liên kết (44)</p>
+                            <h4 className="title line-clamp-1">
+                              Private Khu Phố Đồ Da Màu Vàng Tại Hà Nội
+                            </h4>
+                            <p className="pera line-clamp-2">
+                              buổi Tối Tuyệt Vời Esc apade Bắt Đầu Từ Madinat
+                              jumeirah Đến Đài Phun Nước Âm Nhạc Để Xem Người Khác.
+                              buổi Tối Tuyệt VờiEscapade Bắt Đầu Từ Madinat
+                              jumeirah Đến Các Đài Phun Nước Âm Nhạc Để Xem Người Khác
+                            </p>
                           </div>
                         </div>
-                      </li>
-                      <li className="single-list">
-                        <div className="d-flex align-items-center gap-8">
-                          <label className="checkbox-label">
-                            <input className="checkbox-style" type="checkbox" defaultValue="remember" name="remember" />
-                            <span className="checkmark-style" />
-                          </label>
-                          <div className="content">
-                            <p className="pera">Blog (23)</p>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                    {/* List of Filter */}
-                    <ul className="listing">
-                      <li>
-                        <h4 className="search-label">Thể loại</h4>
-                      </li>
-                      <li className="single-list">
-                        <div className="d-flex align-items-center gap-8">
-                          <label className="checkbox-label">
-                            <input className="checkbox-style" type="checkbox" defaultValue="remember" name="remember" />
-                            <span className="checkmark-style" />
-                          </label>
-                          <div className="content">
-                            <p className="pera">Bài viết (3)</p>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="single-list">
-                        <div className="d-flex align-items-center gap-8">
-                          <label className="checkbox-label">
-                            <input className="checkbox-style" type="checkbox" defaultValue="remember" name="remember" />
-                            <span className="checkmark-style" />
-                          </label>
-                          <div className="content">
-                            <p className="pera">Thăm dò ý kiến (3)</p>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="single-list">
-                        <div className="d-flex align-items-center gap-8">
-                          <label className="checkbox-label">
-                            <input className="checkbox-style" type="checkbox" defaultValue="remember" name="remember" />
-                            <span className="checkmark-style" />
-                          </label>
-                          <div className="content">
-                            <p className="pera">Bài báo (44)</p>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="single-list">
-                        <div className="d-flex align-items-center gap-8">
-                          <label className="checkbox-label">
-                            <input className="checkbox-style" type="checkbox" defaultValue="remember" name="remember" />
-                            <span className="checkmark-style" />
-                          </label>
-                          <div className="content">
-                            <p className="pera">Blog (23)</p>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                    {/* List of Filter */}
-                    <ul className="listing">
-                      <li>
-                        <h4 className="search-label">Du lịch</h4>
-                      </li>
-                      <li className="single-list">
-                        <div className="d-flex align-items-center gap-8">
-                          <label className="checkbox-label">
-                            <input className="checkbox-style" type="checkbox" defaultValue="remember" name="remember" />
-                            <span className="checkmark-style" />
-                          </label>
-                          <div className="content">
-                            <p className="pera">Bài viết (3)</p>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="single-list">
-                        <div className="d-flex align-items-center gap-8">
-                          <label className="checkbox-label">
-                            <input className="checkbox-style" type="checkbox" defaultValue="remember" name="remember" />
-                            <span className="checkmark-style" />
-                          </label>
-                          <div className="content">
-                            <p className="pera">Thăm dò ý kiến (3)</p>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="single-list">
-                        <div className="d-flex align-items-center gap-8">
-                          <label className="checkbox-label">
-                            <input className="checkbox-style" type="checkbox" defaultValue="remember" name="remember" />
-                            <span className="checkmark-style" />
-                          </label>
-                          <div className="content">
-                            <p className="pera">Bài báo (44)</p>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="single-list">
-                        <div className="d-flex align-items-center gap-8">
-                          <label className="checkbox-label">
-                            <input className="checkbox-style" type="checkbox" defaultValue="remember" name="remember" />
-                            <span className="checkmark-style" />
-                          </label>
-                          <div className="content">
-                            <p className="pera">Blog (23)</p>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="div">
-                  <div className="filter_menu" />
+                      </a>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
-          {/* / End-Search */}
         </div>
       </header>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

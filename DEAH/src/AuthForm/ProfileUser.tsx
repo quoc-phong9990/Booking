@@ -1,215 +1,164 @@
-
 import { useEffect, useState } from 'react';
-import Footer from '../components/Footer'
-import Header from '../components/Header'
-import { useNavigate } from 'react-router-dom';
+import '../App1.css'
 
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const ProfileUser = () => {
-  const [userEmail, setUserEmail] = useState('');
-  const [userName, setUserName] = useState('');
+  const [file, setFile] = useState<File | null>(null);
+  const [avatarUrl, setAvatarUrl] = useState<string>(''); // State để lưu URL của ảnh
+  const navigate = useNavigate();
+  const { register, handleSubmit, reset } = useForm();
+
+  const [userData, setUserData] = useState({
+    id: '',
+    avatar: '',
+    name: '',
+    email: '',
+    phone: '',
+    address: '',
+    token: '',
+    file: '',
+    date_of_birth:''
+  });
 
   useEffect(() => {
-    // Lấy thông tin từ sessionStorage
-    const userData = sessionStorage.getItem('user');
-console.log(userData);
-
-    if (userData) {
-      const { name, email } = JSON.parse(userData);
-      setUserName(name);
-      setUserEmail(email);
+    const Data = sessionStorage.getItem('user');
+    if (Data) {
+      const user = JSON.parse(Data);
+      setUserData(user);
+      setAvatarUrl(user.avatar ? 'http://127.0.0.1:8000/' + user.avatar : ''); // Cập nhật URL ảnh từ userData
+      reset(user);
     }
-  }, []);
+  }, [reset]);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      setFile(files[0]);
+      const imageUrl = URL.createObjectURL(files[0]); // Tạo URL cho ảnh mới
+      setAvatarUrl(imageUrl); // Cập nhật URL ảnh trong form
+    }
+  };
+
+  const handleUpdate = async (data: any) => {
+    data.file = file;
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/client/user/update`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Update failed:', errorData);
+        throw new Error(`Failed to update user data: ${response.statusText}`);
+      }
+
+      alert('Thông tin người dùng đã được cập nhật thành công.');
+    } catch (error) {
+      alert('Đã xảy ra lỗi khi cập nhật thông tin người dùng: ');
+    }
+  };
+
+
   return (
     <div>
-    <div>
       <Header />
-      <main>
-  <div className="container mt-2">
-  <div className="row flex-lg-nowrap">
-    <div className="col-12 col-lg-auto mb-3" style={{width: 200}}>
-      <div className="card p-3">
-        <div className="e-navlist e-navlist--active-bg">
-          <ul className="nav">
-            <li className="nav-item"><a className="nav-link px-2 active" href="#"><i className="fa fa-fw fa-bar-chart mr-1" /><span>Overview</span></a></li>
-            <li className="nav-item"><a className="nav-link px-2" href="https://www.bootdey.com/snippets/view/bs4-crud-users" target="__blank"><i className="fa fa-fw fa-th mr-1" /><span>CRUD</span></a></li>
-            <li className="nav-item"><a className="nav-link px-2" href="https://www.bootdey.com/snippets/view/bs4-edit-profile-page" target="__blank"><i className="fa fa-fw fa-cog mr-1" /><span>Settings</span></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div className="col">
-      <div className="row">
-        <div className="col mb-3">
-          <div className="card">
-            <div className="card-body">
-              <div className="e-profile">
-                <div className="row">
-                  <div className="col-12 col-sm-auto mb-3">
-                    <div className="mx-auto" style={{width: 140}}>
-                      <div className="d-flex justify-content-center align-items-center rounded" style={{height: 140, backgroundColor: 'rgb(233, 236, 239)'}}>
-                        <span style={{color: 'rgb(166, 168, 170)', font: 'bold 8pt Arial'}}>140x140</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col d-flex flex-column flex-sm-row justify-content-between mb-3">
-                    <div className="text-center text-sm-left mb-2 mb-sm-0">
-                      <h4 className="pt-sm-2 pb-1 mb-0 text-nowrap">{userName}</h4>
-                      <p className="mb-0">@johnny.s</p>
-                      <h4></h4>
-                      <div className="text-muted"><small>Last seen 2 hours ago</small></div>
-                      <div className="mt-2">
-                        <button className="btn btn-primary" type="button">
-                          <i className="fa fa-fw fa-camera" />
-                          <span>Change Photo</span>
-                        </button>
-                      </div>
-                    </div>
-                    <div className="text-center text-sm-right">
-                      <span className="badge badge-secondary">administrator</span>
-                      <div className="text-muted"><small>Joined 09 Dec 2017</small></div>
-                    </div>
-                  </div>
+      <div className="container">
+        <div className="view-account">
+          <section className="module">
+            <div className="module-inner">
+              <div className="side-bar">
+                <div className="user-info">
+                  <img className="img-profile img-circle img-responsive center-block" src={avatarUrl} alt="Profile Avatar" />
+                  <ul className="meta list list-unstyled">
+                    <li className="name">{userData.name}</li>
+                    <li className="email"><a href="#">{userData.email}</a></li>
+                    <li className="activity">Last logged in: Today at 2:18pm</li>
+                  </ul>
                 </div>
-                <ul className="nav nav-tabs">
-                  <li className="nav-item"><a  className="active nav-link">Settings</a></li>
-                </ul>
-                <div className="tab-content pt-3">
-                  <div className="tab-pane active">
-                    <form className="form" noValidate>
-                      <div className="row">
-                        <div className="col">
-                          <div className="row">
-                            <div className="col">
-                              <div className="form-group">
-                                <label>Full Name</label>
-                                <input className="form-control" type="text" name="name" placeholder="John Smith" defaultValue="John Smith" />
-                              </div>
-                            </div>
-                            <div className="col">
-                              <div className="form-group">
-                                <label>Username</label>
-                                <input className="form-control" type="text" name="username" placeholder="johnny.s" defaultValue="johnny.s" />
-                              </div>
-                            </div>
-                          </div>
-                          <div className="row">
-                            <div className="col">
-                              <div className="form-group">
-                                <label>Email</label>
-                             
-                                <input className="form-control" type="text" placeholder="user@example.com" />   {userEmail}
-                              </div>
-                            </div>
-                          </div>
-                          <div className="row">
-                            <div className="col mb-3">
-                              <div className="form-group">
-                                <label>About</label>
-                                <textarea className="form-control" rows={5} placeholder="My Bio" defaultValue={""} />
-                              </div>
-                            </div>
-                          </div>
+                <nav className="side-menu ">
+                  <ul className="nav">
+                    <li><a href="#"><span className="fa fa-user" /> Profile</a></li>
+                    <li><a href="#"><span className="fa fa-cog" /> Settings</a></li>
+                    <li className="active"><a href="#"><span className="fa fa-credit-card" /> Billing</a></li>
+                    <li><a href="#"><span className="fa fa-envelope" /> Messages</a></li>
+                    <li><a href="user-drive.html"><span className="fa fa-th" /> Drive</a></li>
+                    <li><a href="#"><span className="fa fa-clock-o" /> Reminders</a></li>
+                    <div className="mt-40">
+                          <button type="submit" className="send-btn"><a className='text-black' href="/pass">Đổi mật khẩu </a></button>
+                        </div>
+                  </ul>
+                </nav>
+              </div>
+              <div className="content-panel">
+                <div className="billing">
+                  <form id="billing" className="form-horizontal" onSubmit={handleSubmit(handleUpdate)} role="form">
+                    <div className="form-group">
+                      <label className="col-sm-3 control-label">Ảnh của bạn</label>
+                      <div className="col-sm-9">
+                        <input type="file" className="form-control" onChange={handleFileChange} />
+                        <p className="help-block">Hãy nhập hoặc sửa ảnh của bạn</p>
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label className="col-sm-3 control-label">Họ Và Tên</label>
+                      <div className="col-sm-9">
+                        <input type="text" className="form-control" {...register("name")} defaultValue={userData.name} />
+                        <p className="help-block">Hãy nhập hoặc sửa tên của bạn</p>
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label className="col-sm-3 control-label">Email</label>
+                      <div className="col-sm-9">
+                        <input type="email" className="form-control" {...register("email")} defaultValue={userData.email} />
+                        <p className="help-block">Xin mời nhập hoặc chỉnh sửa tại đây</p>
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label className="col-sm-3 control-label">Địa chỉ</label>
+                      <div className="col-sm-9">
+                        <input type="text" className="form-control" {...register("address")} defaultValue={userData.address} />
+                        <p className="help-block">Xin mời nhập hoặc chỉnh sửa tại đây</p>
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label className="col-sm-3 control-label">Số điện thoại</label>
+                      <div className="col-sm-9">
+                        <input type="text" className="form-control" {...register("phone")} defaultValue={userData.phone} />
+                        <p className="help-block">Xin mời nhập hoặc chỉnh sửa tại đây</p>
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label className="col-sm-3 control-label">Ngày sinh</label>
+                      <div className="col-sm-9">
+                        <input type="date" className="form-control" {...register("birthdate")} defaultValue={userData.date_of_birth} />
+                        <p className="help-block">Xin mời nhập hoặc chỉnh sửa tại đây</p>
+                      </div>
+                    </div>
+                    <hr />
+                    <div className="action-wrapper text-center">
+                      <div className="action-btn">
+                        <div className="mt-40">
+                          <button type="submit" className="send-btn">Lưu thay đổi</button>
                         </div>
                       </div>
-                      <div className="row">
-                        <div className="col-12 col-sm-6 mb-3">
-                          <div className="mb-2"><b>Change Password</b></div>
-                          <div className="row">
-                            <div className="col">
-                              <div className="form-group">
-                                <label>Current Password</label>
-                                <input className="form-control" type="password" placeholder="••••••" />
-                              </div>
-                            </div>
-                          </div>
-                          <div className="row">
-                            <div className="col">
-                              <div className="form-group">
-                                <label>New Password</label>
-                                <input className="form-control" type="password" placeholder="••••••" />
-                              </div>
-                            </div>
-                          </div>
-                          <div className="row">
-                            <div className="col">
-                              <div className="form-group">
-                                <label>Confirm <span className="d-none d-xl-inline">Password</span></label>
-                                <input className="form-control" type="password" placeholder="••••••" /></div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-12 col-sm-5 offset-sm-1 mb-3">
-                          <div className="mb-2"><b>Keeping in Touch</b></div>
-                          <div className="row">
-                            <div className="col">
-                              <label>Email Notifications</label>
-                              <div className="custom-controls-stacked px-2">
-                                <div className="custom-control custom-checkbox">
-                                  <input type="checkbox" className="custom-control-input" id="notifications-blog" defaultChecked />
-                                  <label className="custom-control-label" htmlFor="notifications-blog">Blog posts</label>
-                                </div>
-                                <div className="custom-control custom-checkbox">
-                                  <input type="checkbox" className="custom-control-input" id="notifications-news" defaultChecked />
-                                  <label className="custom-control-label" htmlFor="notifications-news">Newsletter</label>
-                                </div>
-                                <div className="custom-control custom-checkbox">
-                                  <input type="checkbox" className="custom-control-input" id="notifications-offers" defaultChecked />
-                                  <label className="custom-control-label" htmlFor="notifications-offers">Personal Offers</label>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col d-flex justify-content-end">
-                          <button className="btn btn-primary" type="submit">Save Changes</button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div className="col-12 col-md-3 mb-3">
-          <div className="card mb-3">
-            <div className="card-body">
-              <div className="px-xl-3">
-                <button className="btn btn-block btn-secondary">
-                  <i className="fa fa-sign-out" />
-                  <span>Logout</span>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="card">
-            <div className="card-body">
-              <h6 className="card-title font-weight-bold">Support</h6>
-              <p className="card-text">Get fast, free help from our friendly assistants.</p>
-              <button type="button" className="btn btn-primary">Contact Us</button>
-            </div>
-          </div>
+          </section>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-</main>
-      {/* Footer S t a r t */}
       <Footer />
-      <div className="progressParent" id="back-top">
-        <svg className="backCircle svg-inner" width="100%" height="100%" viewBox="-1 -1 102 102">
-          <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
-        </svg>
-      </div>
-      <div className="search-overlay" />
     </div>
+  );
+};
 
-  </div>
-  )
-}
-
-export default ProfileUser
+export default ProfileUser;
