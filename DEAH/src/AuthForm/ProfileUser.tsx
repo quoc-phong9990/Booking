@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react';
+import { Component, useEffect, useState } from 'react';
 import '../App1.css'
 
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import axios from 'axios';
 
 const ProfileUser = () => {
   const [file, setFile] = useState<File | null>(null);
   const [avatarUrl, setAvatarUrl] = useState<string>(''); // State để lưu URL của ảnh
+  const [status, setStatus] = useState<boolean>(false); // State để lưu URL của ảnh
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
 
@@ -21,7 +23,7 @@ const ProfileUser = () => {
     address: '',
     token: '',
     file: '',
-    date_of_birth:''
+    date_of_birth: ''
   });
 
   useEffect(() => {
@@ -32,6 +34,7 @@ const ProfileUser = () => {
       setAvatarUrl(user.avatar ? 'http://127.0.0.1:8000/' + user.avatar : ''); // Cập nhật URL ảnh từ userData
       reset(user);
     }
+
   }, [reset]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,32 +46,32 @@ const ProfileUser = () => {
     }
   };
 
-  const handleUpdate = async (data: any) => {
-    data.file = file;
-    try {
-      const response = await fetch(`http://127.0.0.1:8000/api/client/user/update`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error('Update failed:', errorData);
-        throw new Error(`Failed to update user data: ${response.statusText}`);
-      }
+  const handleUpdate = async (user: any) => {
+    user.file = file;
+    console.log(user);
 
-      alert('Thông tin người dùng đã được cập nhật thành công.');
+    try {
+      await axios.post('http://127.0.0.1:8000/api/client/user/update', user, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+        .then((res) => {
+          console.log(res.data.data);
+          reset(user);
+          setStatus(!status);
+          sessionStorage.setItem('user', JSON.stringify(res.data.data));
+          alert('Thông tin người dùng đã được cập nhật thành công.');
+        });
     } catch (error) {
       alert('Đã xảy ra lỗi khi cập nhật thông tin người dùng: ');
-    }
-  };
+    };
+  }
 
 
   return (
     <div>
-      <Header />
+      <Header status={status} />
       <div className="container">
         <div className="view-account">
           <section className="module">
@@ -91,8 +94,8 @@ const ProfileUser = () => {
                     <li><a href="user-drive.html"><span className="fa fa-th" /> Drive</a></li>
                     <li><a href="#"><span className="fa fa-clock-o" /> Reminders</a></li>
                     <div className="mt-40">
-                          <button type="submit" className="send-btn"><a className='text-black' href="/pass">Đổi mật khẩu </a></button>
-                        </div>
+                      <button type="submit" className="send-btn"><a className='text-black' href="/pass">Đổi mật khẩu </a></button>
+                    </div>
                   </ul>
                 </nav>
               </div>

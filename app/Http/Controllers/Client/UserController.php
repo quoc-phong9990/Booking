@@ -40,7 +40,7 @@ class UserController extends Controller
         ];
         if (Auth::attempt($user)) {
             // $request->session()->regenerate();
-     
+
             Auth::user()->token = Hash::make(Auth::user()->id);
             return $this->response->responseSuccess(Auth::user());
         } else {
@@ -78,12 +78,10 @@ class UserController extends Controller
     }
     public function update(Request $request)
     {
-  
-   
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => ['required', 'email', Rule::unique('users')->ignore(auth()->user()->id)],
-            'file' => 'nullable|image',
+            'email' => ['required', 'email', Rule::unique('users')->ignore($request->id)],
+            'file' => 'nullable',
             'date_of_birth' => 'nullable|date|after:' . now()->toDateString() . "'",
             'phone' => 'nullable|regex:/^(0[0-9]{9,10})$/',
             'address' => 'nullable',
@@ -93,33 +91,26 @@ class UserController extends Controller
             return $this->response->responseFailed($validator->errors()->first());
         }
 
-        if (Hash::check(auth()->user()->id, $token)) {
-            $user = User::find(auth()->user()->id);
-            if ($request->hasFile('file')) {
-                $image = $request->file('file');
-                $imageName = "storage/users/" . time() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('storage/users'), $imageName);
-                $request->merge(['avarta' => $imageName]);
+        if (Hash::check($request->id, $request->token)) {
+            $user = User::find($request->id);
+            if ($user) {
+                if ($request->hasFile('file')) {
+                    $image = $request->file('file');
+                    $imageName = "storage/users/test-" . time() . '.' . $image->getClientOriginalExtension();
+                    $image->move(public_path('storage/users'), $imageName);
+                    $request->merge(['avatar' => $imageName]);
+                }
                 $user->update($request->all());
 
+                $user->token = Hash::make($user->id);
+                return $this->response->responseSuccess($user, 'Cập nhật thành công');
 
-                if ($user) {
-                    $user->token = Hash::make($user->id);
-                    return $this->response->responseSuccess($user, 'Cập nhật thành công');
-                }
-                return $this->response->responseFailed('Cập nhật thất bại');
-            } else {
-                $user->update($request->all());
-
-                if ($user) {
-                    $user->token = Hash::make($user->id);
-                    return $this->response->responseSuccess($user, 'Cập nhật thành công');
-                }
-                return $this->response->responseFailed('Cập nhật thất bại');
 
             }
+            return $this->response->responseFailed('Người dùng không tồn tại');
+
         } else {
-            return $this->response->responseFailed('Token không hợp lệ');
+            return $this->response->responseFailed('Cập nhật thất bại');
         }
 
 
