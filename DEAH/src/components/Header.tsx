@@ -162,9 +162,11 @@ const Header = () => {
                                 </div>
                               )}
                              
+                             {userName && (
                              <div className="sign-btn">
                                   <a type='submit' className="btn-secondary-sm " onClick={handleLogout}>Đăng xuất</a>
                                 </div>
+                             )}
                               {/* Theme Mode */}
                               <li className="single-list">
                                 <button className="ToggleThemeButton change-theme-mode m-0 p-0 border-0">
