@@ -93,7 +93,7 @@ class UserController extends Controller
             return $this->response->responseFailed($validator->errors()->first());
         }
 
-        if (Hash::check(auth()->user()->id, $token)) {
+        if (Hash::check($request->id, $request->token)) {
             $user = User::find(auth()->user()->id);
             if ($request->hasFile('file')) {
                 $image = $request->file('file');
