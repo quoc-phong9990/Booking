@@ -22,7 +22,7 @@ const TourDetails = () => {
     queryKey: ['KEY_POST', id],
     queryFn: async () => {
       const { data } = await axios.get(`http://127.0.0.1:8000/api/client/get-tour-detail/${id}`);
-      console.log(data.data.tour.images);
+        console.log(data.data.tour.images);
       localStorage.setItem('tour', JSON.stringify(data.data))
       return data.data;
     }

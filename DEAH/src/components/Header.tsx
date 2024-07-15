@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../App.css';
 
-const Header = () => {
+const Header = ({status}) => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState<{ name: String, avatar: String } | null>(null);
 
@@ -11,7 +11,7 @@ const Header = () => {
     if (userData) {
       setUserName(JSON.parse(userData));
     }
-  }, []);
+  }, [status]);
 
   const handleLogout = () => {
     sessionStorage.removeItem('user');
