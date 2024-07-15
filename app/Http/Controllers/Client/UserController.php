@@ -92,6 +92,7 @@ class UserController extends Controller
         }
 
         if (Hash::check($request->id, $request->token)) {
+
             $user = User::find($request->id);
             if ($user) {
                 if ($request->hasFile('file')) {
@@ -99,6 +100,7 @@ class UserController extends Controller
                     $imageName = "storage/users/test-" . time() . '.' . $image->getClientOriginalExtension();
                     $image->move(public_path('storage/users'), $imageName);
                     $request->merge(['avatar' => $imageName]);
+
                 }
                 $user->update($request->all());
 
