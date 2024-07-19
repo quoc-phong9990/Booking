@@ -17,23 +17,37 @@ use App\Models\TourHotel;
 use App\Models\TourType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use League\Flysystem\UrlGeneration\PublicUrlGenerator;
 
 class TourController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $tours = Tour::orderByDesc('created_at')->paginate(10);
+
+        $provinces = Province::whereIn('id', Tour::groupBy('province_id')->get('province_id'))->get(['id', 'name']);
+        $query = Tour::query();
+        if ($request->title && $request->title != null) {
+            $query->where('title', 'LIKE', '%' . $request->title . '%');
+        }
+        if (isset($request->province)) {
+            $query->where('province_id', intval($request->province));
+        }
+        if (isset($request->is_active)) {
+            $query->where('is_active', intval($request->is_active));
+        }
+        $tours = $query->orderByDesc('created_at')->paginate(10);
         $title = "Tours list";
-        return view('admin.tours.index', compact('tours', 'title'));
+        return view('admin.tours.index', compact('tours', 'title', 'provinces'));
     }
 
 
 
     public function create()
     {
+
         $title = "Tour add";
         $attributes = Attribute::all();
         $provinces = Province::all();
@@ -46,6 +60,8 @@ class TourController extends Controller
         // Validate input
         $request->is_active ? $request->is_active : $request->merge(['is_active' => 0]);
         $request->merge(['views' => 0]);
+        $slug = Str::slug($request->title);
+        $request->merge(['slug' => $slug]);
         $tour = Tour::create($request->all());
         if ($tour) {
             for ($i = 0; $i < $request->day; $i++) {

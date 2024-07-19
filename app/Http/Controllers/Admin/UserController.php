@@ -10,9 +10,20 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::orderByDesc('created_at')->paginate(10);
+        $query = User::query();
+        if ($request->name && $request->name != null) {
+            $query->where('name', 'LIKE', '%' . $request->name . '%');
+        }
+
+        if (isset($request->role)) {
+            $query->where('role', intval($request->role));
+        }
+        if (isset($request->is_active)) {
+            $query->where('is_active', intval($request->is_active));
+        }
+        $users = $query->orderByDesc('created_at')->paginate(10);
         $title = 'Users list';
         return view('admin.user.index', compact('users', 'title'));
     }

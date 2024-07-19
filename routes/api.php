@@ -48,6 +48,7 @@ Route::group(['middleware' => 'cors'], function () {
         //user
         Route::group(['prefix' => 'user'], function () {
             Route::post('get-bookings', [ClientBookingController::class, 'showByUserId']);
+            Route::post('booking/update', [ClientBookingController::class, 'cancelBooking']);
             Route::post('login', [UserController::class, 'login']);
             Route::post('signup', [UserController::class, 'signup']);
             Route::post('update', [UserController::class, 'update']);

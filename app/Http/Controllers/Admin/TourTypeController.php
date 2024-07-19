@@ -21,7 +21,7 @@ class TourTypeController extends Controller
     {
         $request->validate(['name_type' => 'required']);
         TourType::create($request->all());
-        return redirect()->route('types.index')->with('success', 'Tour type created successfully.');
+        return redirect()->route('types.index')->with('success', 'Thêm danh mục mới thành công');
     }
 
 
@@ -34,9 +34,9 @@ class TourTypeController extends Controller
         $tourType = TourType::findOrFail($request->id);
         if ($tourType) {
             $tourType->update($request->all());
-            return redirect()->route('types.index')->with('success', 'Tour type updated successfully.');
+            return redirect()->route('types.index')->with('success', 'Cập nhật danh mục mới thành công');
         }
-        return redirect()->route('types.index')->with('error', 'Tour type updated faild.');
+        return redirect()->route('types.index')->with('error', 'Cập nhật danh mục thất bại');
 
     }
 
@@ -45,10 +45,10 @@ class TourTypeController extends Controller
     {
         try {
             TourType::find($id)->delete();
-            return redirect()->route('types.index')->with('success', 'Tour type deleted successfully.');
+            return redirect()->route('types.index')->with('success', 'Xóa danh mục thành công');
 
         } catch (\Exception $e) {
-            return redirect()->route('types.index')->with('error', 'Tour type can not be deleted');
+            return redirect()->route('types.index')->with('error', 'Xóa danh mục thất bại');
         }
     }
 }

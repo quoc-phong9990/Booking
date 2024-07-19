@@ -17,9 +17,9 @@ class StatusTour extends Enum
     public static function getArrayView(): array
     {
         return [
-            self::WAITING => '<span class="badge bg-warning">Waiting</span>',
-            self::DONE => '<span class="badge bg-success">Done</span>',
-            self::CANCEL => '<span class="badge bg-danger">Canel</span>'
+            self::WAITING => '<span class="badge bg-warning">Đơn mới</span>',
+            self::DONE => '<span class="badge bg-success">Hoàn thành</span>',
+            self::CANCEL => '<span class="badge bg-danger">Hủy</span>'
 
         ];
     }

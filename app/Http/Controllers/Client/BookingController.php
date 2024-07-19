@@ -43,21 +43,33 @@ class BookingController extends Controller
     }
     public function cancelBooking(Request $request)
     {
-        $booking = Booking::where('booking_code', $request->booking_code)->first();
+        $booking = Booking::where('booking_code', 'LIKE', $request->booking_code)->first();
         if ($booking) {
-            if ($booking->status_payment != StatusPayment::PAID && $booking->status_tour != StatusTour::WAITING) {
-                $booking->status_payment = StatusPayment::CANCEL;
+            if ($booking->status_tour == StatusTour::WAITING && $request->action == 'cancel') {
+                if ($booking->status_payment == 1) {
+                    $booking->status_payment = StatusPayment::REFUND;
+                } else {
+                    $booking->status_payment = StatusPayment::CANCEL;
+
+                }
                 $booking->status_tour = StatusTour::CANCEL;
                 $booking->save();
                 return $this->ResponseJson->responseSuccess('Hủy thành công');
             }
-            return $this->ResponseJson->responseFailed('Không thể hủy');
+            if (
+                $booking->status_payment == StatusPayment::PAID
+                && $booking->status_tour == StatusTour::WAITING
+                && $request->action == 'refund'
+            ) {
+                $booking->status_payment = StatusPayment::REFUND;
+                $booking->status_tour = StatusTour::CANCEL;
+                $booking->save();
+                return $this->ResponseJson->responseSuccess('Hoàn tiền thành công');
+            }
+            return $this->ResponseJson->responseSuccess('Không thể cập nhật dữ liệu');
 
         }
         return $this->ResponseJson->responseFailed('Không có dữ liệu');
     }
-    public function refund(Request $request)
-    {
 
-    }
 }

@@ -8,12 +8,20 @@ use App\Models\PostComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::orderByDesc('created_at')->paginate(10);
+        $query = Post::query();
+        if ($request->title && $request->title != null) {
+            $query->where('title', 'LIKE', '%'.$request->title.'%');
+        }
+        if (isset($request->is_active)) {
+            $query->where('is_active', intval($request->is_active));
+        }
+        $posts = $query->orderByDesc('created_at')->paginate(10);
         $title = "Posts list";
         return view('admin.Posts.index', compact('posts', 'title'));
     }
@@ -32,21 +40,26 @@ class PostController extends Controller
             'file' => 'required|max:2048|image',
             'is_active' => 'nullable'
         ]);
+        $request->merge(['slug' => Str::slug($request->title)]);
         $request->is_active ? $request->is_active : $request->merge(['is_active' => 0]);
         $thumbnail = $request->file('file');
-        $imageName = "storage/posts/" . time() . '.' . $thumbnail->getClientOriginalExtension();
+        $imageName = "storage/posts/" . uniqid() . '.' . $thumbnail->getClientOriginalExtension();
         $thumbnail->move(public_path('storage/posts'), $imageName);
         $request->merge(['thumbnail' => $imageName]);
         $request->merge(['views' => 0]);
-        Post::create($request->all());
-        return redirect()->route('posts.index')->with('success', 'Post created successfully.');
+        $post = Post::create($request->all());
+        if($post){
+            return redirect()->route('posts.index')->with('success', 'Post created successfully.');
+        }
+        return redirect()->route('posts.index')->with('error', 'Post created faild.');
+
     }
 
     public function show(Post $post)
-    {   
+    {
         $title = "Post show";
 
-        return view('admin.Posts.show', compact('post','title'));
+        return view('admin.Posts.show', compact('post', 'title'));
     }
 
     public function edit(Post $post)
@@ -69,7 +82,7 @@ class PostController extends Controller
                 Storage::delete($post->thumbnail);
             }
             $thumbnail = $request->file('file');
-            $imageName = "storage/posts/" . time() . '.' . $thumbnail->getClientOriginalExtension();
+            $imageName = "storage/posts/" . uniqid() . '.' . $thumbnail->getClientOriginalExtension();
             $thumbnail->move(public_path('storage/posts'), $imageName);
             $request->merge(['thumbnail' => $imageName]);
             $post->update($request->all());

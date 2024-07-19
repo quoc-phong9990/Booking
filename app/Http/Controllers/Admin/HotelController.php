@@ -19,11 +19,25 @@ use Illuminate\Support\Facades\Validator;
 
 class HotelController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $hotels = Hotel::orderByDesc('created_at')->paginate(10);
+        $query = Hotel::query();
+        $provinces = Province::whereIn('id', Hotel::groupBy('province_id')->get('province_id'))->get(['id', 'name']);
+        if ($request->name && $request->name != null) {
+            $query->where('name', 'LIKE', '%'.$request->name.'%');
+        }
+        if (isset($request->province)) {
+            $query->where('province_id', intval($request->province));
+        }
+        if (isset($request->status)) {
+            $query->where('status', intval($request->status));
+        }
+        if (isset($request->is_active)) {
+            $query->where('is_active', intval($request->is_active));
+        }
+        $hotels = $query->orderByDesc('created_at')->paginate(10);
         $title = "Hotels list";
-        return view('admin.Hotel.index', compact('hotels', 'title'));
+        return view('admin.Hotel.index', compact('hotels', 'title','provinces'));
     }
 
     public function create()

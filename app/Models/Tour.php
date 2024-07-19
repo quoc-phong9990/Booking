@@ -15,6 +15,7 @@ class Tour extends Model
     'id',
     'type_id',
     'title',
+    'slug',
     'day',
     'description',
     'price',
