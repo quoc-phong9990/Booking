@@ -17,7 +17,7 @@ class VNPayController extends Controller
         $vnp_Returnurl = "http://localhost:5173/paymentSuccess";
         $vnp_TmnCode = "JNX5BU3J"; //Mã website tại VNPAY 
         $vnp_HashSecret = "3LOIJOCBALY2FWV4LC2DQXZJ0LY4VJHI"; //Chuỗi bí mật
-        $vnp_TxnRef = 'TOUR' . random_int(1000000, 9999999);
+        $vnp_TxnRef = 'TOUR' . time();
         $vnp_OrderInfo = 'Thanh Toán Tour: ' . $request->title;
         $vnp_OrderType = 1000;
         $vnp_Amount = $request->total_price * 100;
