@@ -9,12 +9,13 @@ type Input = {
   email: string,
   image: string,
   password: number,
+  date_of_birth:Date,
   PasswordConfirm: number
 }
 const Register = () => {
   const navigate = useNavigate()
   const { register, handleSubmit, formState: { errors }, watch } = useForm<Input>()
-  
+
   const onSubmit = (data: Input) => {
     console.log(data);
     const { name, password, email } = data;
@@ -93,6 +94,19 @@ const Register = () => {
                         {errors.name && <span style={{ color: "red" }}>{errors.name?.message}</span>}
                       </div>
                       <div className="contact-form mb-24">
+                        <label className="contact-label">Ngày sinh </label>
+                        <input className="form-control contact-input" type="date" placeholder="Enter Your Tên" {...register("date_of_birth",
+                          {
+                            required: " Không được để trống name",
+                            minLength: {
+                              value: 2,
+                              message: "Nhập ít nhất 2 ký tự "
+                            }
+                          }
+                        )} />
+                        {errors.name && <span style={{ color: "red" }}>{errors.name?.message}</span>}
+                      </div>
+                      <div className="contact-form mb-24">
                         <label className="contact-label">Email </label>
                         <input className="form-control contact-input" type="email" placeholder="Email" {...register("email",
                           {
@@ -105,7 +119,7 @@ const Register = () => {
                         )} />
                         {errors.email && <span style={{ color: "red" }}>{errors.email?.message}</span>}
                       </div>
-                     
+
                       {/* Password */}
                       <div className="position-relative contact-form mb-24">
                         <label className="contact-label">Nhập mật khẩu </label>

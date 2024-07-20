@@ -4,19 +4,19 @@ import { Link, useParams } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import '../App.css'
+import '../App1.css'
 import Footer from './Footer';
 import Header from './Header';
 import TourSbar from '../FunctionComponentContext/TourSbar';
 import { Slide } from 'react-slideshow-image';
-import { useState } from 'react';
-
-
-
+import { useState, useEffect } from 'react';
 
 const TourDetails = () => {
+
   const { slug } = useParams();
   const [mainImage, setMainImage] = useState(null)
   console.log(slug);
+
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['KEY_POST', slug],
@@ -28,39 +28,44 @@ const TourDetails = () => {
     }
   });
 
-  if (isLoading) return <div>Loading.....</div>;
+  useEffect(() => {
+    if (data && data.tour.images.length > 0 && !mainImage) {
+      setMainImage(data.tour.images[0].image);
+    }
+  }, [data, mainImage]);
+
+  if (isLoading) return
+  <div className="spinner">
+    <div className="blob blob-0" />
+  </div>;
   if (error) return <div>Error: {error.message}</div>;
 
-  // Ensure data is defined and is an array
-  const tourDetail = data ? (Array.isArray(data) ? data : [data]) : [];
-  console.log(tourDetail);
-  if (tourDetail.length > 0 && !mainImage) {
-    setMainImage(tourDetail[0].tour.images[0].image)
-  }
   const handleImageClick = (image: any) => {
-    setMainImage(image)
+    setMainImage(image);
   }
 
   return (
     <div>
       <Header />
       <main>
-        {/* Breadcrumbs S t a r t */}
         <section className="breadcrumbs-area breadcrumb-bg">
           <div className="container">
             <h1 className="title wow fadeInUp" data-wow-delay="0.0s">Chi tiết tour du lịch</h1>
             <div className="breadcrumb-text">
               <nav aria-label="breadcrumb" className="breadcrumb-nav wow fadeInUp" data-wow-delay="0.1s">
                 <ul className="breadcrumb listing">
-                  <li className="breadcrumb-item single-list"><a href="index" className="single">Trang chủ</a></li>
+
+                  <li className="breadcrumb-item single-list"><Link to="/" className="single">Trang chủ</Link></li>
                   <li className="breadcrumb-item single-list" aria-current="page">
-                    <a href="javascript:void(0)" className="single active">Chi tiết tour du lịch</a>
+                   <a href="javascript:void(0)" className="single active">Chi tiết tour du lịch</a>
+
                   </li>
                 </ul>
               </nav>
             </div>
           </div>
         </section>
+
         {/*/ End-of Breadcrumbs*/}
         {/* Destination area S t a r t */}
         <section className="tour-details-section section-padding2">
@@ -86,6 +91,7 @@ const TourDetails = () => {
                 </div>
               </>
             )}
+
             <div className="tour-details-banner ">
             </div>
             {/* / Slider*/}
@@ -115,82 +121,63 @@ const TourDetails = () => {
                   </div>
                   <div className="price-review">
                     <div className="d-flex gap-10 align-items-end">
-                      <p className="light-pera ">Chỉ từ :</p>
-                      <div className="price mb-3 d-flex justify-content-center ml-4  ">
-                        <h6 className="text-danger fw-bold mr-2">Giá mới: {data.tour.promotion}VND</h6> <h6 className="text-muted text-decoration-line-through  ">Giá cũ: {data.tour.price}VND</h6>
+
+                      <p className="light-pera">Chỉ từ :</p>
+                      <div className="price mb-3 d-flex justify-content-center ml-4">
+                        <h6 className="text-danger fw-bold mr-2">Giá mới: {data.tour.promotion}VND</h6>
+                        <h6 className="text-muted text-decoration-line-through">Giá cũ: {data.tour.price}VND</h6>
                       </div>
 
                     </div>
-
                     <div className="rating">
-                      <p className="pera mr-5">Đánh giá: {data.rates ? data.rates.qty : 0}</p> <p className="pera"> {data.rates ? data.rates.rate : 0}   </p> <i className="ri-star-s-fill  mb-3"></i>
-
+                      <p className="pera mr-5">Đánh giá: {data.rates ? data.rates.qty : 0}</p>
+                      <p className="pera">{data.rates ? data.rates.rate : 0}</p>
+                      <i className="ri-star-s-fill mb-3"></i>
                     </div>
                   </div>
                 </div>
-              </div>
-              {/* / Details Heading */}
 
-              <div className="container">
-                <div className="row g-4">
-                  {/* Left content */}
-                  <div className="col-xl-8 col-lg-7">
-                    {/* About tour */}
-                    <div className="tour-details-content">
-                      <h4 className="title">Về</h4>
 
-                      <p className="pera" >
+                <div className="mt-30">
+                  <div className="row g-4">
+                    <div className="col-xl-8 col-lg-7">
+                      <div className="tour-details-content">
+                        <h4 className="title">Về</h4>
+                        <p className="pera">
+                          <div dangerouslySetInnerHTML={{ __html: data.tour.description }} />
+                        </p>
+                      </div>
 
-                        <div dangerouslySetInnerHTML={{ __html: data.tour.description }} />
-
-                      </p>
-                    </div>
-                    {/* / About tour */}
-                    {/* Tour Include Loại trừ */}
-                    <div className="tour-include-exclude radius-6">
-                      <div className="includ-exclude-point">
-                        <h4 className="title">Thuộc tính</h4>
-                        {data.tour.attributes?.map((attr: any) => {
-                          return (
-                            <li className='' key={attr.id}>
+                      <div className="tour-include-exclude radius-6">
+                        <div className="includ-exclude-point">
+                          <h4 className="title">Thuộc tính</h4>
+                          {data.tour.attributes?.map((attr: any) => (
+                            <li key={attr.id}>
                               {attr.attribute}<br />
                             </li>
-                          )
-                        })}
-
+                          ))}
+                        </div>
+                        <div className="divider" />
                       </div>
-                      <div className="divider" />
-
-                    </div>
-                    {/* / Tour Include Loại trừ */}
-                    {/* Tour Plan accordion*/}
-                    <div className="tour-details-content mb-30">
-                      <h4 className="title">Kế hoạch du lịch</h4>
-                      <div className="accordion" id="accordionExample">
 
 
-                        {data.tour && data.tour.itineraries && data.tour.itineraries.length > 0 ? (
-                          data.tour.itineraries.map((day: any, index: any) => (
-                            <div className="">
-                              <h2 className="accordion-header" >
-                                <button
-                                  className="accordion-button text-black"
-                                >
-                                  Ngày {day.day}: {day.title}
-                                </button>
-
-                              </h2>
-                              <div className='ml-4 text-black' dangerouslySetInnerHTML={{ __html: day.itinerary }} />
-                              <div
-                                id={`collapse${index}`}
-                                className={`accordion-collapse collapse ${index === 1 ? "show" : ""}`}
-                                aria-labelledby={`heading${index}`}
-                                data-bs-parent="#accordionExample"
-                              >
-                                <div className="accordion-body">
-
+                      <div className="tour-details-content mb-30">
+                        <h4 className="title">Kế hoạch du lịch</h4>
+                        <div className="accordion" id="accordionExample">
+                          {data.tour.itineraries?.length > 0 ? (
+                            data.tour.itineraries.map((day: any, index: any) => (
+                              <div key={index}>
+                                <h2 className="accordion-header">
+                                  <button className="accordion-button text-black">
+                                    Ngày {day.day}: {day.title}
+                                  </button>
+                                </h2>
+                                <div className='ml-4 text-black' dangerouslySetInnerHTML={{ __html: day.itinerary }} />
+                                <div id={`collapse${index}`} className={`accordion-collapse collapse ${index === 1 ? "show" : ""}`} aria-labelledby={`heading${index}`} data-bs-parent="#accordionExample">
+                                  <div className="accordion-body"></div>
                                 </div>
                               </div>
+
 
                             </div>
                           ))
@@ -279,37 +266,28 @@ const TourDetails = () => {
                     <div className="btn-primary-icon-sm pt-3">
                       <p className="pera">Xem tất cả Các khách sạn </p>
                       {/* <i className="ri-arrow-right-up-line" /> */}
+
                     </div>
                   </a>
                 </div>
               </div>
             </div>
 
-
-
-
-
           </div>
+        </section>
+      </main>
+      <Footer />
 
-
-
-
-
-
-          {/* <TravelCard /> */}
-        </section >
-        {/*/ End-of Destination */}
-      </main >
-      {/* Footer S t a r t */}
-      < Footer />
       <div className="progressParent" id="back-top">
         <svg className="backCircle svg-inner" width="100%" height="100%" viewBox="-1 -1 102 102">
           <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
         </svg>
       </div>
       <div className="search-overlay" />
+
     </div >
+
   )
 }
 
-export default TourDetails
+export default TourDetails;

@@ -395,5 +395,22 @@ body{
 .avatar {
   border-radius: 50%;
 }
+/* dropdowheader */
+.dropdown {
+  width: 100px;
+  background: purple;
+}
+.dropdown .item {
+  display: none;
+}
+
+.dropdown:hover .item{
+  display: block;
+}
+/* indextwo */
+.inputindex{
+  background-color: #000;
+}
+/* payment */
 
 }

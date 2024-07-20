@@ -9,7 +9,7 @@ const CurrencyFormatter: React.FC<CurrencyFormatterProps> = ({ amount }) => {
         currency: 'VND',
     });
 
-    return <span>{formatter.format(amount)}</span>;
+    return <strong>{formatter.format(amount)} VND</strong>;
 };
 
 export default CurrencyFormatter;

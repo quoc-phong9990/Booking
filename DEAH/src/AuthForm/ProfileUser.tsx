@@ -1,7 +1,11 @@
+
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { Component, useEffect, useState } from 'react';
 import '../App1.css'
-
 import { Link, useNavigate } from 'react-router-dom';
+
 import { useForm } from 'react-hook-form';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -15,6 +19,7 @@ const ProfileUser = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState({
     id: '',
     avatar: '',
@@ -47,28 +52,31 @@ const ProfileUser = () => {
     }
   };
 
-  const handleUpdate = async (user: any) => {
-    user.file = file;
-    console.log(user);
 
+   const handleUpdate = async (data: any) => {
+    data.file = file;
+    console.log(data);
+    
     try {
-      await axios.post('http://127.0.0.1:8000/api/client/user/update', user, {
+      const response = await fetch(`http://127.0.0.1:8000/api/client/user/update`, {
+        method: 'POST',
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-        .then((res) => {
-          console.log(res.data.data);
-          reset(user);
-          setStatus(!status);
-          sessionStorage.setItem('user', JSON.stringify(res.data.data));
-          alert('Thông tin người dùng đã được cập nhật thành công.');
-        });
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Update failed:', errorData);
+        throw new Error(`Failed to update user data: ${response.statusText}`);
+      }
+      console.log(response);
+      setIsLoggedIn(true);
+      toast.success('Lưu thay đổi thành công!');
     } catch (error) {
       alert('Đã xảy ra lỗi khi cập nhật thông tin người dùng: ');
-    };
-  }
-
+    }
+  };
 
   return (
     <div>
@@ -77,14 +85,16 @@ const ProfileUser = () => {
         <div className="view-account">
           <section className="module">
             <div className="module-inner">
+
               <SideBar userData={userData} avatarUrl={avatarUrl}/>
+
               <div className="content-panel">
                 <div className="billing">
                   <form id="billing" className="form-horizontal" onSubmit={handleSubmit(handleUpdate)} role="form">
                     <div className="form-group">
                       <label className="col-sm-3 control-label">Ảnh của bạn</label>
                       <div className="col-sm-9">
-                        <input type="file" className="form-control" onChange={handleFileChange} />
+                        <input type="file" className="form-control" {...register("avatar")} onChange={handleFileChange} />
                         <p className="help-block">Hãy nhập hoặc sửa ảnh của bạn</p>
                       </div>
                     </div>
@@ -119,7 +129,7 @@ const ProfileUser = () => {
                     <div className="form-group">
                       <label className="col-sm-3 control-label">Ngày sinh</label>
                       <div className="col-sm-9">
-                        <input type="date" className="form-control" {...register("birthdate")} defaultValue={userData.date_of_birth} />
+                        <input type="date" className="form-control" {...register("date_of_birth")} defaultValue={userData.date_of_birth} />
                         <p className="help-block">Xin mời nhập hoặc chỉnh sửa tại đây</p>
                       </div>
                     </div>
@@ -139,6 +149,7 @@ const ProfileUser = () => {
         </div>
       </div>
       <Footer />
+      <ToastContainer />
     </div>
   );
 };
