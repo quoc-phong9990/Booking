@@ -26,7 +26,11 @@ class TourController extends Controller
 {
     public function index(Request $request)
     {
-
+        foreach(Tour::all() as $tour){
+            $tour->update([
+                'slug'=>Str::slug($tour->title)
+            ]);
+        }
         $provinces = Province::whereIn('id', Tour::groupBy('province_id')->get('province_id'))->get(['id', 'name']);
         $query = Tour::query();
         if ($request->title && $request->title != null) {

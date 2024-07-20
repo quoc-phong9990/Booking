@@ -14,7 +14,7 @@ class PostController extends Controller
 {
     public function index(Request $request)
     {
-        foreach(Tour::all() as $tour){
+        foreach(Post::all() as $tour){
             $tour->update([
                 'slug'=>Str::slug($tour->title)
             ]);
