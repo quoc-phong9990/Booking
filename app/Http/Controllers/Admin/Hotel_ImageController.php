@@ -80,7 +80,7 @@ class Hotel_ImageController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images'), $imageName);
             $hotelImage->image = $imageName;
         }

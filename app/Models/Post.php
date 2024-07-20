@@ -12,7 +12,7 @@ class Post extends Model
     
     protected $table = 'posts';
     protected $fillable = [
-      'title','body','views','thumbnail','is_active'
+      'title','slug','body','views','thumbnail','is_active'
 
     ];
     public function comments(){

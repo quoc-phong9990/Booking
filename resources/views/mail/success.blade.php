@@ -1,6 +1,6 @@
 @include('admin.layout.header')
 <div class="container">
-    <h2>Cảm ơn thượng đế {{ $booking->user_name }} đã sử dụng dịch vụ của em.</h2>
+    <strong>Cảm ơn {{ $booking->user_name }} đã sử dụng dịch vụ của chúng tôi.</strong>
     <div>
         <h4>Thông tin của thượng đế</h4>
         <div class="row">

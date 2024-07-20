@@ -72,8 +72,8 @@ class VNPayController extends Controller
             'message' => 'success',
             'data' => $vnp_Url
         );
-        $booking = Booking::create($request->all());
-        Mail::to($request->email)->send(new BookingSuccess($booking));
+        Booking::create($request->all());
+        // Mail::to($request->email)->send(new BookingSuccess($booking));
 
         if (isset($_POST['redirect'])) {
             header('Location: ' . $vnp_Url);

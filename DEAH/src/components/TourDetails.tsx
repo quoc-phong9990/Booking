@@ -14,14 +14,14 @@ import { useState } from 'react';
 
 
 const TourDetails = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [mainImage, setMainImage] = useState(null)
-  console.log(id);
+  console.log(slug);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ['KEY_POST', id],
+    queryKey: ['KEY_POST', slug],
     queryFn: async () => {
-      const { data } = await axios.get(`http://127.0.0.1:8000/api/client/get-tour-detail/${id}`);
+      const { data } = await axios.get(`http://127.0.0.1:8000/api/client/get-tour-detail/${slug}`);
         console.log(data.data.tour.images);
       localStorage.setItem('tour', JSON.stringify(data.data))
       return data.data;

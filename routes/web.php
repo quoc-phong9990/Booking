@@ -35,7 +35,7 @@ Route::get('/login', [AuthController::class, 'form'])->name('auth.form');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'login'], function () {
-    Route::get("/",[DashBoardController::class,'index'])->name('admin.index');
+    Route::get("/", [DashBoardController::class, 'index'])->name('admin.index');
     //Hotels
     Route::resource('/hotels', HotelController::class);
     Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
@@ -48,7 +48,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'login'], function () {
     //Tours
     Route::resource('/types', TourTypeController::class);
     Route::put('/type/update', [TourTypeController::class, 'updateType'])->name('type.update');
+
     Route::resource('/tours', TourController::class);
+    // Route::post('/tours-filter', [TourController::class, 'index'])->name('tours.filter');
+    // Route::get('/tours-filter', function () {
+    //     return redirect(route('tours.index'));
+    // });
     Route::post('/tour/add-attributes', [TourController::class, 'addAttributes'])->name('addAttributes.store');
     Route::post('/tour/del-attributes', [TourController::class, 'delAttribute'])->name('delAttribute.destroy');
     Route::post('/tour/add-image', [TourController::class, 'addImage'])->name('addImage.store');
@@ -69,7 +74,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'login'], function () {
     //Vouchers
     Route::resource('/vouchers', VoucherController::class);
     //Bookings
-    Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
+    Route::any('/bookings', [BookingController::class, 'index'])->name('bookings.index');
     Route::get('/bookings/{id}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
     ;
     Route::put('/bookings/update', [BookingController::class, 'update'])->name('bookings.update');

@@ -2,54 +2,62 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="row">
-                <div class="col-12">
-                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h1>Manage Attributes</h1>
+            <div class="col-12">
+                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                    <h4 class="mb-sm-0">Quản lý thuộc tinh</h4>
 
-                        <div class="page-title-right">
-                            <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="{{ route('attributes.index') }}">Attributes</a></li>
-                                <li class="breadcrumb-item active"><a href="F{{ route('attributes.index') }}">List</a></li>
-                            </ol>
-                        </div>
-
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="{{ route('attributes.index') }}">Attributes</a></li>
+                            <li class="breadcrumb-item active"><a href="F{{ route('attributes.index') }}">List</a></li>
+                        </ol>
                     </div>
+
                 </div>
             </div>
             <div class="col-md-8 card">
                 <div class="row">
-                    <div class="card-header">Attributes List</div>
+                    <div class="card-header">Danh sách thuộc tính</div>
                     <div class="card-body">
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Attribute</th>
-                                    <th>Actions</th>
+                                    <th>Thuộc tính</th>
+                                    <th>Hành động</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($attributes as $index => $attribute)
-                                    <tr>
-                                        <td>{{ $index + 1 }}</td>
-                                        <td>{{ $attribute->attribute }}</td>
-                                        <td>
+                                @if (count($attributes) > 0)
+                                    @foreach ($attributes as $index => $attribute)
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $attribute->attribute }}</td>
+                                            <td class="">
 
-                                            <button class="btn btn-sm btn-warning edit-item-btn showEdit"
-                                                data-bs-toggle="modal" data-bs-target="#showModal"
-                                                data-edit-value="{{ $attribute->attribute }}"
-                                                data-edit-id="{{ $attribute->id }}">Edit</button>
-                                            <form action="{{ route('attributes.destroy', $attribute->id) }}" method="POST"
-                                                style="display: inline-block;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('Are you sure you want to delete this tour?')">Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                                <button class="btn">
+                                                    <i class="ri-pencil-fill showEdit fs-5 text-warning align-items-center"
+                                                        data-bs-toggle="modal" data-bs-target="#showModal"
+                                                        data-edit-value="{{ $attribute->attribute }}"
+                                                        data-edit-id="{{ $attribute->id }}"></i>
+                                                </button>
+
+                                                <form action="{{ route('attributes.destroy', $attribute->id) }}"
+                                                    method="POST" style="display: inline-block;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn "
+                                                        onclick="return confirm('Bạn có chắc chắn muốn xóa thuộc tính này không?')">
+                                                        <i class="ri-delete-bin-7-fill fs-5 text-danger"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <td class="fw-bold">Không có dữ liệu</td>
+                                @endif
+
                             </tbody>
                         </table>
                         {{ $attributes->links() }}
@@ -62,15 +70,15 @@
                     action="{{ route('attributes.store') }}">
                     @csrf
                     <div>
-                        <label for="date-field" class="form-label">Attribute
+                        <label for="date-field" class="form-label">Thuộc tính
                         </label>
-                        <input type="text" class="form-control" name="attribute" > 
+                        <input type="text" class="form-control" name="attribute">
                         @error('attribute')
                             <span class="text-danger fw-light "><i>{{ $message }}</i></span>
                         @enderror
                     </div>
                     <div class="mt-3">
-                        <button type="submit" class="btn btn-primary">Add</button>
+                        <button type="submit" class="btn btn-primary">Thêm</button>
                     </div>
                 </form>
             </div>
@@ -102,7 +110,7 @@
                         @csrf
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="customername-field" class="form-label">Attribute
+                                <label for="customername-field" class="form-label">Thuộc tính
                                 </label>
                                 <input type="hidden" id="customername-field" class="form-control" name="id" value="${id}"
                                      >
@@ -113,8 +121,8 @@
                         </div>
                         <div class="modal-footer">
                             <div class="hstack gap-2 justify-content-end">
-                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-success" id="add-btn">Update
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Đóng</button>
+                                <button type="submit" class="btn btn-success" id="add-btn">Cập nhật
                                     </button>
                             </div>
                         </div>
