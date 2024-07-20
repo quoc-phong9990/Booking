@@ -17,12 +17,16 @@ import TourList from './components/TourList';
 import Verification from './components/Verification';
 import Indextwo from './components/Indextwo';
 import SlideShow from './FunctionComponentContext/SlideShow';
-import SlideShowpost from './FunctionComponentContext/SlideShowpost';
 import ProfileUser from './AuthForm/ProfileUser';
 import PaymentSuccess from './components/PaymentSuccess';
 import Password from './AuthForm/Password';
-import Test from './components/Test';
 
+import Test from './FunctionComponentContext/Longtour';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Ok from './components/Ok';
+import You from './components/You';
+import Payment_PT from './FunctionComponentContext/Pament_PT';
 
 
 
@@ -49,7 +53,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/slide" element={<SlideShow />} />
         <Route path='/paymentSuccess' element={<PaymentSuccess/>} />
-        <Route path="/slidepost" element={<SlideShowpost />} />
+        
 
 
         {/* user */}
@@ -57,8 +61,11 @@ function App() {
             {/* user */}
             <Route path="/pass" element={<Password />} />
        
-            <Route path="/t" element={<Test/>} />
+            <Route path="/t" element={<Ok/>} />
+            <Route path="/y" element={<You/>} />
+            <Route path="/x" element={<Payment_PT/>} />
       </Routes>
+      <ToastContainer />
     </>
   );
 }

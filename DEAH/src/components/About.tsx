@@ -1,11 +1,7 @@
-import React, { useEffect } from 'react'
-import "../assets/js/main.js"
-import SlideShow from '../FunctionComponentContext/SlideShow.js'
-import 'react-slideshow-image/dist/styles.css';
 
+import "../assets/js/main.js"
+import 'react-slideshow-image/dist/styles.css';
 import '../App.css';
-import SlideshowDetail from '../FunctionComponentContext/SlideshowDetail.js';
-import SlideShowpost from '../FunctionComponentContext/SlideShowpost.js';
 import Header from './Header.js';
 import Footer from './Footer.js';
 const About = () => {
@@ -97,44 +93,8 @@ const About = () => {
           </div>
         </section>
 
-        <section className="brand-area">
-          <div className="container">
-            <div className="border-section-title">
-              <h4 className="title">Chúng tôi đã được đề cập trong các thương hiệu dưới đây</h4>
-            </div>
-            <div className="swiper brandSwiper-active">
-
-            </div>
-          </div>
-        </section>
-        <section className="testimonial-area section-padding">
-          <div className="container">
-            <div className="row justify-content-center">
-              <div className="col-xl-7 col-lg-7">
-                <div className="section-title mx-430 mx-auto text-center">
-                  <span className="highlights">Chứng thực</span>
-                  <h4 className="title">
-                    Những gì mọi người đã nói về dịch vụ của chúng tôi
-                  </h4>
-                </div>
-              </div>
-            </div>
-          </div>
-          <SlideShowpost />
-          {/* slide show */}
-          <div className="d-flex flex-wrap gap-24">
-
-            <div className="swiper bulletRightSwiper-active">
-
-            </div>
-          </div>
-          {/* slide show and */}
-          <div className="mt-30">
-            <button type="submit" className="btn-primary-fill w-100">
-              Sẵn sàng kiểm tra
-            </button>
-          </div>
-        </section>
+   
+     
         {/*/ End of Testimonial */}
         {/* Special area S t a r t */}
         <section className="special-area bottom-padding1">

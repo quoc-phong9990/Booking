@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../App.css';
+import Ok from './Ok';
+// import MyDropdown from './MyDropdown'; // Import the new component
 
 const Header = () => {
   const navigate = useNavigate();
@@ -34,7 +36,7 @@ const Header = () => {
                     <div className="top-menu-wrapper d-flex align-items-center justify-content-between">
                       {/* Top Left Side */}
                       <div className="top-header-left d-flex align-items-center">
-                        {/* Logo*/}
+                        {/* Logo */}
                         <div className="logo">
                           <a href="index-two">
                             <img
@@ -45,7 +47,7 @@ const Header = () => {
                             />
                           </a>
                         </div>
-                        {/* search box */}
+                        {/* Search box */}
                         <div className="search-box search-bar d-none d-lg-block">
                           <div className="header-search">
                             <span className="pera">Điểm Đến Thu Hút</span>
@@ -57,7 +59,7 @@ const Header = () => {
                             </kbd>
                           </div>
                         </div>
-                        {/* Mobile Device Seach & Theme Mode */}
+                        {/* Mobile Device Search & Theme Mode */}
                         <div className="search-header-position d-block d-lg-none">
                           <div className="d-flex gap-15">
                             <div className="search-bar">
@@ -72,9 +74,9 @@ const Header = () => {
                           </div>
                         </div>
                       </div>
-                      {/*Top Right Side */}
+                      {/* Top Right Side */}
                       <div className="top-header-right">
-                        {/* contact us */}
+                        {/* Contact us */}
                         <div className="contact-section">
                           <div className="circle-primary-sm">
                             <i className="ri-mail-line" />
@@ -85,6 +87,7 @@ const Header = () => {
                               <a href="javascript:void(0)">example@gmail.com</a>
                             </h4>
                           </div>
+                   
                         </div>
                         <div className="contact-section">
                           <div className="circle-primary-sm">
@@ -129,6 +132,9 @@ const Header = () => {
                               <li className="single-list">
                                 <a href="/contact" className="single">Liên hệ</a>
                               </li>
+                              <li className="single-list">
+                            
+                              </li>
                               <li className="d-block d-lg-none">
                                 <div className="header-right pl-15">
                                   <div className="d-flex align-items-center gap-12">
@@ -139,18 +145,19 @@ const Header = () => {
                                     <div className="money">
                                       <p className="pera">Login</p>
                                     </div>
+                                    
                                   </div>
                                 </div>
                               </li>
                             </ul>
                             <div className="header-right">
+                          
                               {userName ? (
                                 <div className='d-flex'>
                                   <Link to={'/profile'}>
                                     <p className='mt-3 mr-2 user-name '>Chào mừng, {userName.name}!</p>  
                                   </Link>
                                   <img className='rounded-circle' width={60} height={100} src={'http://127.0.0.1:8000/' + (userName.avatar ? userName.avatar : '')} alt="" />
-                                
                                 </div>
                               ) : (
                                 <p className='mt-3'>Chào mừng, bạn vui lòng đăng nhập!</p>
@@ -160,18 +167,26 @@ const Header = () => {
                                 <div className="sign-btn">
                                   <a href="/login" className="btn-secondary-sm">Đăng nhập</a>
                                 </div>
+                                
                               )}
-                             
-                             <div className="sign-btn">
-                                  <a type='submit' className="btn-secondary-sm " onClick={handleLogout}>Đăng xuất</a>
-                                </div>
+                            
+                              <div className="sign-btn">
+                                <a type='submit' className="btn-secondary-sm " onClick={handleLogout}>Đăng xuất</a>
+                              </div>
+                              
                               {/* Theme Mode */}
                               <li className="single-list">
                                 <button className="ToggleThemeButton change-theme-mode m-0 p-0 border-0">
-                                  <i className="ri-sun-line" />
+                                  {/* Icon for theme mode */}
+                                  <Ok/>
+                            
                                 </button>
                               </li>
+                              {/* MyDropdown Component */}
+                              {/* <MyDropdown /> */}
+                            
                             </div>
+                        
                           </div>
                         </nav>
                       </div>
@@ -217,9 +232,8 @@ const Header = () => {
                             </h4>
                             <p className="pera line-clamp-2">
                               buổi Tối Tuyệt Vời Esc apade Bắt Đầu Từ Madinat
-                              jumeirah Đến Đài Phun Nước Âm Nhạc Để Xem Người Khác.
-                              buổi Tối Tuyệt VờiEscapade Bắt Đầu Từ Madinat
-                              jumeirah Đến Các Đài Phun Nước Âm Nhạc Để Xem Người Khác
+                              jumeirah Đến Đài Phun Nước Dubai, tiếp theo là show nhạc
+                              nước đặc sắc...
                             </p>
                           </div>
                         </div>
@@ -233,33 +247,12 @@ const Header = () => {
                           </div>
                           <div className="content">
                             <h4 className="title line-clamp-1">
-                              Private Khu Phố Đồ Da Màu Vàng Tại Hà Nội
+                              Tận Hưởng Ẩm Thực Trung Hoa Với Show Văn Hóa
                             </h4>
                             <p className="pera line-clamp-2">
                               buổi Tối Tuyệt Vời Esc apade Bắt Đầu Từ Madinat
-                              jumeirah Đến Đài Phun Nước Âm Nhạc Để Xem Người Khác.
-                              buổi Tối Tuyệt VờiEscapade Bắt Đầu Từ Madinat
-                              jumeirah Đến Các Đài Phun Nước Âm Nhạc Để Xem Người Khác
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <li className="single-list">
-                      <a href="tour-details">
-                        <div className="search-flex">
-                          <div className="content-img">
-                            <img src="/src/assets/images/gallery/search-img-3.jpeg" alt="travello" />
-                          </div>
-                          <div className="content">
-                            <h4 className="title line-clamp-1">
-                              Bảo Tàng Hoàng Gia Cổ Tích Du Lịch
-                            </h4>
-                            <p className="pera line-clamp-2">
-                              buổi Tối Tuyệt Vời Esc apade Bắt Đầu Từ Madinat
-                              jumeirah Đến Đài Phun Nước Âm Nhạc Để Xem Người Khác.
-                              buổi Tối Tuyệt VờiEscapade Bắt Đầu Từ Madinat
-                              jumeirah Đến Các Đài Phun Nước Âm Nhạc Để Xem Người Khác
+                              jumeirah Đến Đài Phun Nước Dubai, tiếp theo là show nhạc
+                              nước đặc sắc...
                             </p>
                           </div>
                         </div>
@@ -273,13 +266,12 @@ const Header = () => {
                           </div>
                           <div className="content">
                             <h4 className="title line-clamp-1">
-                              Bảo Tàng Hoàng Gia Cổ Tích Du Lịch
+                              Chinh Phục Đỉnh Núi Himalayas
                             </h4>
                             <p className="pera line-clamp-2">
                               buổi Tối Tuyệt Vời Esc apade Bắt Đầu Từ Madinat
-                              jumeirah Đến Đài Phun Nước Âm Nhạc Để Xem Người Khác.
-                              buổi Tối Tuyệt VờiEscapade Bắt Đầu Từ Madinat
-                              jumeirah Đến Các Đài Phun Nước Âm Nhạc Để Xem Người Khác
+                              jumeirah Đến Đài Phun Nước Dubai, tiếp theo là show nhạc
+                              nước đặc sắc...
                             </p>
                           </div>
                         </div>
@@ -290,23 +282,22 @@ const Header = () => {
                 <div className="col-md-4">
                   <ul className="listing">
                     <li>
-                      <h4 className="search-label">Popular Search</h4>
+                      <h4 className="search-label">Yêu thích</h4>
                     </li>
                     <li className="single-list">
                       <a href="tour-details">
                         <div className="search-flex">
                           <div className="content-img">
-                            <img src="/src/assets/images/gallery/search-img-4.jpeg" alt="travello" />
+                            <img src="/src/assets/images/gallery/search-img-1.jpeg" alt="travello" />
                           </div>
                           <div className="content">
                             <h4 className="title line-clamp-1">
-                              Private Khu Phố Đồ Da Màu Vàng Tại Hà Nội
+                              Khám Phá Thành Phố Cổ Hội An
                             </h4>
                             <p className="pera line-clamp-2">
                               buổi Tối Tuyệt Vời Esc apade Bắt Đầu Từ Madinat
-                              jumeirah Đến Đài Phun Nước Âm Nhạc Để Xem Người Khác.
-                              buổi Tối Tuyệt VờiEscapade Bắt Đầu Từ Madinat
-                              jumeirah Đến Các Đài Phun Nước Âm Nhạc Để Xem Người Khác
+                              jumeirah Đến Đài Phun Nước Dubai, tiếp theo là show nhạc
+                              nước đặc sắc...
                             </p>
                           </div>
                         </div>
@@ -316,17 +307,16 @@ const Header = () => {
                       <a href="tour-details">
                         <div className="search-flex">
                           <div className="content-img">
-                            <img src="/src/assets/images/gallery/search-img-5.jpeg" alt="travello" />
+                            <img src="/src/assets/images/gallery/search-img-2.jpeg" alt="travello" />
                           </div>
                           <div className="content">
                             <h4 className="title line-clamp-1">
-                              Private Khu Phố Đồ Da Màu Vàng Tại Hà Nội
+                              Trải Nghiệm Văn Hóa Nhật Bản
                             </h4>
                             <p className="pera line-clamp-2">
                               buổi Tối Tuyệt Vời Esc apade Bắt Đầu Từ Madinat
-                              jumeirah Đến Đài Phun Nước Âm Nhạc Để Xem Người Khác.
-                              buổi Tối Tuyệt VờiEscapade Bắt Đầu Từ Madinat
-                              jumeirah Đến Các Đài Phun Nước Âm Nhạc Để Xem Người Khác
+                              jumeirah Đến Đài Phun Nước Dubai, tiếp theo là show nhạc
+                              nước đặc sắc...
                             </p>
                           </div>
                         </div>
@@ -336,17 +326,16 @@ const Header = () => {
                       <a href="tour-details">
                         <div className="search-flex">
                           <div className="content-img">
-                            <img src="/src/assets/images/gallery/search-img-6.jpeg" alt="travello" />
+                            <img src="/src/assets/images/gallery/search-img-1.jpeg" alt="travello" />
                           </div>
                           <div className="content">
                             <h4 className="title line-clamp-1">
-                              Private Khu Phố Đồ Da Màu Vàng Tại Hà Nội
+                              Tham Quan Vịnh Hạ Long
                             </h4>
                             <p className="pera line-clamp-2">
                               buổi Tối Tuyệt Vời Esc apade Bắt Đầu Từ Madinat
-                              jumeirah Đến Đài Phun Nước Âm Nhạc Để Xem Người Khác.
-                              buổi Tối Tuyệt VờiEscapade Bắt Đầu Từ Madinat
-                              jumeirah Đến Các Đài Phun Nước Âm Nhạc Để Xem Người Khác
+                              jumeirah Đến Đài Phun Nước Dubai, tiếp theo là show nhạc
+                              nước đặc sắc...
                             </p>
                           </div>
                         </div>

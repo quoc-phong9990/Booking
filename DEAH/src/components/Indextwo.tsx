@@ -10,6 +10,7 @@ import Footer from "./Footer.js";
 import CurrencyFormatter from "../FunctionComponentContext/CurrencyFormatter.js";
 import { Link } from "react-router-dom";
 import '../App.css'
+import DateStar from "../FunctionComponentContext/DateStar.js";
 
 
 
@@ -62,7 +63,7 @@ const Indextwo = () => {
                       Tận hưởng từng khoảnh khắc tại các địa điểm mơ ước, tham gia các hoạt động thú vị và lưu giữ những kỷ niệm đẹp.<br />
                     </p>
                     <div className="button-section wow fadeInUp" data-wow-delay="0.5s">
-                      <a href="payment" className="btn-secondary-sm hero-book-btn">Bắt đầu đặt phòng</a>
+                      <a href="/tour-list" className="btn-secondary-sm hero-book-btn">Bắt đầu đặt phòng</a>
                     </div>
                   </div>
                 </div>
@@ -78,11 +79,13 @@ const Indextwo = () => {
                           <i className="ri-map-pin-line" />
                           <h4 className="select2-title">Điểm đến</h4>
                         </div>
-                        <select className="destination-dropdown">
-                          <option value={1}>Sydney, Australia</option>
-                          <option value={2}>USA, Turkish </option>
-                          <option value={3}>Chittagong, Turkish </option>
+                        <select className="js-example-basic-single  destination-dropdown" >
+                          <option value="">Choose</option>
+                          <option value={1}>Booking Type</option>
+                          <option value={2}>Advance Type</option>
+                          <option value={3}>Pre-book Type</option>
                         </select>
+
                       </div>
                       <div className="select-dropdown-section">
                         <div className="d-flex gap-10 align-items-center">
@@ -96,80 +99,10 @@ const Indextwo = () => {
                         </select>
                       </div>
 
-                      <div className="dropdown-section">
-                        <i className="ri-time-line" />
-                        <div className="z-index">
-
-                          <div className="custom-dropdown custom-date">
-                            <div>
-                              <label htmlFor="">Ngày bắt đầu </label>
-                              <input type="date" />
-
-                            </div>
-                            <div>
-                              <label htmlFor="">Ngày kết thúc </label>
-                              <input type="date" />
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-
-
                       <div className="dropdown-section position-relative user-picker-dropdown">
                         <div className="d-flex gap-10 align-items-center">
                         </div>
 
-                        <div className="user-picker dropdown-shadow">
-                          <div className="user-category">
-                            <div className="category-name">
-                              <h4 className="title">Người lớn</h4>
-                              <p className="pera">12 năm trở lên</p>
-                            </div>
-                            <div className="qty-container">
-                              <button className="qty-btn-minus mr-1" type="button">
-                                <i className="ri-subtract-fill" />
-                              </button>
-                              <input type="text" name="qty" defaultValue={0} className="input-qty input-rounded" />
-                              <button className="qty-btn-plus ml-1" type="button">
-                                <i className="ri-add-fill" />
-                              </button>
-                            </div>
-                          </div>
-                          <div className="user-category">
-                            <div className="category-name">
-                              <h4 className="title">Những đứa trẻ</h4>
-                              <p className="pera">2-11 years</p>
-                            </div>
-                            <div className="qty-container">
-                              <button className="qty-btn-minus mr-1" type="button">
-                                <i className="ri-subtract-fill" />
-                              </button>
-                              <input type="text" name="qty" defaultValue={0} className="input-qty input-rounded" />
-                              <button className="qty-btn-plus ml-1" type="button">
-                                <i className="ri-add-fill" />
-                              </button>
-                            </div>
-                          </div>
-                          <div className="user-category">
-                            <div className="category-name">
-                              <h4 className="title">Trẻ sơ sinh</h4>
-                              <p className="pera">Belwo 2 năm </p>
-                            </div>
-                            <div className="qty-container">
-                              <button className="qty-btn-minus mr-1" type="button">
-                                <i className="ri-subtract-fill" />
-                              </button>
-                              <input type="text" name="qty" defaultValue={0} className="input-qty input-rounded" />
-                              <button className="qty-btn-plus ml-1" type="button">
-                                <i className="ri-add-fill" />
-                              </button>
-                            </div>
-                          </div>
-                          <div className="btn-section">
-                            <a href="javascript:void(0)" className="done-btn">Xong</a>
-                          </div>
-                        </div>
                       </div>
                       <div className="sign-btn">
                         <a href="tour-list" className="btn-secondary-lg">Kế hoạch tìm kiếm</a>
@@ -193,226 +126,12 @@ const Indextwo = () => {
           <section className="why-area">
 
             {/*  */}
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-12">
-                  <div className="border-section-title">
-                    <h4 className="title">Tại sao bạn lại thích chúng tôi</h4>
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-lg-12">
-                  <div className="swiper whySwiper-active">
-                    <div className="swiper-wrapper">
-                      <div className="swiper-slide">
-                        <div className="why-points">
-                          <div className="why-point">
-                            <div className="why-icon">
-                              <span>$</span>
-                            </div>
-                            <div className="why-content">
-                              <h4 className="title line-clamp-1">Đảm bảo giá tốt nhất</h4>
-                              <p className="pera line-clamp-3">
-                                Tiết kiệm chi phí: Khách hàng có thể yên tâm không phải tốn thời gian và công sức để so sánh giá giữa các nơi khác nhau.
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="swiper-slide">
-                        <div className="why-points">
-                          <div className="why-point">
-                            <div className="why-icon">
-                              <span>$</span>
-                            </div>
-                            <div className="why-content">
-                              <h4 className="title line-clamp-1">Easy &amp; Quick Booking</h4>
-                              <p className="pera line-clamp-3">
-                                A "Đảm bảo giá tốt nhất" is a commitment offered by
-                                businesses, typically in the retail or hospitality
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="swiper-slide">
-                        <div className="why-points">
-                          <div className="why-point">
-                            <div className="why-icon">
-                              <span>$</span>
-                            </div>
-                            <div className="why-content">
-                              <h4 className="title line-clamp-1">Hướng dẫn viên du lịch</h4>
-                              <p className="pera line-clamp-3">
-                                A "Đảm bảo giá tốt nhất" is a commitment offered by
-                                businesses, typically in the retail or hospitality
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="swiper-slide">
-                        <div className="why-points">
-                          <div className="why-point">
-                            <div className="why-icon">
-                              <span>$</span>
-                            </div>
-                            <div className="why-content">
-                              <h4 className="title line-clamp-1">Đảm bảo giá tốt nhất</h4>
-                              <p className="pera line-clamp-3">
-                                Một "đảm bảo giá tốt nhất" là một cam kết được cung cấp bởi
-                                các doanh nghiệp, thường là trong bán lẻ hoặc khách sạn
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+
           </section>
           {/*/ End of Brand */}
           {/* Special area S t a r t */}
-          <section className="special-area top-padding">
-            <div className="container">
-              <div className="row justify-content-center">
-                <div className="col-xl-7 col-lg-7">
-                  <div className="section-title mx-430 mx-auto text-center">
-                    <span className="highlights fancy-font font-400 text-center">Ưu đãi đặc biệt</span>
-                    <h4 className="title">
-                      Mùa đông những lời đề nghị lớn của chúng tôi để truyền cảm hứng cho bạn
-                    </h4>
-                  </div>
-                </div>
-              </div>
-              <div className="row g-4">
-                <div className="col-lg-6 col-md-6">
-                  <a href="tour-list" className="offer-banner imgEffect4 wow fadeInLeft" data-wow-delay="0.0s">
-                    <img src="/src/assets/category_tour/tour miền tây.jpg" alt="travello" />
 
-                    <div className="offer-content">
-                      <p className="highlights-text">Tiết kiệm lên đến</p>
-                      <h4 className="title">50%</h4>
-                      <p className="pera">Hãy cùng khám phá thế giới</p>
-                      <div className="location">
-                        <i className="ri-map-pin-line" />
-                        <p className="name">Tây Hồ , Hà Nội </p>
-                      </div>
-                      <div className="btn-secondary-sm radius-30 ">Đặt phòng ngay</div>
-                    </div>
-                  </a>
-                </div>
-                <div className="col-lg-6 col-md-6">
-                  <a href="tour-list" className="offer-banner imgEffect4 wow fadeInRight" data-wow-delay="0.0s">
-                    <img src="/src/assets/category_tour/Sapa.jpg" alt="travello" />
-                    <div className="offer-content-two">
-                      <h4 className="title">Khách sạn gần đó</h4>
-                      <p className="pera">
-                        Up to <span className="highlights-text">50%</span> Tắt tốt nhất
-                        Khách sạn gần
-                      </p>
-                      <div className="location">
-                        <i className="ri-map-pin-line" />
-                        <p className="name">Tây Hồ , Hà Nội </p>
-                      </div>
-                      <div className="btn-secondary-sm radius-30">Đặt phòng ngay</div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </section>
-          {/*/ End-of Special*/}
-          {/* About Us area S t a r t */}
-          <section className="about-area bottom-padding1 position-relative">
-            <div className="container">
-              <div className="row g-4">
-                <div className="col-xl-5 col-lg-5">
-                  <div className="section-title mx-430 mb-30">
-                    <span className="highlights fancy-font font-400">Đặt phòng tham quan </span>
-                    <h4 className="title">Sẵn sàng kiểm tra</h4>
-                    <p className="pera">
-                      Lorem Ipsum Dolor ngồi ampe, lãnh sự.Thuận tiện tại Diam Smart
-                      đội.Động cơ Mauris chính thống cho đau cho.Nếu có
-                      Mauris ngày mai xin vui lòng hoặc vui lòng cuối tuần.EU và
-                      Phim hoạt hình lập kế hoạch xấu xí.
-                    </p>
-                    <div className="about-imp-link">
-                      <div className="icon">
-                        <i className="ri-phone-line" />
-                      </div>
-                      <div className="content">
-                        <p className="pera">Gọi bất cứ lúc nào</p>
-                        <h4 className="title">00 (888) +123456</h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-xl-7 col-lg-7">
-                  <div className="available-card">
-                    {/* Open Calender */}
-                    <form action="#" className="mb-20">
-                      <input type="text" name="daterange" className="custom-form" defaultValue="03/12/2023 - 4/15/2023" />
-                    </form>
-                    {/* / Open Calender */}
-                    {/* user qty card */}
-                    <div className="user-qty-card">
-                      <div className="user-quantity">
-                        <div className="user-category">
-                          <div className="category-name">
-                            <h4 className="title">Người lớn</h4>
-                            <p className="pera">Ages 18+</p>
-                          </div>
-                          <div className="qty-container">
-                            <button className="qty-btn-minus-two mr-1" type="button">
-                              <i className="ri-subtract-fill" />
-                            </button>
-                            <input type="text" name="qty" defaultValue={0} className="input-qty-two input-rounded" />
-                            <button className="qty-btn-plus-two ml-1" type="button">
-                              <i className="ri-add-fill" />
-                            </button>
-                          </div>
-                        </div>
-                        <div className="user-category">
-                          <div className="category-name">
-                            <h4 className="title">Những đứa trẻ</h4>
-                            <p className="pera">Ages 5-18</p>
-                          </div>
-                          <div className="qty-container">
-                            <button className="qty-btn-minus-two mr-1" type="button">
-                              <i className="ri-subtract-fill" />
-                            </button>
-                            <input type="text" name="qty" defaultValue={0} className="input-qty-two input-rounded" />
-                            <button className="qty-btn-plus-two ml-1" type="button">
-                              <i className="ri-add-fill" />
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="count-guest">
-                        <h4 className="title">
-                          Khách <span className="calc-user">0</span>
-                        </h4>
-                      </div>
-                      <div className="mt-30">
-                        <button type="submit" className="btn-primary-fill w-100">
-                          Sẵn sàng kiểm tra
-                        </button>
-                      </div>
-                    </div>
-                    {/* / user qty card */}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="shape-about-two p3">
-              {/* <img width={400} src="/src/assets/category_tour/Phu Quoc Island - Vietnams Trauminsel + Highlights.jpg" alt="travello" /> */}
-            </div>
-          </section>
-          {/*/ End-of About US*/}
+
           {/* Destination area S t a r t */}
           <section className="destination-section-two bottom-padding1">
             <div className="destination-area-two position-relative">
@@ -524,6 +243,7 @@ const Indextwo = () => {
                     <span className="highlights"> Gói phổ biến</span>
                     <h4 className="title">
                       Địa điểm du lịch yêu thích nhất ở Việt Nam
+                      <DateStar/>
                     </h4>
                   </div>
                 </div>
@@ -558,8 +278,10 @@ const Indextwo = () => {
                               </div>
                               <div className="price-review">
                                 <div className="d-flex gap-10">
-                                  <p className="light-pera">Từ</p>
-                                  <p className="pera text-danger" ><CurrencyFormatter amount={tour.price} /></p>
+                                  <p className="text-muted text-decoration-line-through  mr-3 "><CurrencyFormatter amount={tour.promotion}/> </p>
+                                  <p className="text-danger fw-bold"> <CurrencyFormatter amount={tour.price}/> </p>
+
+
                                 </div>
 
                               </div>
@@ -621,7 +343,7 @@ const Indextwo = () => {
                   <div className="section-title text-center mx-605 mx-auto position-relative mb-60">
                     <span className="highlights">News &amp; Bài báo</span>
                     <h4 className="title">
-                      Latest News &amp; Bài viết Từ  Blog Bài viết
+                      Bài viết mới nhất
                     </h4>
                   </div>
                 </div>
@@ -637,11 +359,12 @@ const Indextwo = () => {
                           </figure>
                           <div className="news-content">
                             <div className="heading line-clamp-1">
-                              <span className="heading-pera"> {post.title}</span>
+                              <Link to={`/news-details/${post.id}`}>{post.title} </Link>
                             </div>
                             <h4 className="title line-clamp-2">
 
-                              <Link to={`/news-details/${post.id}`}>{post.body} </Link>
+
+                              <div dangerouslySetInnerHTML={{ __html: post.body }} />
                             </h4>
                             <div className="news-info">
                               <div className="d-flex gap-10 align-items-center">

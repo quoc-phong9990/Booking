@@ -84,7 +84,8 @@ const New = () => {
                             <img className='rounded' width={100} src={'http://127.0.0.1:8000/' + post.thumbnail} alt="travello" />
                             <div>
                               <p className="heading-pera line-clamp-1">{post.title}</p>
-                              <p className="heading-pera line-clamp-4">{post.body}</p>
+                              {/* <p className="heading-pera line-clamp-4">{post.body}</p> */}
+                              <div className='heading-pera line-clamp-4' dangerouslySetInnerHTML={{ __html: post.body }} />
                             </div>
 
                           </div>
@@ -129,12 +130,12 @@ const New = () => {
                         </figure>
                         <div className="news-content">
                           <div className="heading line-clamp-1">
-                            <span className="heading-pera">{post.title}</span>
-
+                        
+                            <Link className='text-success' to={`/news-details/${post.id}`}>{post.title}</Link>
                           </div>
                           <h4 className="title line-clamp-2">
-                            <Link to={`/news-details/${post.id}`}>{post.body}</Link>
-
+                   
+                            <div className='' dangerouslySetInnerHTML={{ __html: post.body }} />
                           </h4>
                           <div className="news-info">
                             <div className="d-flex gap-10 align-items-center">

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import '../App1.css'
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import '../App1.css';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Header from '../components/Header';
@@ -12,6 +13,7 @@ const ProfileUser = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState({
     id: '',
     avatar: '',
@@ -45,6 +47,8 @@ const ProfileUser = () => {
 
   const handleUpdate = async (data: any) => {
     data.file = file;
+    console.log(data);
+    
     try {
       const response = await fetch(`http://127.0.0.1:8000/api/client/user/update`, {
         method: 'POST',
@@ -58,13 +62,13 @@ const ProfileUser = () => {
         console.error('Update failed:', errorData);
         throw new Error(`Failed to update user data: ${response.statusText}`);
       }
-
-      alert('Thông tin người dùng đã được cập nhật thành công.');
+      console.log(response);
+      setIsLoggedIn(true);
+      toast.success('Lưu thay đổi thành công!');
     } catch (error) {
       alert('Đã xảy ra lỗi khi cập nhật thông tin người dùng: ');
     }
   };
-
 
   return (
     <div>
@@ -78,11 +82,12 @@ const ProfileUser = () => {
                   <img className="img-profile img-circle img-responsive center-block" src={avatarUrl} alt="Profile Avatar" />
                   <ul className="meta list list-unstyled">
                     <li className="name">{userData.name}</li>
+                    <li>{userData.date_of_birth}</li>
                     <li className="email"><a href="#">{userData.email}</a></li>
                     <li className="activity">Last logged in: Today at 2:18pm</li>
                   </ul>
                 </div>
-                <nav className="side-menu ">
+                <nav className="side-menu">
                   <ul className="nav">
                     <li><a href="#"><span className="fa fa-user" /> Profile</a></li>
                     <li><a href="#"><span className="fa fa-cog" /> Settings</a></li>
@@ -91,8 +96,8 @@ const ProfileUser = () => {
                     <li><a href="user-drive.html"><span className="fa fa-th" /> Drive</a></li>
                     <li><a href="#"><span className="fa fa-clock-o" /> Reminders</a></li>
                     <div className="mt-40">
-                          <button type="submit" className="send-btn"><a className='text-black' href="/pass">Đổi mật khẩu </a></button>
-                        </div>
+                      <button type="submit" className="send-btn"><a className='text-black' href="/pass">Đổi mật khẩu </a></button>
+                    </div>
                   </ul>
                 </nav>
               </div>
@@ -102,7 +107,7 @@ const ProfileUser = () => {
                     <div className="form-group">
                       <label className="col-sm-3 control-label">Ảnh của bạn</label>
                       <div className="col-sm-9">
-                        <input type="file" className="form-control" onChange={handleFileChange} />
+                        <input type="file" className="form-control" {...register("avatar")} onChange={handleFileChange} />
                         <p className="help-block">Hãy nhập hoặc sửa ảnh của bạn</p>
                       </div>
                     </div>
@@ -137,7 +142,7 @@ const ProfileUser = () => {
                     <div className="form-group">
                       <label className="col-sm-3 control-label">Ngày sinh</label>
                       <div className="col-sm-9">
-                        <input type="date" className="form-control" {...register("birthdate")} defaultValue={userData.date_of_birth} />
+                        <input type="date" className="form-control" {...register("date_of_birth")} defaultValue={userData.date_of_birth} />
                         <p className="help-block">Xin mời nhập hoặc chỉnh sửa tại đây</p>
                       </div>
                     </div>
@@ -157,6 +162,7 @@ const ProfileUser = () => {
         </div>
       </div>
       <Footer />
+      <ToastContainer />
     </div>
   );
 };

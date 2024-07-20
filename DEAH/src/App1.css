@@ -103,7 +103,7 @@ body {
 /* Content panel styles */
 .view-account .content-panel {
     padding: 30px;
-    background-color: #e2f4f3;
+    /* background-color: #e2f4f3; */
 }
 
 .content-panel {
@@ -252,6 +252,7 @@ body {
     .view-account .content-panel {
         min-height: 800px;
         border-left: 1px solid #f3f3f7;
+        border-radius: 20px;
         margin-left: 320px;
         padding: 30px;
     }
@@ -314,4 +315,231 @@ body {
         border-right: 4px solid #40babd;
         border-bottom: none;
     }
+    @keyframes spin {
+        0% {
+          transform: rotate(0);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .spinner {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1003;
+        background: #000000;
+        overflow: hidden;
+      }
+      .spinner div:first-child {
+        display: block;
+        position: relative;
+        left: 50%;
+        top: 50%;
+        width: 150px;
+        height: 150px;
+        margin: -75px 0 0 -75px;
+        border-radius: 50%;
+        box-shadow: 0 3px 3px 0 rgba(255, 56, 106, 1);
+        transform: translate3d(0, 0, 0);
+        animation: spin 2s linear infinite;
+      }
+      .spinner div:first-child:after,
+      .spinner div:first-child:before {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+      }
+      .spinner div:first-child:before {
+        top: 5px;
+        left: 5px;
+        right: 5px;
+        bottom: 5px;
+        box-shadow: 0 3px 3px 0 rgb(255, 228, 32);
+        -webkit-animation: spin 3s linear infinite;
+        animation: spin 3s linear infinite;
+      }
+      .spinner div:first-child:after {
+        top: 15px;
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+        box-shadow: 0 3px 3px 0 rgba(61, 175, 255, 1);
+        animation: spin 1.5s linear infinite;
+      }
+      /* slideshowpost */
+      /* App.css */
+/* App.css */
+
+.slide-container {
+    width: 100%;
+    margin: auto;
+  }
+  
+  .slide-container .each-slide {
+    display: flex;
+    justify-content: space-between; /* Đảm bảo khoảng cách đều nhau giữa các ảnh */
+    align-items: center;
+  }
+  
+  .slide-container .each-slide div {
+    flex: 1; /* Mỗi div con sẽ chiếm một phần bằng nhau của hàng */
+    display: flex;
+    justify-content: center; /* Căn giữa nội dung bên trong div */
+  }
+  
+  .slide-container .each-slide img {
+    width: 90%; /* Đảm bảo ảnh không chiếm toàn bộ không gian của div */
+    height: auto;
+    border-radius: 8px; /* Tùy chỉnh để có góc bo tròn nếu muốn */
+    transition: transform 0.3s ease; /* Tạo hiệu ứng khi hover */
+  }
+  
+  .slide-container .each-slide img:hover {
+    transform: scale(1.05); /* Tạo hiệu ứng phóng to khi hover */
+  }
+  
+  .news-content {
+    padding: 10px;
+  }
+  
+  .news-card-two {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .news-card-two:hover {
+    transform: translateY(-10px); /* Tạo hiệu ứng nổi lên khi hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .heading-pera {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .title {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .news-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .news-info .all-user {
+    display: flex;
+  }
+  
+  .news-info .happy-user {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 5px;
+  }
+  
+  .news-info .happy-user img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .time {
+    font-size: 12px;
+    color: #999;
+  }
+  /* payment */
+  /* Basic styling */
+.tour-include-exclude {
+    border-radius: 6px;
+    margin-bottom: 30px;
+    padding: 15px;
+    /* background-color: #f8f9fa; Ví dụ về màu nền, thay đổi theo nhu cầu */
+  }
+  
+  .include-exclude-point {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .title {
+    font-size: 1.25rem;
+    margin-bottom: 15px;
+  }
+  
+  .checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Khoảng cách giữa các checkbox */
+  }
+  
+  .checkbox-group label {
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem; /* Kích thước chữ cho checkbox */
+    width: 750px;
+    border: 1px solid gray;
+
+  }
+  
+  .checkbox-group input[type="radio"] {
+    margin-right: 20px; /* Khoảng cách giữa checkbox và văn bản */
+    width: 20px;
+
+ 
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .tour-include-exclude {
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+  
+    .title {
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+  
+    .checkbox-group {
+      gap: 8px; /* Giảm khoảng cách giữa các checkbox trên màn hình nhỏ */
+    }
+  
+    .checkbox-group label {
+      font-size: 0.8rem; /* Kích thước chữ nhỏ hơn trên màn hình nhỏ */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .tour-include-exclude {
+      padding: 5px;
+      margin-bottom: 15px;
+    }
+  
+    .title {
+      font-size: 0.875rem;
+      margin-bottom: 5px;
+    }
+  
+    .checkbox-group {
+      gap: 6px; /* Giảm khoảng cách giữa các checkbox thêm nữa trên màn hình rất nhỏ */
+    }
+  
+    .checkbox-group label {
+      font-size: 0.75rem; /* Kích thước chữ nhỏ hơn nữa trên màn hình rất nhỏ */
+    }
+  }
+  
+      
+
 }

@@ -7,27 +7,10 @@ import { format } from 'date-fns';
 
 const DateStar = () => {
   const [openDate, setOpenDate] = useState(false);
-  const [date, setDate] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
-    key: 'selection',
-  });
+  const [startDate, setStartDate] = useState(new Date());
 
   const handleChange = (ranges: any) => {
-    const { startDate, endDate } = ranges.selection;
-    if (endDate >= startDate) {
-      setDate({
-        ...date,
-        startDate,
-        endDate,
-      });
-    } else {
-      setDate({
-        ...date,
-        startDate,
-        endDate: startDate,
-      });
-    }
+    setStartDate(ranges.selection.startDate);
   };
 
   const handleClick = () => {
@@ -37,14 +20,19 @@ const DateStar = () => {
   return (
     <div className=''>
       <span className='select2-title' onClick={handleClick}>
-        {format(date.startDate, 'MMM dd, yyyy')} - {format(date.endDate, 'MMM dd, yyyy')}
+        {format(startDate, 'MMM dd, yyyy')}
       </span>
       {openDate && (
         <DateRangePicker
           className='dateRanger'
-          ranges={[date]}
+          ranges={[{ startDate: startDate, endDate: startDate, key: 'selection' }]}
           onChange={handleChange}
           minDate={new Date()}
+        //   showSelectionPreview={false}
+          moveRangeOnFirstSelection={false}
+          showDateDisplay={false}
+          staticRanges={[]}
+          inputRanges={[]}
         />
       )}
     </div>

@@ -1,12 +1,13 @@
 
 import axios from 'axios'
-import  { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import FunctionApp from "../FunctionComponentContext/Date.js"
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import Header from './Header.js';
 import Footer from './Footer.js';
 import CurrencyFormatter from '../FunctionComponentContext/CurrencyFormatter.js';
+import Longtour from '../FunctionComponentContext/Longtour.js';
 const TourList = () => {
   const [selectedProvince, setSelectedProvince] = useState<any>(null);
   const [selectedType, setSelectedType] = useState<any>(null);
@@ -69,9 +70,9 @@ const TourList = () => {
                           <i className="ri-map-pin-line" />
                           <h4 className="select2-title">Điểm đến</h4>
                         </div>
-                        <select className="destination-dropdown" onChange={(e) => setSelectedProvince(e.target.value)}>
-                          <option value=''>-- Lọc theo điểm đến --</option>
-                          {tour.provinces?.map((province:any) => {
+                        <select className="destination-dropdown rounded" onChange={(e) => setSelectedProvince(e.target.value)}>
+                          <option className='rounded' value=''>Lọc theo điểm đến</option>
+                          {tour.provinces?.map((province: any) => {
                             return (
                               <option value={province.id}>{province.name}</option>
                             )
@@ -83,9 +84,9 @@ const TourList = () => {
                           <i className="ri-flight-takeoff-fill" />
                           <h4 className="select2-title">Loại du lịch </h4>
                         </div>
-                        <select className="destination-dropdown" onChange={(e) => setSelectedType(e.target.value)}>
-                          <option value=''>-- Lọc theo loại du lịch --</option>
-                          {tour.types?.map((type:any) => {
+                        <select className="destination-dropdown rounded" onChange={(e) => setSelectedType(e.target.value)}>
+                          <option value=''>Lọc theo loại du lịch</option>
+                          {tour.types?.map((type: any) => {
                             return (
                               <option value={type.id}>{type.name_type}</option>
                             )
@@ -187,31 +188,10 @@ const TourList = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="heading">
-                      <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none">
-                        <path d="M15.5556 2H15.44C15.0422 2.00354 14.6569 2.13084 14.3446 2.36192C14.0323 2.59299 13.8108 2.91474 13.7147 3.27667C13.6118 3.62903 13.3882 3.93994 13.0784 4.16155C12.7686 4.38316 12.3897 4.5032 12 4.5032C11.6103 4.5032 11.2314 4.38316 10.9216 4.16155C10.6118 3.93994 10.3882 3.62903 10.2853 3.27667C10.1892 2.91474 9.96766 2.59299 9.65538 2.36192C9.3431 2.13084 8.95781 2.00354 8.56 2H8.44444C7.26614 2.00132 6.1365 2.44073 5.30331 3.22185C4.47012 4.00296 4.00141 5.062 4 6.16667V19.5C4 20.163 4.28095 20.7989 4.78105 21.2678C5.28115 21.7366 5.95942 22 6.66667 22H8.56C8.95781 21.9965 9.3431 21.8692 9.65538 21.6381C9.96766 21.407 10.1892 21.0853 10.2853 20.7233C10.3882 20.371 10.6118 20.0601 10.9216 19.8385C11.2314 19.6168 11.6103 19.4968 12 19.4968C12.3897 19.4968 12.7686 19.6168 13.0784 19.8385C13.3882 20.0601 13.6118 20.371 13.7147 20.7233C13.8108 21.0853 14.0323 21.407 14.3446 21.6381C14.6569 21.8692 15.0422 21.9965 15.44 22H17.3333C18.0406 22 18.7189 21.7366 19.219 21.2678C19.719 20.7989 20 20.163 20 19.5V6.16667C19.9986 5.062 19.5299 4.00296 18.6967 3.22185C17.8635 2.44073 16.7339 2.00132 15.5556 2V2ZM17.3333 20.3333L15.4284 20.2808C15.2197 19.5737 14.7678 18.9509 14.143 18.509C13.5182 18.0671 12.7554 17.8308 11.9727 17.8368C11.1901 17.8428 10.4315 18.0907 9.81442 18.5421C9.19738 18.9934 8.75645 19.6231 8.56 20.3333H6.66667C6.43092 20.3333 6.20483 20.2455 6.03813 20.0893C5.87143 19.933 5.77778 19.721 5.77778 19.5V16.1667H7.55556C7.7913 16.1667 8.0174 16.0789 8.18409 15.9226C8.35079 15.7663 8.44444 15.5543 8.44444 15.3333C8.44444 15.1123 8.35079 14.9004 8.18409 14.7441C8.0174 14.5878 7.7913 14.5 7.55556 14.5H5.77778V6.16667C5.77778 5.50363 6.05873 4.86774 6.55883 4.3989C7.05892 3.93006 7.7372 3.66667 8.44444 3.66667L8.57156 3.71917C8.77975 4.42202 9.22755 5.0417 9.84659 5.48363C10.4656 5.92555 11.2219 6.16543 12 6.16667C12.7886 6.16038 13.5534 5.91275 14.178 5.46147C14.8027 5.01019 15.253 4.37995 15.4604 3.66667H15.5556C16.2628 3.66667 16.9411 3.93006 17.4412 4.3989C17.9413 4.86774 18.2222 5.50363 18.2222 6.16667V14.5H16.4444C16.2087 14.5 15.9826 14.5878 15.8159 14.7441C15.6492 14.9004 15.5556 15.1123 15.5556 15.3333C15.5556 15.5543 15.6492 15.7663 15.8159 15.9226C15.9826 16.0789 16.2087 16.1667 16.4444 16.1667H18.2222V19.5C18.2222 19.721 18.1286 19.933 17.9619 20.0893C17.7952 20.2455 17.5691 20.3333 17.3333 20.3333Z" fill="#071516" />
-                      </svg>
-                      <h4 className="title">Ưu đãi đặc biệt </h4>
-                    </div>
+
                     <div className="offer-list">
-                      <div className="d-flex align-items-center gap-12 mb-12">
-                        <label className="checkbox-label">
-                          <input className="checkbox-style" type="checkbox" defaultValue="remember" name="remember" />
-                          <span className="checkmark-style" />
-                        </label>
-                        <div className="content">
-                          <p className="pera">Có khả năng bán hết</p>
-                        </div>
-                      </div>
-                      <div className="d-flex align-items-center gap-12">
-                        <label className="checkbox-label">
-                          <input className="checkbox-style" type="checkbox" defaultValue="remember" name="remember" />
-                          <span className="checkmark-style" />
-                        </label>
-                        <div className="content">
-                          <p className="pera">Giảm giá mùa đông </p>
-                        </div>
-                      </div>
+
+
                     </div>
 
 
@@ -221,7 +201,7 @@ const TourList = () => {
                 </div>
                 <div className="col-xl-9">
                   <div className="showing-result">
-                    <h4 className="title">Hiển thị 6 trong số 10 kết quả</h4>
+                    <h4 className="title"><Longtour/></h4>
                     <div className="d-flex gap-10 align-items-center">
                       <div className="expand-icon hamburger block d-xl-none" id="hamburger">
                         <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none">
@@ -251,7 +231,7 @@ const TourList = () => {
                                   <img src={'http://127.0.0.1:8000/' + (tour.images ? tour.images : '')} alt="travello" />
                                 </div>
                                 <div className="package-content">
-                                  <h4 className="area-name mb-3">
+                                  <h4 className="area-name mb-3 line-clamp-2">
                                     {tour.title}
                                   </h4>
                                   <div className="packages-person">
@@ -263,12 +243,10 @@ const TourList = () => {
                                   </div>
                                   <div className="price-review">
                                     <div className="d-flex gap-10">
-                                      <p className="light-pera mt-1">Từ</p>
-                                      <p className="pera text-danger"><CurrencyFormatter amount={tour.price} /></p>
+                                    <p className="text-muted text-decoration-line-through mr-2"><CurrencyFormatter amount={tour.price}/></p>
+                                      <p className="text-danger fw-bold "><CurrencyFormatter amount={tour.promotion}/></p>                        
                                     </div>
                                     <div className="rating">
-
-
                                       <p className="pera mr-5">Đánh giá: {tour.rates ? tour.rates.qty : 0}</p> <p className="pera"> {tour.rates ? tour.rates.rate : 0}   </p> <i className="ri-star-s-fill  mb-3"></i>
                                     </div>
 
