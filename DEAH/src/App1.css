@@ -539,7 +539,14 @@ body {
       font-size: 0.75rem; /* Kích thước chữ nhỏ hơn nữa trên màn hình rất nhỏ */
     }
   }
+  /* paymentyPT */
+  .limited-width {
+    max-width: 750px; /* Thay đổi giá trị này theo ý muốn của bạn */
+    /* Để căn giữa thẻ ul */
+ margin-left: 20px;
+ margin-top: 20px;
   
-      
+  }
+  
 
 }
