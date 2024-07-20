@@ -4,7 +4,7 @@ import '../App.css';
 import Ok from './Ok';
 // import MyDropdown from './MyDropdown'; // Import the new component
 
-const Header = ({status}) => {
+const Header = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState<{ name: String, avatar: String } | null>(null);
 
@@ -13,7 +13,7 @@ const Header = ({status}) => {
     if (userData) {
       setUserName(JSON.parse(userData));
     }
-  }, [status]);
+  }, );
 
   const handleLogout = () => {
     sessionStorage.removeItem('user');
