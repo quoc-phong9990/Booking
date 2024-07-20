@@ -16,7 +16,7 @@ class PostController extends Controller
     {
         $query = Post::query();
         if ($request->title && $request->title != null) {
-            $query->where('title', 'LIKE', '%'.$request->title.'%');
+            $query->where('title', 'LIKE', '%' . $request->title . '%');
         }
         if (isset($request->is_active)) {
             $query->where('is_active', intval($request->is_active));
@@ -40,7 +40,13 @@ class PostController extends Controller
             'file' => 'required|max:2048|image',
             'is_active' => 'nullable'
         ]);
-        $request->merge(['slug' => Str::slug($request->title)]);
+        $slug = Str::slug($request->title);
+        $checkSlug = Post::where('slug', $slug)->get('id');
+        if ($checkSlug) {
+            $request->merge(['slug' => $slug . '-' . Str::random(3)]);
+        } else {
+            $request->merge(['slug' => $slug]);
+        }
         $request->is_active ? $request->is_active : $request->merge(['is_active' => 0]);
         $thumbnail = $request->file('file');
         $imageName = "storage/posts/" . uniqid() . '.' . $thumbnail->getClientOriginalExtension();
@@ -48,7 +54,7 @@ class PostController extends Controller
         $request->merge(['thumbnail' => $imageName]);
         $request->merge(['views' => 0]);
         $post = Post::create($request->all());
-        if($post){
+        if ($post) {
             return redirect()->route('posts.index')->with('success', 'Post created successfully.');
         }
         return redirect()->route('posts.index')->with('error', 'Post created faild.');
@@ -76,7 +82,13 @@ class PostController extends Controller
             'is_active' => 'nullable'
         ]);
         $request->is_active ? $request->is_active : $request->merge(['is_active' => 0]);
-
+        $slug = Str::slug($request->title);
+        $checkSlug = Post::where('slug', $slug)->get('id');
+        if ($checkSlug) {
+            $request->merge(['slug' => $slug . '-' . Str::random(3)]);
+        } else {
+            $request->merge(['slug' => $slug]);
+        }
         if ($request->hasFile('file')) {
             if ($post->thumbnail) {
                 Storage::delete($post->thumbnail);

@@ -243,7 +243,7 @@ const TourList = () => {
                         return (
 
                           <div className="col-xl-4 col-lg-4 col-sm-6" key={index}>
-                            <a href={`/tour-details/${tour.id}`}>
+                            <a href={`/tour-details/${tour.slug}`}>
 
                               <div className="package-card">
                                 <div className="package-img imgEffect4">

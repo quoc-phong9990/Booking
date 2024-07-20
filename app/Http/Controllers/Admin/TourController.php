@@ -61,7 +61,12 @@ class TourController extends Controller
         $request->is_active ? $request->is_active : $request->merge(['is_active' => 0]);
         $request->merge(['views' => 0]);
         $slug = Str::slug($request->title);
-        $request->merge(['slug' => $slug]);
+        $checkSlug = Tour::where('slug', $slug)->get('id');
+        if ($checkSlug) {
+            $request->merge(['slug' => $slug . '-' . Str::random(3)]);
+        } else {
+            $request->merge(['slug' => $slug]);
+        }
         $tour = Tour::create($request->all());
         if ($tour) {
             for ($i = 0; $i < $request->day; $i++) {
@@ -141,6 +146,13 @@ class TourController extends Controller
         // Cập nhật thông tin của tour
         if ($validator->fails()) {
             return redirect()->back()->with('error', $validator->errors()->first());
+        }
+        $slug = Str::slug($request->title);
+        $checkSlug = Tour::where('slug', $slug)->get('id');
+        if ($checkSlug) {
+            $request->merge(['slug' => $slug . '-' . Str::random(3)]);
+        } else {
+            $request->merge(['slug' => $slug]);
         }
         $request->is_active ? $request->is_active : $request->merge(['is_active' => 0]);
         $tour = Tour::findOrFail($id);

@@ -25,6 +25,7 @@ class Tour extends Model
     'province_id',
     'district_id',
     'ward_id',
+    'type',
     'is_active'
 
   ];

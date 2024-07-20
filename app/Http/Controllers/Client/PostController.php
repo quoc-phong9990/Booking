@@ -40,13 +40,12 @@ class PostController extends Controller
     }
     public function show(Request $request)
     {
-        $post = $this->query->find($request->id);
-        $post->comments = $post->comments()->orderByDesc('created_at')->get();
-        foreach ($post->comments as $comment) {
-            $comment->user = $comment->user()->get(['name','avatar']);
-        }
-
+        $post = $this->query->where('slug', $request->slug)->first();
         if ($post) {
+            $post->comments = $post->comments()->orderByDesc('created_at')->get();
+            foreach ($post->comments as $comment) {
+                $comment->user = $comment->user()->get(['name', 'avatar']);
+            }
             $this->query->update(['views' => $post->views += 1]);
             return $this->response->responseSuccess($post);
         }

@@ -6,7 +6,7 @@ import Footer from './Footer';
 import { useEffect, useState } from 'react';
 const NewsDetails = () => {
 
-  const { id } = useParams();
+  const { slug } = useParams();
   // console.log(id);
   const [postFeature, setPostFeature] = useState<any>([]);
   const [post, setPostDetail] = useState<any>([]);
@@ -16,7 +16,7 @@ const NewsDetails = () => {
     const fetchData = async () => {
       try {
         let postsFeatureApi = 'http://127.0.0.1:8000/api/client/get-posts-list';
-        let postApi = `http://127.0.0.1:8000/api/client/get-post-detail/${id}`;
+        let postApi = `http://127.0.0.1:8000/api/client/get-post-detail/${slug}`;
         const [postFeature, post] = await Promise.all([
           axios.get(postsFeatureApi),
           axios.get(postApi)
@@ -168,7 +168,7 @@ const NewsDetails = () => {
 
                             return (
                               <li className="list  " key={index}>
-                                <a href={`/news-details/${item.id}`} className="destination-banner-two h-calc wow fadeInUp" data-wow-delay="0.s">
+                                <a href={`/news-details/${item.slug}`} className="destination-banner-two h-calc wow fadeInUp" data-wow-delay="0.s">
                                   <img className='ImageNewDetail' src={'http://127.0.0.1:8000/' + (item.thumbnail ? item.thumbnail : '')} alt="travello" />
 
                                   <div className="destination-content-two">

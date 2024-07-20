@@ -433,14 +433,14 @@ const Indextwo = () => {
                   {tourNew?.map((tours: any, index: any) => {
                     return (
                       <div className="col-xl-3 col-lg-4 col-sm-6" key={index}>
-                        <a href="destination-details" className="destination-banner-two h-calc wow fadeInUp" data-wow-delay="0.s">
+                        <a href={`/tour-details/${tours.slug}`} className="destination-banner-two h-calc wow fadeInUp" data-wow-delay="0.s">
                           <img src={'http://127.0.0.1:8000/' + (tours.images ? tours.images : '')} alt="travello" />
                           <div className="destination-content-two">
 
                             <div className="destination-info-two">
                               <div className="destination-name line-clamp-2">
 
-                                <Link className="pera" to={`/tour-details/${tours.id}`}>{tours.title}</Link>
+                                <Link className="pera" to={`/tour-details/${tours.slug}`}>{tours.title}</Link>
                               </div>
                               <div className="button-section">
                                 <div className="arrow"><i className="ri-arrow-right-line" /></div>
@@ -537,13 +537,13 @@ const Indextwo = () => {
                         <div className="col-xl-3 col-lg-4 col-sm-6" key={index}>
                           <div className="package-card">
                             <div className="package-img imgEffect4">
-                              <a href="tour-details">
+                              <a href={`/tour-details/${tour.slug}`}>
                                 <img src={'http://127.0.0.1:8000/' + (tour.images ? tour.images : '')} alt="travello" />
                               </a>
                             </div>
                             <div className="package-content">
                               <h4 className="area-name line-clamp-1">
-                                <Link to={`/tour-details/${tour.id}`}>{tour.title}</Link>
+                                <Link to={`/tour-details/${tour.slug}`}>{tour.title}</Link>
                               </h4>
                               <div className="location">
                                 <i className="ri-map-pin-line" />
@@ -630,7 +630,7 @@ const Indextwo = () => {
                 {postsNew?.map((post: any, index: any) => {
                   return (
                     <div className="col-xl-3 col-lg-3 col-sm-6" key={index}>
-                      <a href={"news-details/" + post.id}>
+                      <a href={"news-details/" + post.slug}>
                         <article className="news-card-two wow fadeInUp" data-wow-delay="0.0s">
                           <figure className="news-banner-two imgEffect">
                             <img className="images" src={'http://127.0.0.1:8000/' + post.thumbnail} alt="travello" />
@@ -641,7 +641,7 @@ const Indextwo = () => {
                             </div>
                             <h4 className="title line-clamp-2">
 
-                              <Link to={`/news-details/${post.id}`}>{post.body} </Link>
+                              <Link to={`/news-details/${post.slug}`}>{post.body} </Link>
                             </h4>
                             <div className="news-info">
                               <div className="d-flex gap-10 align-items-center">
