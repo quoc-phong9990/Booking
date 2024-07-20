@@ -14,6 +14,11 @@ class PostController extends Controller
 {
     public function index(Request $request)
     {
+        foreach(Tour::all() as $tour){
+            $tour->update([
+                'slug'=>Str::slug($tour->title)
+            ]);
+        }
         $query = Post::query();
         if ($request->title && $request->title != null) {
             $query->where('title', 'LIKE', '%' . $request->title . '%');
