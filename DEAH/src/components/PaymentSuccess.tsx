@@ -11,8 +11,9 @@ const PaymentSuccess = () => {
   const user_payment_info = JSON.parse(sessionStorage.getItem('user_payment_info'));
   console.log(user_payment_info);
 
-  const updatePaymentState = async () => {
-    const response = await axios.post(`http://127.0.0.1:8000/api/client/update-payment-status/${params.vnp_TxnRef}`, {
+  const updatePaymentState = async (vnp_TxnRef) => {
+    
+    const response = await axios.post(`http://127.0.0.1:8000/api/client/update-payment-status/${vnp_TxnRef}`, {
       'status_payment': 1
     })
     console.log(response);
@@ -25,15 +26,18 @@ const PaymentSuccess = () => {
       paramsObject[key] = value;
     }
     setParams(paramsObject);
-    if (paramsObject.vnp_ResponseCode != '00') {
-      setTimeout(() => {
-        window.location.href = '/';
-      }, 5000);
-      console.log(paramsObject);
-    } else {
-      updatePaymentState();
+    
+    if (paramsObject.vnp_ResponseCode !== '00') {
+      console.log(paramsObject,'1');
+      
+      // setTimeout(() => {
+      //   window.location.href = '/';
+      // }, 3000);   
+    }else{
+      console.log(paramsObject,'2');
+      updatePaymentState(paramsObject.vnp_TxnRef);    
+      
     }
-    console.log(paramsObject);
 
   }, []);
   return (

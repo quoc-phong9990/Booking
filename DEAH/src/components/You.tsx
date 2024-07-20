@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const UserPicker = () => {
+const UserPicker = ({setKids,setAdults}) => {
     // Khai báo state để quản lý giá trị của số lượng người lớn và trẻ em
     const [adultQuantity, setAdultQuantity] = useState(0);
     const [childQuantity, setChildQuantity] = useState(0);
@@ -9,8 +9,10 @@ const UserPicker = () => {
     const handleDecreaseAdult = () => {
         if (adultQuantity > 0) {
             setAdultQuantity(adultQuantity - 1);
+            setAdults(adultQuantity-1)
             if (adultQuantity - 1 === 0) {
                 setChildQuantity(0);
+                setKids(0)
             }
         }
     };
@@ -19,6 +21,7 @@ const UserPicker = () => {
     const handleIncreaseAdult = () => {
         if (adultQuantity < 10) {
             setAdultQuantity(adultQuantity + 1);
+            setAdults(adultQuantity+1)
         }
     };
 
@@ -26,6 +29,7 @@ const UserPicker = () => {
     const handleDecreaseChild = () => {
         if (childQuantity > 0) {
             setChildQuantity(childQuantity - 1);
+            setKids(childQuantity-1)
         }
     };
 
@@ -33,6 +37,7 @@ const UserPicker = () => {
     const handleIncreaseChild = () => {
         if (adultQuantity > 0 && childQuantity < 10) {
             setChildQuantity(childQuantity + 1);
+            setKids(childQuantity+1)
         }
     };
 
@@ -44,9 +49,11 @@ const UserPicker = () => {
                 setAdultQuantity(value);
                 if (value === 0) {
                     setChildQuantity(0);
+                    setKids(0)
                 }
             } else {
                 setAdultQuantity(10);
+                setKids(10)
             }
         }
     };
@@ -56,8 +63,10 @@ const UserPicker = () => {
         if (!isNaN(value) && adultQuantity > 0) {
             if (value <= 10) {
                 setChildQuantity(value);
+                setKids(value)
             } else {
                 setChildQuantity(10);
+                setKids(10)
             }
         }
     };

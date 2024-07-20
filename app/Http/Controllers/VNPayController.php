@@ -7,12 +7,13 @@ use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Number;
-
+use App\Jobs\CreateBookingJob;
 class VNPayController extends Controller
 {
     public function createPayment(Request $request)
     {
         // Prepare payment parameters
+        
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         $vnp_Returnurl = "http://localhost:5173/paymentSuccess";
         $vnp_TmnCode = "JNX5BU3J"; //Mã website tại VNPAY 
@@ -72,9 +73,9 @@ class VNPayController extends Controller
             'message' => 'success',
             'data' => $vnp_Url
         );
-        Booking::create($request->all());
+        
         // Mail::to($request->email)->send(new BookingSuccess($booking));
-
+        CreateBookingJob::dispatch($request->all());
         if (isset($_POST['redirect'])) {
             header('Location: ' . $vnp_Url);
             die();
