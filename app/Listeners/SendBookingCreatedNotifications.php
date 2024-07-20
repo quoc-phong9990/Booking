@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\BookingCreate;
+use App\Models\Booking;
 use App\Notifications\NewBooking;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -24,5 +25,7 @@ class SendBookingCreatedNotifications implements ShouldQueue
     {
         //
         $event->booking->notify(new NewBooking($event->booking));
+        
+        
     }
 }
