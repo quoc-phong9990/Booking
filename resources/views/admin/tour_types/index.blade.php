@@ -3,51 +3,60 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="row">
-                <div class="col-12">
-                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h1>Manage Tour Types</h1>
+            <div class="col-12">
+                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                    <h4 class="mb-sm-0">Quản lý danh mục</h4>
 
-                        <div class="page-title-right">
-                            <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="{{ route('types.index') }}">Types</a></li>
-                                <li class="breadcrumb-item active"><a href="F{{ route('types.index') }}">List</a></li>
-                            </ol>
-                        </div>
-
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="{{ route('types.index') }}">Types</a></li>
+                            <li class="breadcrumb-item active"><a href="F{{ route('types.index') }}">List</a></li>
+                        </ol>
                     </div>
+
                 </div>
             </div>
             <div class="card col-8">
-                <div class="card-header">{{ $title }}</div>
+                <div class="card-header">Danh sách danh mục</div>
                 <div class="card-body">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Name</th>
-                                <th>Actions</th>
+                                <th>Tên</th>
+                                <th>Hành động</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($types as $index => $type)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $type->name_type }}</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-warning edit-item-btn showEdit" data-bs-toggle="modal"
-                                            data-bs-target="#showModal" data-edit-value="{{ $type->name_type }}"
-                                            data-edit-id="{{ $type->id }}">Edit</button>
-                                        <form action="{{ route('types.destroy', $type->id) }}" method="POST"
-                                            style="display: inline-block;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm"
-                                                onclick="return confirm('Are you sure you want to delete this tour type?')">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
+                            @if (count($types)>0)
+                                @foreach ($types as $index => $type)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $type->name_type }}</td>
+                                        <td>
+                                            <button class="btn">
+                                                <i class="ri-pencil-fill showEdit fs-5 text-warning align-items-center"
+                                                    data-bs-toggle="modal" data-bs-target="#showModal"
+                                                    data-edit-value="{{ $type->name_type }}"
+                                                    data-edit-id="{{ $type->id }}""></i>
+                                            </button>
+
+                                            <form action="{{ route('types.destroy', $type->id) }}" method="POST"
+                                                style="display: inline-block;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn "
+                                                    onclick="return confirm('Bạn có chắc chắn muốn xóa thuộc tính này không?')">
+                                                    <i class="ri-delete-bin-7-fill fs-5 text-danger"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <td class="fw-bold">Không có dữ liệu</td>
+                            @endif
+
                         </tbody>
                     </table>
                     {{ $types->links() }}
@@ -58,7 +67,7 @@
                     action="{{ route('types.store') }}">
                     @csrf
                     <div>
-                        <label for="date-field" class="form-label">Types
+                        <label for="date-field" class="form-label">Tên danh mục
                         </label>
                         <input type="text" class="form-control" name="name_type">
                         @error('name_type')
@@ -66,7 +75,7 @@
                         @enderror
                     </div>
                     <div class="mt-3">
-                        <button type="submit" class="btn btn-primary">Add</button>
+                        <button type="submit" class="btn btn-primary">Thêm</button>
                     </div>
                 </form>
             </div>
@@ -99,7 +108,7 @@
                         @method('put')
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="customername-field" class="form-label">Service
+                                <label for="customername-field" class="form-label">Tên danh mục
                                 </label>
                                 <input type="hidden" id="customername-field" class="form-control" name="id" value="${id}"
                                      >

@@ -37,17 +37,18 @@ Route::group(['middleware' => 'cors'], function () {
         Route::get('get-posts-new', [HomeController::class, 'newPosts']);
         //tour
         Route::any('get-tours-list', [TourController::class, 'index']);
-        Route::get('get-tour-detail/{id}', [TourController::class, 'show']);
+        Route::get('get-tour-detail/{slug}', [TourController::class, 'show']);
         //Hotel
         Route::get('get-hotel-detail/{id}', [HotelController::class, 'show']);
         //post
         Route::any('get-posts-list', [PostController::class, 'index']);
-        Route::get('get-post-detail/{id}', [PostController::class, 'show']);
+        Route::get('get-post-detail/{slug}', [PostController::class, 'show']);
         //booking
         Route::get('get-booking/{code}', [ClientBookingController::class, 'showByBookingCode']);
         //user
         Route::group(['prefix' => 'user'], function () {
             Route::post('get-bookings', [ClientBookingController::class, 'showByUserId']);
+            Route::post('booking/update', [ClientBookingController::class, 'cancelBooking']);
             Route::post('login', [UserController::class, 'login']);
             Route::post('signup', [UserController::class, 'signup']);
             Route::post('update', [UserController::class, 'update']);

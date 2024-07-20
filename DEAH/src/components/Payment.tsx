@@ -59,12 +59,10 @@ const Payment = () => {
     return window.location.href = response.data.data;
   };
 
-
   const chooseHotel = (e: any) => {
     let data = JSON.parse(e.target.value);
     setHotel(data);
   }
-
   const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedStartDate = e.target.value;
     setStartDate(selectedStartDate);

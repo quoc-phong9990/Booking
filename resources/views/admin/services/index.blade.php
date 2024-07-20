@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h1>Manage Services</h1>
+                        <h1>Quản lý dịch vụ</h1>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
@@ -19,37 +19,45 @@
             </div>
             <div class="col-md-8 card">
                 <div class="row">
-                    <div class="card-header">Services List</div>
+                    <div class="card-header">Danh sách dịch vụ</div>
                     <div class="card-body">
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Service</th>
-                                    <th>Actions</th>
+                                    <th>Dịch vụ</th>
+                                    <th>Hành động</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($services as $index => $service)
-                                    <tr>
-                                        <td>{{ $index + 1 }}</td>
-                                        <td>{{ $service->service }}</td>
-                                        <td>
+                                @if (count($services) > 0)
+                                    @foreach ($services as $index => $service)
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $service->service }}</td>
+                                            <td>
 
-                                            <button class="btn btn-sm btn-warning edit-item-btn showEdit"
-                                                data-bs-toggle="modal" data-bs-target="#showModal"
-                                                data-edit-value="{{ $service->service }}"
-                                                data-edit-id="{{ $service->id }}">Edit</button>
-                                            <form action="{{ route('services.destroy', $service->id) }}" method="POST"
-                                                style="display: inline-block;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('Are you sure you want to delete this tour?')">Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                                <button class="border-0 bg-white edit-item-btn showEdit"
+                                                    data-bs-toggle="modal" data-bs-target="#showModal"
+                                                    data-edit-value="{{ $service->service }}"
+                                                    data-edit-id="{{ $service->id }}"><i
+                                                        class="ri-pencil-fill text-warning fs-5"></i></button>
+                                                <form action="{{ route('services.destroy', $service->id) }}" method="POST"
+                                                    style="display: inline-block;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="border-0 bg-white"
+                                                        onclick="return confirm('Bạn có chắc chắn muốn xóa?')">
+                                                        <i class="ri-delete-bin-7-fill fs-5 text-danger"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <td class="fw-bold">Không có dữ liệu</td>
+                                @endif
+
                             </tbody>
                         </table>
                         {{ $services->links() }}
@@ -62,7 +70,7 @@
                     action="{{ route('services.store') }}">
                     @csrf
                     <div>
-                        <label for="date-field" class="form-label">Services
+                        <label for="date-field" class="form-label">Dịch vụ
                         </label>
                         <input type="text" class="form-control" name="service">
                         @error('service')
@@ -70,7 +78,7 @@
                         @enderror
                     </div>
                     <div class="mt-3">
-                        <button type="submit" class="btn btn-primary">Add</button>
+                        <button type="submit" class="btn btn-primary">Thêm</button>
                     </div>
                 </form>
             </div>
@@ -103,7 +111,7 @@
                         @method('put')
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="customername-field" class="form-label">Service
+                                <label for="customername-field" class="form-label">Dịch vụ
                                 </label>
                                 <input type="hidden" id="customername-field" class="form-control" name="id" value="${id}"
                                      >

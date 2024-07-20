@@ -18,10 +18,10 @@ class StatusPayment extends Enum
     public static function getArrayView(): array
     {
         return [
-            self::PENDING => '<span class="badge bg-warning">Pending</span>',
-            self::PAID => '<span class="badge bg-success">Paid</span>',
-            self::CANCEL => '<span class="badge bg-danger">Cancel</span>',
-            self::REFUND => '<span class="badge bg-info">Refund</span>'
+            self::PENDING => '<span class="badge bg-warning">Chưa thanh toán</span>',
+            self::PAID => '<span class="badge bg-success">Đã thanh toán</span>',
+            self::CANCEL => '<span class="badge bg-danger">Hủy</span>',
+            self::REFUND => '<span class="badge bg-info">Hoàn tiền</span>'
 
         ];
     }

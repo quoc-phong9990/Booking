@@ -15,21 +15,21 @@
             <li class="nav-item">
                 <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button"
                     aria-expanded="false" aria-controls="sidebarApps">
-                    <i class="ri-apps-2-line"></i> <span data-key="t-apps">Tours</span>
+                    <i class="ri-apps-2-line"></i> <span data-key="t-apps">Chuyến du lịch</span>
                 </a>
                 <div class="collapse menu-dropdown" id="sidebarApps">
                     <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
                             <a href="{{ route('types.index') }}" class="nav-link">
-                                Tour types
+                                Quản lý kiểu du lịch
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('tours.index') }}" class="nav-link" data-key="t-chat"> Tours </a>
+                            <a href="{{ route('tours.index') }}" class="nav-link" data-key="t-chat"> Quản lý chuyến du lịch </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ route('attributes.index') }}" class="nav-link" data-key="t-chat"> Attributes
+                            <a href="{{ route('attributes.index') }}" class="nav-link" data-key="t-chat"> Quản lý thuộc tính
                             </a>
                         </li>
                     </ul>
@@ -39,18 +39,18 @@
             <li class="nav-item">
                 <a class="nav-link menu-link" href="#sidebarHotels" data-bs-toggle="collapse" role="button"
                     aria-expanded="false" aria-controls="sidebarHotels">
-                    <i class="ri-home-2-line"></i> <span data-key="t-apps">Hotels</span>
+                    <i class="ri-home-2-line"></i> <span data-key="t-apps">Khách sạn</span>
                 </a>
                 <div class="collapse menu-dropdown" id="sidebarHotels">
                     <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
                             <a href="{{ route('hotels.index') }}" class="nav-link" role="button" aria-expanded="false"
                                 aria-controls="sidebarCalendar" data-key="t-calender">
-                                Hotels
+                                Quản lý khách sạn
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('services.index') }}" class="nav-link" data-key="t-chat"> Services </a>
+                            <a href="{{ route('services.index') }}" class="nav-link" data-key="t-chat"> Quản lý dịch vụ </a>
                         </li>
 
                     </ul>
@@ -59,14 +59,18 @@
             <li class="nav-item">
                 <a class="nav-link menu-link" href="#sidebarPost" data-bs-toggle="collapse" role="button"
                     aria-expanded="false" aria-controls="sidebarHotels">
-                    <i class="ri-pages-line"></i> <span data-key="t-apps">Posts</span>
+                    <i class="ri-pages-line"></i> <span data-key="t-apps">Bài viết</span>
                 </a>
                 <div class="collapse menu-dropdown" id="sidebarPost">
                     <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
                             <a href="{{ route('posts.index') }}" class="nav-link" role="button" aria-expanded="false"
                                 aria-controls="sidebarCalendar" data-key="t-calender">
-                                Posts
+                                Danh sách bài viết
+                            </a>
+                            <a href="{{ route('posts.create') }}" class="nav-link" role="button" aria-expanded="false"
+                                aria-controls="sidebarCalendar" data-key="t-calender">
+                                Thêm bài viết
                             </a>
                         </li>
 
@@ -79,24 +83,40 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link menu-link" href="{{ route('bookings.index') }}" data-bs-toggle="" role="button"
+                <a class="nav-link menu-link" href="#sidebarBooking" data-bs-toggle="collapse" role="button"
                     aria-expanded="false" aria-controls="sidebarHotels">
-                    <i class="ri-list-ordered"></i> <span data-key="t-apps">Bookings</span>
+                    <i class="ri-list-ordered"></i> <span data-key="t-apps">Đơn hàng</span>
                 </a>
-               
+                <div class="collapse menu-dropdown" id="sidebarBooking">
+                    <ul class="nav nav-sm flex-column">
+                        <li class="nav-item">
+                            <a href="{{ route('bookings.index') }}" class="nav-link" role="button" aria-expanded="false"
+                                aria-controls="sidebarCalendar" data-key="t-calender">
+                                Danh sách đơn hàng
+                            </a>
+                       
+                        </li>
+
+
+
+
+
+
+                    </ul>
+                </div>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link menu-link" href="{{ route('vouchers.index') }}" role="button" aria-expanded="false"
                     aria-controls="sidebarHotels">
                     <i class="ri-add-box-line"></i> <span data-key="t-apps">Vouchers</span>
                 </a>
 
-            </li>
+            </li> --}}
 
             <li class="nav-item">
                 <a class="nav-link menu-link" href="{{ route('users.index') }}" role="button" aria-expanded="false"
                     aria-controls="sidebarHotels">
-                    <i class="ri-user-2-line"></i> <span data-key="t-apps">Accounts</span>
+                    <i class="ri-user-2-line"></i> <span data-key="t-apps">Tài khoản</span>
                 </a>
 
             </li>

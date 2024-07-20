@@ -4,7 +4,7 @@ import '../App.css';
 import Ok from './Ok';
 // import MyDropdown from './MyDropdown'; // Import the new component
 
-const Header = () => {
+const Header = ({status}) => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState<{ name: String, avatar: String } | null>(null);
 
@@ -13,7 +13,7 @@ const Header = () => {
     if (userData) {
       setUserName(JSON.parse(userData));
     }
-  }, []);
+  }, [status]);
 
   const handleLogout = () => {
     sessionStorage.removeItem('user');
@@ -169,11 +169,14 @@ const Header = () => {
                                 </div>
                                 
                               )}
-                            
-                              <div className="sign-btn">
-                                <a type='submit' className="btn-secondary-sm " onClick={handleLogout}>Đăng xuất</a>
-                              </div>
-                              
+
+                             
+                             {userName && (
+                             <div className="sign-btn">
+                                  <a type='submit' className="btn-secondary-sm " onClick={handleLogout}>Đăng xuất</a>
+                                </div>
+                             )}
+
                               {/* Theme Mode */}
                               <li className="single-list">
                                 <button className="ToggleThemeButton change-theme-mode m-0 p-0 border-0">

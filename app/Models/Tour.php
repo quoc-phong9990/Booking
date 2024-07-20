@@ -15,6 +15,7 @@ class Tour extends Model
     'id',
     'type_id',
     'title',
+    'slug',
     'day',
     'description',
     'price',
@@ -24,6 +25,7 @@ class Tour extends Model
     'province_id',
     'district_id',
     'ward_id',
+    'type',
     'is_active'
 
   ];
