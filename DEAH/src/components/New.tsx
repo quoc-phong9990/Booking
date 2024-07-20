@@ -113,44 +113,44 @@ const New = () => {
                 {posts.map((post, index) => (
 
                   <div className="col-xl-4 col-lg-4 col-sm-6" key={post.id} >
+                    <Link to={`/news-details/${post.slug}`}>s
+                      <article className="news-card-two">
+                        <figure className="news-banner-two imgEffect">
+                          <a href="news-details">
+                            <img src="/src/assets/category_tour/phú quốc.jpg" alt="travello" />
+                          </a>
+                        </figure>
+                        <div className="news-content">
+                          <div className="heading">
+                            <span className="heading-pera">{post.title}</span>
 
-                    <article className="news-card-two">
-                      <figure className="news-banner-two imgEffect">
-                        <a href="news-details">
-                          <img src="/src/assets/category_tour/phú quốc.jpg" alt="travello" />
-                        </a>
-                      </figure>
-                      <div className="news-content">
-                        <div className="heading">
-                          <span className="heading-pera">{post.title}</span>
+                          </div>
+                          <h4 className="title line-clamp-2">
+                            {post.body}
 
-                        </div>
-                        <h4 className="title line-clamp-2">
-                          <Link to={`/news-details/${post.id}`}>{post.body}</Link>
-
-                        </h4>
-                        <div className="news-info">
-                          <div className="d-flex gap-10 align-items-center">
-                            <div className="all-user">
-                              <div className="happy-user">
-                                <img src="/src/assets/images/hero/user-1.jpeg" alt="image" />
-                              </div>
-                              <div className="happy-user">
-                                <img src="/src/assets/images/hero/user-2.png" alt="image" />
-                              </div>
-                              <div className="happy-user">
-                                <img src="/src/assets/images/hero/user-3.png" alt="image" />
-                              </div>
-                              <div className="happy-user">
-                                <img src="/src/assets/images/hero/user-4.jpeg" alt="image" />
+                          </h4>
+                          <div className="news-info">
+                            <div className="d-flex gap-10 align-items-center">
+                              <div className="all-user">
+                                <div className="happy-user">
+                                  <img src="/src/assets/images/hero/user-1.jpeg" alt="image" />
+                                </div>
+                                <div className="happy-user">
+                                  <img src="/src/assets/images/hero/user-2.png" alt="image" />
+                                </div>
+                                <div className="happy-user">
+                                  <img src="/src/assets/images/hero/user-3.png" alt="image" />
+                                </div>
+                                <div className="happy-user">
+                                  <img src="/src/assets/images/hero/user-4.jpeg" alt="image" />
+                                </div>
                               </div>
                             </div>
+                            <p className="time">10 phút đọc </p>
                           </div>
-                          <p className="time">10 phút đọc </p>
                         </div>
-                      </div>
-                    </article>
-
+                      </article>
+                    </Link>
                   </div>
 
                 ))}

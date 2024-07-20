@@ -12,7 +12,7 @@ class AttributeController extends Controller
     //
     public function index()
     {
-      
+
         $attributes = Attribute::orderByDesc('created_at')->paginate(10);
         $title = 'Attributes';
         return view('admin.Attributes.index', compact('attributes', 'title'));
@@ -28,16 +28,15 @@ class AttributeController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'attribute' => 'required|max:255',
 
+        $request->validate([
+            'attribute' => 'required|max:255',
+        ], [
+            'attribute' => "Thuộc tính không được để trống"
         ]);
-        if ($validator->fails()) {
-            return redirect()->back()->with('error', 'Add attribute faild');
-        }
         Attribute::create($request->all());
         return redirect()->route('attributes.index')
-            ->with('success', 'Attribute created successfully.');
+            ->with('success', 'Thêm thuộc tính thành công');
     }
 
     public function show(Attribute $attribute)
@@ -57,22 +56,32 @@ class AttributeController extends Controller
         $validator = Validator::make($request->all(), [
             'attribute' => 'required|max:255',
 
+        ], [
+            'attribute' => "Thuộc tính không được để trống"
+
         ]);
         if ($validator->fails()) {
-            return redirect()->back()->with('error', 'Add attribute faild');
+            return redirect()->back()->with('error', $validator->errors()->first());
         }
-
-        Attribute::find($request->id)->update($request->all());
-        return redirect()->route('attributes.index')
-            ->with('success', 'Attribute updated successfully.');
+        $attr = Attribute::find($request->id)->update($request->all());
+        if ($attr) {
+            return redirect()->route('attributes.index')
+                ->with('success', 'Cập nhật thuộc tính thành công');
+        }
+        return redirect()->back()
+            ->with('error', 'Cập nhật thuộc tính thất bại');
     }
 
 
     public function destroy(Attribute $attribute)
     {
-        $attribute->delete();
 
-        return redirect()->route('attributes.index')
-            ->with('success', 'Attribute deleted successfully.');
+        if ($attribute->delete()) {
+            return redirect()->route('attributes.index')
+                ->with('success', 'Xóa thuộc tính thành công');
+        }
+        return redirect()->back()
+            ->with('error', 'Xóa thuộc tính thất bại');
+
     }
 }

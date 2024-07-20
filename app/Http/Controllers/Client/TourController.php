@@ -49,8 +49,8 @@ class TourController extends Controller
             $this->query->orderByDesc('created_at');
         }
         $tours = $this->query->get();
-        $provinces_id = Tour::where('deleted_at',null)->groupBy('province_id')->get('province_id');
-        $types_id = Tour::where('deleted_at',null)->groupBy('type_id')->get('type_id');
+        $provinces_id = Tour::where('deleted_at', null)->groupBy('province_id')->get('province_id');
+        $types_id = Tour::where('deleted_at', null)->groupBy('type_id')->get('type_id');
         $provinces = Province::whereIn('id', $provinces_id)->get();
         $tour_type = TourType::whereIn('id', $types_id)->get();
         foreach ($tours as $tour) {
@@ -75,10 +75,9 @@ class TourController extends Controller
     }
     public function show(Request $request)
     {
-        $this->query = Tour::find($request->id);
-        $rate = $this->query->rates();
+        $this->query->where('slug', $request->slug)->first();
         // $rate = $this->query->rates();
-        $tour = Tour::find($request->id);
+        $tour = Tour::where('slug', $request->slug)->first();
         //Kiểu du lịch của tour
         $tour->type = $tour->types()->value('name_type');
         //Lịch trình tour
@@ -90,19 +89,19 @@ class TourController extends Controller
         //Hotels của tour
         $tour->hotels = $tour->hotels()->get();
 
-        foreach($tour->hotels as $hotel){
+        foreach ($tour->hotels as $hotel) {
             $hotel->images = $hotel->images()->take(1)->value('image');
         }
         //Địa điểm tour
         $tour->location = [
-            'province' => $this->query->provinces()->value('name'),
-            'district' => $this->query->districts()->value('name'),
-            'ward' => $this->query->wards()->value('name')
+            'province' => $tour->provinces()->value('name'),
+            'district' => $tour->districts()->value('name'),
+            'ward' => $tour->wards()->value('name')
         ];
         //Đánh giá của tour
         $tour->rate = [
             'rate' => number_format($tour->rates()->avg('rate'), 1),
-            'qty' => $rate->count('rate')
+            'qty' => $tour->rates()->count('rate')
         ];
         //Bình luận của tour
         $tour->comments = $tour->comments()->orderByDesc('created_at')->get('comments');
@@ -125,7 +124,7 @@ class TourController extends Controller
         // }
         $data = [
             'tour' => $tour,
-            
+
         ];
         if ($data) {
             $this->query->update(['views' => $tour->views += 1]);

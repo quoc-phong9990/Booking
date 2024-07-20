@@ -78,7 +78,7 @@ const New = () => {
                 <div className="col-xl-5 col-lg-5">
                   {postFeature.posts_feature?.map((post:any, index:number) => (
                     <div className="all-contents" id="v-pills-tab-two" role="tablist" aria-orientation="vertical" key={index}>
-                      <a href={"news-details/" + post.id}>
+                      <a href={"news-details/" + post.slug}>
                         <div className="news-content active" id="pills-news-one-tab" data-bs-toggle="pill" data-bs-target="#pills-news-one" role="tab" aria-controls="pills-news-one" aria-selected="true">
                           <div className="heading d-flex gap-3">
                             <img className='rounded' width={100} src={'http://127.0.0.1:8000/' + post.thumbnail} alt="travello" />
@@ -122,7 +122,7 @@ const New = () => {
 
                 {postFeature.posts?.map((post:any, index:number) => (
                   <div className="col-xl-4 col-lg-4 col-sm-6" key={index} >
-                    <a href={"news-details/" + post.id}>
+                    <a href={"news-details/" + post.slug}>
 
                       <article className="news-card-two">
                         <figure className="news-banner-two imgEffect ">
@@ -134,8 +134,10 @@ const New = () => {
                             <Link className='text-success' to={`/news-details/${post.id}`}>{post.title}</Link>
                           </div>
                           <h4 className="title line-clamp-2">
-                   
-                            <div className='' dangerouslySetInnerHTML={{ __html: post.body }} />
+
+
+                            <Link to={`/news-details/${post.slug}`}><div className='' dangerouslySetInnerHTML={{ __html: post.body }} /></Link>
+
                           </h4>
                           <div className="news-info">
                             <div className="d-flex gap-10 align-items-center">

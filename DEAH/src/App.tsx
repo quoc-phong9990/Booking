@@ -18,6 +18,8 @@ import Verification from './components/Verification';
 import Indextwo from './components/Indextwo';
 import SlideShow from './FunctionComponentContext/SlideShow';
 import ProfileUser from './AuthForm/ProfileUser';
+
+import ListBill from './components/ListBill';
 import PaymentSuccess from './components/PaymentSuccess';
 import Password from './AuthForm/Password';
 
@@ -30,6 +32,7 @@ import Payment_PT from './FunctionComponentContext/Pament_PT';
 
 
 
+
 function App() {
   return (
     <>
@@ -38,8 +41,8 @@ function App() {
         <Route path="/index-two" element={<Indextwo />} />
         <Route path="/about" element={<About />} />
         <Route path="/tour-list" element={<TourList />} />
-        <Route path="/tour-details/:id" element={<TourDetails />} />
-        <Route path="/news-details/:id" element={<NewsDetails />} />
+        <Route path="/tour-details/:slug" element={<TourDetails />} />
+        <Route path="/news-details/:slug" element={<NewsDetails />} />
         <Route path="/payment/:id" element={<Payment />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -58,12 +61,17 @@ function App() {
 
         {/* user */}
         <Route path="/profile" element={<ProfileUser />} />
+
+       <Route path="/listbill" element={<ListBill/>}/>
+ 
+
             {/* user */}
             <Route path="/pass" element={<Password />} />
        
-            <Route path="/t" element={<Ok/>} />
-            <Route path="/y" element={<You/>} />
-            <Route path="/x" element={<Payment_PT/>} />
+
+            <Route path="/t" element={<Test/>} />
+
+
       </Routes>
       <ToastContainer />
     </>

@@ -1,15 +1,21 @@
-import { useEffect, useState } from 'react';
+
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import '../App1.css';
-import { useNavigate } from 'react-router-dom';
+
+import { Component, useEffect, useState } from 'react';
+import '../App1.css'
+import { Link, useNavigate } from 'react-router-dom';
+
 import { useForm } from 'react-hook-form';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import axios from 'axios';
+import SideBar from '../components/SideBar';
 
 const ProfileUser = () => {
   const [file, setFile] = useState<File | null>(null);
   const [avatarUrl, setAvatarUrl] = useState<string>(''); // State để lưu URL của ảnh
+  const [status, setStatus] = useState<boolean>(false); // State để lưu URL của ảnh
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
 
@@ -23,7 +29,7 @@ const ProfileUser = () => {
     address: '',
     token: '',
     file: '',
-    date_of_birth:''
+    date_of_birth: ''
   });
 
   useEffect(() => {
@@ -34,6 +40,7 @@ const ProfileUser = () => {
       setAvatarUrl(user.avatar ? 'http://127.0.0.1:8000/' + user.avatar : ''); // Cập nhật URL ảnh từ userData
       reset(user);
     }
+
   }, [reset]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +52,8 @@ const ProfileUser = () => {
     }
   };
 
-  const handleUpdate = async (data: any) => {
+
+   const handleUpdate = async (data: any) => {
     data.file = file;
     console.log(data);
     
@@ -72,35 +80,14 @@ const ProfileUser = () => {
 
   return (
     <div>
-      <Header />
+      <Header status={status} />
       <div className="container">
         <div className="view-account">
           <section className="module">
             <div className="module-inner">
-              <div className="side-bar">
-                <div className="user-info">
-                  <img className="img-profile img-circle img-responsive center-block" src={avatarUrl} alt="Profile Avatar" />
-                  <ul className="meta list list-unstyled">
-                    <li className="name">{userData.name}</li>
-                    <li>{userData.date_of_birth}</li>
-                    <li className="email"><a href="#">{userData.email}</a></li>
-                    <li className="activity">Last logged in: Today at 2:18pm</li>
-                  </ul>
-                </div>
-                <nav className="side-menu">
-                  <ul className="nav">
-                    <li><a href="#"><span className="fa fa-user" /> Profile</a></li>
-                    <li><a href="#"><span className="fa fa-cog" /> Settings</a></li>
-                    <li className="active"><a href="#"><span className="fa fa-credit-card" /> Billing</a></li>
-                    <li><a href="#"><span className="fa fa-envelope" /> Messages</a></li>
-                    <li><a href="user-drive.html"><span className="fa fa-th" /> Drive</a></li>
-                    <li><a href="#"><span className="fa fa-clock-o" /> Reminders</a></li>
-                    <div className="mt-40">
-                      <button type="submit" className="send-btn"><a className='text-black' href="/pass">Đổi mật khẩu </a></button>
-                    </div>
-                  </ul>
-                </nav>
-              </div>
+
+              <SideBar userData={userData} avatarUrl={avatarUrl}/>
+
               <div className="content-panel">
                 <div className="billing">
                   <form id="billing" className="form-horizontal" onSubmit={handleSubmit(handleUpdate)} role="form">
