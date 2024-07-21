@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../App.css';
 import Ok from './Ok';
-// import MyDropdown from './MyDropdown'; // Import the new component
 
 const Header = () => {
   const navigate = useNavigate();
@@ -13,13 +14,13 @@ const Header = () => {
     if (userData) {
       setUserName(JSON.parse(userData));
     }
-  }, );
+  }, []);
 
   const handleLogout = () => {
     sessionStorage.removeItem('user');
     localStorage.removeItem('token');
     setUserName(null);
-    alert('Bạn đã đăng xuất');
+    toast.success('Bạn đã đăng xuất thành công');
     navigate('/login');
   };
 
@@ -87,7 +88,6 @@ const Header = () => {
                               <a href="javascript:void(0)">example@gmail.com</a>
                             </h4>
                           </div>
-                   
                         </div>
                         <div className="contact-section">
                           <div className="circle-primary-sm">
@@ -133,7 +133,6 @@ const Header = () => {
                                 <a href="/contact" className="single">Liên hệ</a>
                               </li>
                               <li className="single-list">
-                            
                               </li>
                               <li className="d-block d-lg-none">
                                 <div className="header-right pl-15">
@@ -145,51 +144,38 @@ const Header = () => {
                                     <div className="money">
                                       <p className="pera">Login</p>
                                     </div>
-                                    
                                   </div>
                                 </div>
                               </li>
                             </ul>
                             <div className="header-right">
-                          
                               {userName ? (
                                 <div className='d-flex'>
                                   <Link to={'/profile'}>
-                                    <p className='mt-3 mr-2 user-name '>Chào mừng, {userName.name}!</p>  
+                                    <p className='mt-3 mr-2 user-name '>Chào mừng, {userName.name}!</p>
                                   </Link>
                                   <img className='rounded-circle' width={60} height={100} src={'http://127.0.0.1:8000/' + (userName.avatar ? userName.avatar : '')} alt="" />
                                 </div>
                               ) : (
                                 <p className='mt-3'>Chào mừng, bạn vui lòng đăng nhập!</p>
                               )}
-
                               {!userName && (
                                 <div className="sign-btn">
                                   <a href="/login" className="btn-secondary-sm">Đăng nhập</a>
                                 </div>
-                                
                               )}
-
-                             
-                             {userName && (
-                             <div className="sign-btn">
+                              {userName && (
+                                <div className="sign-btn">
                                   <a type='submit' className="btn-secondary-sm " onClick={handleLogout}>Đăng xuất</a>
                                 </div>
-                             )}
-
+                              )}
                               {/* Theme Mode */}
                               <li className="single-list">
                                 <button className="ToggleThemeButton change-theme-mode m-0 p-0 border-0">
-                                  {/* Icon for theme mode */}
-                                  <Ok/>
-                            
+                                  <Ok />
                                 </button>
                               </li>
-                              {/* MyDropdown Component */}
-                              {/* <MyDropdown /> */}
-                            
                             </div>
-                        
                           </div>
                         </nav>
                       </div>
