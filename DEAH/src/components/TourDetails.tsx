@@ -22,7 +22,7 @@ const TourDetails = () => {
     queryKey: ['KEY_POST', slug],
     queryFn: async () => {
       const { data } = await axios.get(`http://127.0.0.1:8000/api/client/get-tour-detail/${slug}`);
-        console.log(data.data.tour.images);
+      console.log(data.data.tour.images);
       localStorage.setItem('tour', JSON.stringify(data.data))
       return data.data;
     }
@@ -57,7 +57,7 @@ const TourDetails = () => {
 
                   <li className="breadcrumb-item single-list"><Link to="/" className="single">Trang chủ</Link></li>
                   <li className="breadcrumb-item single-list" aria-current="page">
-                   <a href="javascript:void(0)" className="single active">Chi tiết tour du lịch</a>
+                    <a href="javascript:void(0)" className="single active">Chi tiết tour du lịch</a>
 
                   </li>
                 </ul>
@@ -91,95 +91,94 @@ const TourDetails = () => {
                 </div>
               </>
             )}
-
-            <div className="tour-details-banner ">
-            </div>
-            {/* / Slider*/}
-            <div className="tour-details-container">
-              <div className="container">
-                {/* Details Heading */}
-                <div className="details-heading" key={data.tour.id}>
-                  <div className="d-flex flex-column">
-                    <h4 className="title">{data.tour.title}</h4>
-                    <div className="d-flex flex-wrap align-items-center gap-30 mt-16">
-                      <div className="location">
-                        <i className="ri-map-pin-line" />
-                        <div className="name">{data.tour.location.province}</div>
-                      </div>
-                      <div className="divider" />
-                      <div className="d-flex align-items-center flex-wrap gap-20">
-                        <div className="count">
-                          <i className="ri-time-line" />
-                          <p className="pera mt-3">{data.tour.day} Ngày {data.tour.day - 1} Đêm</p>
-                        </div>
-                        <div className="count">
-                          <i className="ri-user-line" />
-                          <p className="pera"></p>
-                        </div>
-                      </div>
+          </div>
+          <div className="tour-details-banner ">
+          </div>
+          {/* / Slider*/}
+          <div className="tour-details-container">
+            <div className="container">
+              {/* Details Heading */}
+              <div className="details-heading" key={data.tour.id}>
+                <div className="d-flex flex-column">
+                  <h4 className="title">{data.tour.title}</h4>
+                  <div className="d-flex flex-wrap align-items-center gap-30 mt-16">
+                    <div className="location">
+                      <i className="ri-map-pin-line" />
+                      <div className="name">{data.tour.location.province}</div>
                     </div>
-                  </div>
-                  <div className="price-review">
-                    <div className="d-flex gap-10 align-items-end">
-
-                      <p className="light-pera">Chỉ từ :</p>
-                      <div className="price mb-3 d-flex justify-content-center ml-4">
-                        <h6 className="text-danger fw-bold mr-2">Giá mới: {data.tour.promotion}VND</h6>
-                        <h6 className="text-muted text-decoration-line-through">Giá cũ: {data.tour.price}VND</h6>
+                    <div className="divider" />
+                    <div className="d-flex align-items-center flex-wrap gap-20">
+                      <div className="count">
+                        <i className="ri-time-line" />
+                        <p className="pera mt-3">{data.tour.day} Ngày {data.tour.day - 1} Đêm</p>
                       </div>
-
-                    </div>
-                    <div className="rating">
-                      <p className="pera mr-5">Đánh giá: {data.rates ? data.rates.qty : 0}</p>
-                      <p className="pera">{data.rates ? data.rates.rate : 0}</p>
-                      <i className="ri-star-s-fill mb-3"></i>
+                      <div className="count">
+                        <i className="ri-user-line" />
+                        <p className="pera"></p>
+                      </div>
                     </div>
                   </div>
                 </div>
+                <div className="price-review">
+                  <div className="d-flex gap-10 align-items-end">
+
+                    <p className="light-pera">Chỉ từ :</p>
+                    <div className="price mb-3 d-flex justify-content-center ml-4">
+                      <h6 className="text-danger fw-bold mr-2">Giá mới: {data.tour.promotion}VND</h6>
+                      <h6 className="text-muted text-decoration-line-through">Giá cũ: {data.tour.price}VND</h6>
+                    </div>
+
+                  </div>
+                  <div className="rating">
+                    <p className="pera mr-5">Đánh giá: {data.rates ? data.rates.qty : 0}</p>
+                    <p className="pera">{data.rates ? data.rates.rate : 0}</p>
+                    <i className="ri-star-s-fill mb-3"></i>
+                  </div>
+                </div>
+              </div>
 
 
-                <div className="mt-30">
-                  <div className="row g-4">
-                    <div className="col-xl-8 col-lg-7">
-                      <div className="tour-details-content">
-                        <h4 className="title">Về</h4>
-                        <p className="pera">
-                          <div dangerouslySetInnerHTML={{ __html: data.tour.description }} />
-                        </p>
+              <div className="mt-30">
+                <div className="row g-4">
+                  <div className="col-xl-8 col-lg-7">
+                    <div className="tour-details-content">
+                      <h4 className="title">Về</h4>
+                      <p className="pera">
+                        <div dangerouslySetInnerHTML={{ __html: data.tour.description }} />
+                      </p>
+                    </div>
+
+                    <div className="tour-include-exclude radius-6">
+                      <div className="includ-exclude-point">
+                        <h4 className="title">Thuộc tính</h4>
+                        {data.tour.attributes?.map((attr: any) => (
+                          <li key={attr.id}>
+                            {attr.attribute}<br />
+                          </li>
+                        ))}
                       </div>
-
-                      <div className="tour-include-exclude radius-6">
-                        <div className="includ-exclude-point">
-                          <h4 className="title">Thuộc tính</h4>
-                          {data.tour.attributes?.map((attr: any) => (
-                            <li key={attr.id}>
-                              {attr.attribute}<br />
-                            </li>
-                          ))}
-                        </div>
-                        <div className="divider" />
-                      </div>
+                      <div className="divider" />
+                    </div>
 
 
-                      <div className="tour-details-content mb-30">
-                        <h4 className="title">Kế hoạch du lịch</h4>
-                        <div className="accordion" id="accordionExample">
-                          {data.tour.itineraries?.length > 0 ? (
-                            data.tour.itineraries.map((day: any, index: any) => (
-                              <div key={index}>
-                                <h2 className="accordion-header">
-                                  <button className="accordion-button text-black">
-                                    Ngày {day.day}: {day.title}
-                                  </button>
-                                </h2>
-                                <div className='ml-4 text-black' dangerouslySetInnerHTML={{ __html: day.itinerary }} />
-                                <div id={`collapse${index}`} className={`accordion-collapse collapse ${index === 1 ? "show" : ""}`} aria-labelledby={`heading${index}`} data-bs-parent="#accordionExample">
-                                  <div className="accordion-body"></div>
-                                </div>
+                    <div className="tour-details-content mb-30">
+                      <h4 className="title">Kế hoạch du lịch</h4>
+                      <div className="accordion" id="accordionExample">
+                        {data.tour.itineraries?.length > 0 ? (
+                          data.tour.itineraries.map((day: any, index: any) => (
+                            <div key={index}>
+                              <h2 className="accordion-header">
+                                <button className="accordion-button text-black">
+                                  Ngày {day.day}: {day.title}
+                                </button>
+                              </h2>
+                              <div className='ml-4 text-black' dangerouslySetInnerHTML={{ __html: day.itinerary }} />
+                              <div id={`collapse${index}`} className={`accordion-collapse collapse ${index === 1 ? "show" : ""}`} aria-labelledby={`heading${index}`} data-bs-parent="#accordionExample">
+                                <div className="accordion-body"></div>
                               </div>
-
-
                             </div>
+
+
                           ))
                         ) : (
                           <p>Lịch trình không có sẵn.</p>
@@ -197,7 +196,7 @@ const TourDetails = () => {
                     <div className="row">
                       <hr className="mb-4" />
                       <div className="d-grid gap-2">
-                        <a href={`/payment/${id}`} className="btn btn-primary btn-lg" type="button">
+                        <a href={`/payment/${slug}`} className="btn btn-primary btn-lg" type="button">
                           Đặt Lịch Ngay
                         </a>
 
