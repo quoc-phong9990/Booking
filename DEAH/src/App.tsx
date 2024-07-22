@@ -29,6 +29,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Ok from './components/Ok';
 import You from './components/You';
 import Payment_PT from './FunctionComponentContext/Pament_PT';
+import UserPicker from './components/You';
 
 
 
@@ -61,16 +62,12 @@ function App() {
 
         {/* user */}
         <Route path="/profile" element={<ProfileUser />} />
-
        <Route path="/listbill" element={<ListBill/>}/>
- 
-
             {/* user */}
             <Route path="/pass" element={<Password />} />
-       
-
             <Route path="/t" element={<Test/>} />
-
+            
+           
 
       </Routes>
       <ToastContainer />
