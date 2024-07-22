@@ -67,7 +67,7 @@ const Indextwo = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-5 col-lg-6">
+                <div className="col-xl-5 col-lg-6 relative">
                   <div className="search-tour-card sidenav-active">
                     <div className="section-title text-center">
                       <h4 className="title">Các tour du lịch tìm kiếm</h4>

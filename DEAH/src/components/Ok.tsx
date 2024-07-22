@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import img from '../assets/category_tour/HaNoi.png';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import '../App1.css'
 
 const MyDropdown = () => {
   const [Open, setOpen] = useState(false);
@@ -13,7 +14,7 @@ const MyDropdown = () => {
   ];
 
   return (
-    <div className=''>
+    <div>
       <div className='relative'>
         <img
           onClick={() => setOpen(!Open)}
@@ -21,28 +22,26 @@ const MyDropdown = () => {
           alt="img"
           className='h-5 w-5 border-4 object-cover border-gray-400 rounded-full cursor-pointer'
         />
-        {
-          Open && (
-            <div className='bg-white p-4 w-52 shadow-lg absolute -left-14 top-24'>
-              <ul className='list-none p-0 m-0'>
-                {Menus.map((menu) => (
-                  <li
-                    className='text-lg cursor-pointer rounded p-2 hover:bg-green-400'
-                    key={menu.name}
+        {Open && (
+          <div className='bg-white p-4 w-40 shadow-lg absolute -left-28 mt-2 rounded hi '>
+            <ul className='list-none p-0 m-0'>
+              {Menus.map((menu) => (
+                <li
+                  className='text-lg cursor-pointer rounded  hover:bg-green-400'
+                  key={menu.name}
+                >
+                  <Link 
+                    to={menu.link} 
+                    onClick={() => setOpen(false)}
+                    className='block w-full h-full'
                   >
-                    <Link 
-                      to={menu.link} 
-                      onClick={() => setOpen(false)}
-                      className='block w-full h-full'
-                    >
-                      {menu.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )
-        }
+                   <p> {menu.name}</p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,15 +1,12 @@
 
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import { Component, useEffect, useState } from 'react';
+import {  useEffect, useState } from 'react';
 import '../App1.css'
-import { Link, useNavigate } from 'react-router-dom';
-
+import {  useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import axios from 'axios';
 import SideBar from '../components/SideBar';
 
 const ProfileUser = () => {
@@ -53,7 +50,7 @@ const ProfileUser = () => {
   };
 
 
-   const handleUpdate = async (data: any) => {
+             const handleUpdate = async (data: any) => {
     data.file = file;
     console.log(data);
     
@@ -74,7 +71,7 @@ const ProfileUser = () => {
       setIsLoggedIn(true);
       toast.success('Lưu thay đổi thành công!');
     } catch (error) {
-      alert('Đã xảy ra lỗi khi cập nhật thông tin người dùng: ');
+      toast.success('Sảy ra lỗi khi cập nhật thông tin người dùng!');
     }
   };
 

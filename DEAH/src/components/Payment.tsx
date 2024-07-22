@@ -6,7 +6,11 @@ import axios from 'axios';
 import '../App1.css'
 import DateStar from '../FunctionComponentContext/FunctionApp';
 import You from './You';
+
+import Payment_PT from '../FunctionComponentContext/Pament_PT';
+
 import addDays from 'date-fns/addDays';
+
 
 
 const Payment = () => {
@@ -190,32 +194,9 @@ const Payment = () => {
                             </div>
                           </div>
                           {/* hình thức thanh toán chọn */}
-                          <div className="tour-include-exclude m-0 mb-30 radius-6">
-                            <div className="include-exclude-point">
 
-                              <div className="checkbox-group">
+                      <Payment_PT/>
 
-                                <div className='d-flex'>
-                                  <input name='payment_method' type="radio" />
-                                  <label className='bg-white  h-9 rounded shadow justify-content-center '>Thanh toán bằng tiền mặt
-                                  </label>
-                                </div>
-
-                                <div className='d-flex'>
-                                  <input name='payment_method' type="radio" />
-                                  <label className='bg-white  h-9 rounded shadow justify-content-center'>Chuyển khoản ngân hàng
-                                  </label>
-                                </div>
-
-                                <div className='d-flex'>
-                                  <input name='payment_method' type="radio" />
-                                  <label className='bg-white  h-9 rounded shadow justify-content-center '>Thanh toán VNPay
-                                  </label>
-                                </div>
-
-                              </div>
-                            </div>
-                          </div>
 
                           {/* hình thức thanh toán chọn */}
 

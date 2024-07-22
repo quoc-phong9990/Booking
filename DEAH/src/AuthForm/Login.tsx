@@ -3,7 +3,8 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 type Input = {
   email: string,
   password: number
@@ -46,12 +47,12 @@ const Login = () => {
               address: resData.data.address, 
               password: resData.data.password || '' }));
           }
-          alert('Đăng Nhập thành công')
+          toast.success('Chúc mừng bạn đã đăng nhập thành công');
           navigate('/index-two');
         }
       })
-      .catch(err => {
-        alert("Sai thông tin hãy nhập lại :" + err)
+      .catch(err => {           
+         toast.success('Sai thông tin xin mời nhập lại');
       })
   }
   return (
