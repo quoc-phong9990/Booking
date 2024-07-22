@@ -1,4 +1,5 @@
 /* General styles */
+
 body {
   background: #f9f9fb;
 }
@@ -610,6 +611,7 @@ body {
        margin: 0; 
    }*/
 
+
 body {
   min-height: 100vh;
   background: url(images/html_table.jpg) center / cover;
@@ -617,6 +619,7 @@ body {
   justify-content: center;
   align-items: center;
 }
+
 
 main.table {
   width: 900px;

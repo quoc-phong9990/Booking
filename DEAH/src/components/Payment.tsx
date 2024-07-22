@@ -6,7 +6,11 @@ import axios from 'axios';
 import '../App1.css'
 import DateStar from '../FunctionComponentContext/FunctionApp';
 import You from './You';
+
 import Payment_PT from '../FunctionComponentContext/Pament_PT';
+
+import addDays from 'date-fns/addDays';
+
 
 
 const Payment = () => {
@@ -16,15 +20,21 @@ const Payment = () => {
   const [phone, setPhone] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [hotel, setHotel] = useState<any>();
+  const [adults, setAdults] = useState<any>(0);
+  const [kids, setKids] = useState<any>(0);
   const tourString = localStorage.getItem('tour');
   const tour = tourString ? JSON.parse(tourString) : null;
   // const [searchTerm, setSearchTerm] = useState('');
   const [filteredOptions, setFilteredOptions] = useState(tour.tour.hotels);
 
+  const user = JSON.parse(sessionStorage.getItem('user'));
+  const user_id = user?.id;
   console.log(tour);
 
-  const [startDate, setStartDate] = useState<string>('');
-  const [endDate, setEndDate] = useState<string>('');
+  console.log(user_id);
+  
+  const [startDate, setStartDate] = useState<any>(new Date());
+  const [endDate, setEndDate] = useState<any>(addDays(new Date(), tour.tour.day));
   const Payment = async () => {
     const user_payment_info = {
       'user_name': username,
@@ -40,14 +50,14 @@ const Payment = () => {
       'email': email,
       'tour_name': tour.tour.title,
       'tour_price': tour.tour.price,
-      'tour_address': tour.tour.address + ', ' + tour.tour.location.ward + ', ' + tour.tour.location.district + ', ' + tour.tour.location.province,
+      'tour_address': tour.tour.location.ward + ', ' + tour.tour.location.district + ', ' + tour.tour.location.province,
       'hotel_name': hotel.name,
       'hotel_price': hotel.promotion ? Number(hotel.promotion) : hotel.price,
       'hotel_address': hotel.address + ', ' + tour.tour.location.province,
       'book_price': tour.tour.price + hotel.promotion ? Number(hotel.promotion) : hotel.price,
       'promotion_price': 1,
       'total_price': (tour.tour.price + (hotel.promotion ? Number(hotel.promotion) : hotel.price)) * 1,
-      'people': 1,
+      'people': kids + adults,
       'start': startDate,
       'end': endDate,
       'status_tour': 0,
@@ -55,27 +65,22 @@ const Payment = () => {
       'type': tour.tour.type,
       'phone': phone,
       'promotion': tour.tour.promotion,
+      'kids': kids,
+      'adults':adults,
+      'user_id':user_id
     })
+    // 
+    
     return window.location.href = response.data.data;
   };
+
 
   const chooseHotel = (e: any) => {
     let data = JSON.parse(e.target.value);
     setHotel(data);
   }
-  const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedStartDate = e.target.value;
-    setStartDate(selectedStartDate);
 
-    // Calculate end date
-    const startDateObj = new Date(selectedStartDate);
-    const endDateObj = new Date(startDateObj);
-    endDateObj.setDate(startDateObj.getDate() + tour.tour.day);
-
-    // Format end date as YYYY-MM-DD
-    const formattedEndDate = endDateObj.toISOString().split('T')[0];
-    setEndDate(formattedEndDate);
-  };
+  
 
   return (
     <div>
@@ -189,7 +194,9 @@ const Payment = () => {
                             </div>
                           </div>
                           {/* hình thức thanh toán chọn */}
+
                       <Payment_PT/>
+
 
                           {/* hình thức thanh toán chọn */}
 
@@ -210,11 +217,11 @@ const Payment = () => {
                         </div>
                         <h4 className="heading-card">Chọn Ngày và Khách du lịch </h4>
                         <div className="date-time-dropdown">
-                          <DateStar />
+                          <DateStar tour_long={tour.tour.day} setStartDate={setStartDate} setEndDate={setEndDate}/>
                           {/* <input type="date" /> */}
                         </div>
                         <div className="dropdown-section position-relative user-picker-dropdown">
-                          <You />
+                          <You setKids={setKids} setAdults={setAdults} />
                         </div>
 
                         <div className="footer bg-transparent">
@@ -222,6 +229,7 @@ const Payment = () => {
                           <p className="pera"> Lên đến 24 giờ trước</p>
                         </div>
                       </div>
+                      <button className="btn-primary-submit w-100 mt-2" onClick={Payment}>Thanh Toán</button>
                     </div>
                   </div>
                 </div>
