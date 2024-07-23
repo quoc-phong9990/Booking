@@ -3,6 +3,8 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type Input = {
   name: string,
@@ -32,7 +34,8 @@ const Register = () => {
           console.log(resData);
           if (resData.ok) {
             navigate('/login')
-            alert('Đăng ký thành công')
+          
+            toast.success('Chúc mừng bạn đã đăng ký thành công');
           } else {
             alert('errors')
             const message = await resData.json()

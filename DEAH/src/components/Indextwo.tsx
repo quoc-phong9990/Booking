@@ -18,7 +18,7 @@ const Indextwo = () => {
   const [tourFeature, setToursFeature] = useState<any>([]);
   const [tourNew, setToursNew] = useState<any>([]);
   const [postsNew, setPostsNew] = useState<any>([]);
-
+  const [status, setStatus] = useState<boolean>(false); // State để lưu URL của ảnh
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -32,10 +32,11 @@ const Indextwo = () => {
           axios.get(posts)
         ]);
         // console.log(response1.data.data);
-
+        setStatus(!status);
         setToursNew(tourNew.data.data);
         setToursFeature(tourFeature.data.data);
         setPostsNew(postsNew.data.data);
+   
       } catch (error) {
         if (error) return <div>loi...</div>
       }
@@ -49,7 +50,7 @@ const Indextwo = () => {
     <div>
 
       <div>
-        <Header />
+        <Header status={status} />
         <main>
           {/* Hero area S t a r t*/}
           <section className="hero-padding-two hero-bg-two position-relative">
