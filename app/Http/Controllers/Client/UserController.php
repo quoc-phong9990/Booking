@@ -81,9 +81,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => ['required', 'email', Rule::unique('users')->ignore($request->id)],
-
             'file' => 'nullable',
-
             'date_of_birth' => 'nullable|date|after:' . now()->toDateString() . "'",
             'phone' => 'nullable|regex:/^(0[0-9]{9,10})$/',
             'address' => 'nullable',
@@ -92,21 +90,20 @@ class UserController extends Controller
         if ($validator->fails()) {
             return $this->response->responseFailed($validator->errors()->first());
         }
-
+        
 
   
         if (Hash::check($request->id, $request->token)) {
             $user = User::find($request->id);
             if ($user) {
                 if ($request->hasFile('file')) {
-                    $image = $request->file('file');
+                    $image = $request->file;
                     $imageName = "storage/users/test-" . time() . '.' . $image->getClientOriginalExtension();
                     $image->move(public_path('storage/users'), $imageName);
-                    $request->merge(['avatar' => 'string']);
-                   
-                
+               
                 }
                 $user->update([...$request->all(),'avatar' => $imageName]);
+
 
                 $user->token = Hash::make($user->id);
                 return $this->response->responseSuccess($user, 'Cập nhật thành công');
