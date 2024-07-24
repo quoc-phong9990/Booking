@@ -34,7 +34,7 @@
                             <div class="col-4">
                                 <label for="date-field" class="form-label">Giá
                                 </label>
-                                <input type="text" value="{{ old('price') }}" name="price" id=""
+                                <input type="text" value="{{ old('price') }}" name="price" id="price"
                                     class="form-control" placeholder="Nhập giá">
                                 @error('price')
                                     <span class="text-danger fw-light ">{{ $message }}</span>
@@ -45,7 +45,7 @@
                                 </label>
 
                                 <input type="text" value="{{ old('promotion') }}" name="promotion"
-                                    placeholder="Nhập giá khuyến mại" id="" class="form-control">
+                                    placeholder="Nhập giá khuyến mại" id="promotion" class="form-control">
                                 @error('promotion')
                                     <span class="text-danger fw-light ">{{ $message }}</span>
                                 @enderror
@@ -212,7 +212,20 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-
+            $('#price').on('blur', function() {
+                const value = this.value.replace(/[^0-9]/g, "");
+                this.value = parseFloat(value).toLocaleString('vi-VN');
+                if (value == "") {
+                    this.value = "";
+                }
+            });
+            $('#promotion').on('blur', function() {
+                const value = this.value.replace(/[^0-9]/g, "");
+                this.value = parseFloat(value).toLocaleString('vi-VN');
+                if (value == "") {
+                    this.value = "";
+                }
+            });
             $('#itine').hide();
             $('#day').on('change', function() {
                 $('#itine').show();

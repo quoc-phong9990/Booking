@@ -20,7 +20,7 @@ class BookingController extends Controller
             $query->where('booking_code', 'LIKE', $request->code);
         }
         if ($request->user_name && $request->user_name != null) {
-            $query->where('user_name', 'LIKE', '%'.$request->user_name.'%');
+            $query->where('user_name', 'LIKE', '%' . $request->user_name . '%');
         }
         if (isset($request->status_payment)) {
             $query->where('status_payment', intval($request->status_payment));
@@ -65,20 +65,33 @@ class BookingController extends Controller
                 return redirect()->route('bookings.index')->with('error', "Không thể cập nhật trạng thái đơn hàng");
 
             }
-            if ($request->status_payment == StatusPayment::CANCEL || $request->status_tour == StatusTour::CANCEL) {
+            if ($request->status_tour == StatusTour::DONE) {
                 $booking->update([
-                    'status_payment' => StatusPayment::CANCEL,
-                    'status_tour' => StatusTour::CANCEL,
+                    'status_payment' => StatusPayment::PAID,
+                    'status_tour' => StatusTour::DONE,
                 ]);
-                return redirect()->route('bookings.index')->with('success', 'Hủy đơn hàng thành công');
+            } elseif ($request->status_tour == StatusTour::CANCEL) {
+                if ($booking->status_payment == StatusPayment::PAID) {
+                    $booking->update([
+                        'status_payment' => StatusPayment::REFUND,
+                        'status_tour' => StatusTour::CANCEL,
+                    ]);
+                } elseif ($booking->status_payment == StatusPayment::PENDING) {
+                    $booking->update([
+                        'status_payment' => StatusPayment::CANCEL,
+                        'status_tour' => StatusTour::CANCEL,
+                    ]);
+                }
+
+            } else {
+                $booking->update($request->all());
             }
-            $booking->update($request->all());
             return redirect()->route('bookings.index')->with('success', 'Cập nhật trạng thái đơn hàng thành công');
 
 
 
         }
-        return redirect()->route('bookings.index')->with('error', "Đơn hàng không tồn tị");
+        return redirect()->route('bookings.index')->with('error', "Đơn hàng không tồn tại");
 
     }
 

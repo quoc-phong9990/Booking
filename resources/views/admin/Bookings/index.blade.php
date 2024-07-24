@@ -89,7 +89,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Tên KH</th>
-                                <th>Email</th>
+                                {{-- <th>Email</th> --}}
                                 <th>Mã đơn</th>
                                 <th>Tổng tiền</th>
                                 <th>Số người</th>
@@ -105,10 +105,13 @@
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $booking->user_name }}</td>
-                                        <td>{{ $booking->email }}</td>
+                                        {{-- <td>{{ $booking->email }}</td> --}}
                                         <td>{{ $booking->booking_code }}</td>
                                         <td>{{ number_format($booking->total_price, 0, '.', '.') }} VND</td>
-                                        <td>{{ $booking->people }}</td>
+                                        <td>
+                                            <p>{{$booking->adults}} Người lớn</p>
+                                            <p>{{$booking->kids}} Trẻ con</p>
+                                        </td>
                                         <td>{{ $booking->created_at->format('d-m-Y') }}</td>
                                         <td>
                                             {!! $booking->getNameStatusPayment() !!}
@@ -127,14 +130,14 @@
                                                 data-edit-id="{{ $booking->id }}"></i>
 
 
-                                            <form action="{{ route('bookings.destroy', $booking) }}" method="POST"
+                                            {{-- <form action="{{ route('bookings.destroy', $booking) }}" method="POST"
                                                 class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn border-0 border-spacing-0 p-0"
                                                     onclick="return confirm('Bạn có chắc chắn muốn xóa đơn hàng này?')">
                                                     <i class="ri-delete-bin-7-fill fs-5 text-danger"></i></button>
-                                            </form>
+                                            </form> --}}
                                         </td>
                                     </tr>
                                 @endforeach
