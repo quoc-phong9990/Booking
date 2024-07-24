@@ -45,6 +45,7 @@ const Login = () => {
               email: resData.data.email, 
               phone: resData.data.phone, 
               address: resData.data.address, 
+              date_of_birth: resData.data.date_of_birth, 
               password: resData.data.password || '' }));
           }
           toast.success('Chúc mừng bạn đã đăng nhập thành công');
@@ -58,7 +59,7 @@ const Login = () => {
   return (
     <div>
       <div>
-        <Header />
+        <Header/>
         <main>
           {/* Breadcrumbs S t a r t */}
           <section className="breadcrumbs-area breadcrumb-bg">

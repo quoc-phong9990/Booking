@@ -16,6 +16,7 @@ class DashBoardController extends Controller
     //
     public function index()
     {
+       
         $nowMonth = date("m");
         $nowYear = date("Y");
         $title = "Dashboard";

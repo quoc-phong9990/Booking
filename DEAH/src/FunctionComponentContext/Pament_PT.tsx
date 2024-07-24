@@ -6,7 +6,7 @@ const Payment_PT = () => {
     { 
       name1:'Quý khách vui lòng thanh toán tại bất kỳ văn phòng Vietravel trên toàn quốc và các chi nhánh tại nước ngoài.',
       name2: 'Quý khách chuyển khoản qua ngân hàng sau  Ngân hàng MB BANK: Tài khoản 2 3333 666 9999 – CHI NHÁNH GIA ĐỊNH, TPHCMNgân hàng ACB: Tài khoản 1818386868 – CHI NHÁNH BÌNH THẠNH, TPHCM ', link: '/abc',
-     name3: 'HÌNH THỨC THANH TOÁN BẰNG THẺ ATM/ INTERNET BANKING Vietravel chấp nhận thanh toán bằng thẻ ATM qua cổng thanh toán ZaloPay Hãy đảm bảo Quý khách đang sử dụng thẻ ATM do ngân hàng trong nước phát hành và đã được kích hoạt chức năng thanh toán trực tuyến. '
+      name3: 'HÌNH THỨC THANH TOÁN BẰNG THẺ ATM/ INTERNET BANKING Vietravel chấp nhận thanh toán bằng thẻ ATM qua cổng thanh toán ZaloPay Hãy đảm bảo Quý khách đang sử dụng thẻ ATM do ngân hàng trong nước phát hành và đã được kích hoạt chức năng thanh toán trực tuyến. '
     },
   ];
 
