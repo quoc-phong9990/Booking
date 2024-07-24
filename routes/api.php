@@ -6,7 +6,7 @@ use App\Http\Controllers\Client\TourController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\HotelController;
 use App\Http\Controllers\Client\PostController;
-use App\Http\Controllers\VNPayController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Client\UserController;
 
 use App\Models\Province;
@@ -57,7 +57,9 @@ Route::group(['middleware' => 'cors'], function () {
         });
 
         Route::post('update-payment-status/{id}', [BookingController::class, 'updatePaymentStatus']);
-        Route::post('create-payment', [VNPayController::class, 'createPayment']);
+        Route::post('vnpayment', [PaymentController::class, 'createPayment']);
+        Route::post('cashpayment', [PaymentController::class, 'cashPayment']);
+        Route::post('bankingPayment', [PaymentController::class, 'bankingPayment']);
     });
 });
 

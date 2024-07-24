@@ -26,6 +26,8 @@ const Payment: React.FC = () => {
     const [startDate, setStartDate] = useState<any>(new Date());
     const [endDate, setEndDate] = useState<any>(addDays(new Date(), tour.tour.day));
 
+
+    const [paymentMethod, setPaymentMethod] = useState<any>('VPGD');
     useEffect(() => {
         calculateTotalPrice(adults, kids);
     }, [adults, kids, hotel]);
@@ -47,8 +49,8 @@ const Payment: React.FC = () => {
             'end': endDate,
         };
         sessionStorage.setItem('user_payment_info', JSON.stringify(user_payment_info));
-        const response = await axios.post('http://127.0.0.1:8000/api/client/create-payment', {
-            'booking_code': '',
+        const bookingData = {
+            'booking_code': 'Tour'+Date.now(),
             'user_name': username,
             'email': email,
             'tour_name': tour.tour.title,
@@ -71,11 +73,28 @@ const Payment: React.FC = () => {
             'kids': kids,
             'adults': adults,
             'user_id': user_id
-        });
-        window.location.href = response.data.data;
+        }
+        switch (paymentMethod) {
+            case 'VPGD':
+                
+                break;
+
+            case 'CKNH':
+                break;
+
+            case 'VNPAY':
+                const response = await axios.post('http://127.0.0.1:8000/api/client/vnpayment', bookingData);
+                window.location.href = response.data.data;
+                break;
+            default:
+                break;
+        }
+        
     };
 
     const chooseHotel = (e: any) => {
+        console.log(paymentMethod);
+
         let data = JSON.parse(e.target.value);
         setHotel(data);
     };
@@ -88,7 +107,7 @@ const Payment: React.FC = () => {
 
     return (
         <div>
-            <Header  />
+            <Header />
             <main>
                 {/* Breadcrumbs Start */}
                 <section className="breadcrumbs-area breadcrumb-bg">
@@ -135,8 +154,8 @@ const Payment: React.FC = () => {
                                         <div className="d-flex gap-10 align-items-end">
                                             <p className="light-pera">Thành Tiền</p>
                                             <p className="pera"><CurrencyFormatter amount={totalPrice + tour.tour.price} /></p>
-                                           
-                                 
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -185,7 +204,7 @@ const Payment: React.FC = () => {
                                                     </select>
                                                 </div>
                                                 {/* hình thức thanh toán chọn */}
-                                                <Payment_PT />
+                                                <Payment_PT setPaymentMethod={setPaymentMethod} paymentMethod={paymentMethod} />
                                                 {/* hình thức thanh toán chọn */}
                                             </div>
                                         </div>
@@ -208,7 +227,7 @@ const Payment: React.FC = () => {
                                                 <DateStar tour_long={tour.tour.day} setStartDate={setStartDate} setEndDate={setEndDate} />
                                             </div>
                                             <div className="dropdown-section position-relative user-picker-dropdown">
-                                               
+
                                                 <UserPicker onUserChange={handleUserChange} />
                                             </div>
                                             <div className="footer bg-transparent">
