@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../App1.css'
-const Payment_PT = () => {
+const Payment_PT = ({setPaymentMethod,paymentMethod}) => {
   const [openIndex, setOpenIndex] = useState(null);
   const Menus = [
     { 
@@ -14,6 +14,10 @@ const Payment_PT = () => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  const handleRadioChange = (event)=>{
+    setPaymentMethod(event.target.value);
+  }
+
   return (
     <div>
       <div className="tour-include-exclude m-0 mb-30 radius-6">
@@ -21,9 +25,9 @@ const Payment_PT = () => {
           <div className="checkbox-group">
             <div className=' open' onClick={() => handleToggle(0)}>
               <div className='d-flex'>
-                <input name='payment_method' type="radio" />
+                <input name='payment_method' type="radio" value='VPGD' checked={paymentMethod=='VPGD'} onChange={handleRadioChange}/>
                 <label className='bg-white h-9 rounded shadow justify-content-center'>
-                  Thanh toán bằng tiền mặt
+                  Thanh toán tại văn phòng giao dịch
                 </label>
               </div>
               {openIndex === 0 && (
@@ -42,7 +46,7 @@ const Payment_PT = () => {
             </div>
             <div className=' open' onClick={() => handleToggle(1)}>
               <div className='d-flex'>
-                <input name='payment_method' type="radio" />
+                <input name='payment_method' type="radio" value='CKNH' checked={paymentMethod=='CKNH'}  onChange={handleRadioChange}/>
                 <label className='bg-white h-9 rounded shadow justify-content-center'>
                   Chuyển khoản ngân hàng
                 </label>
@@ -62,7 +66,7 @@ const Payment_PT = () => {
             </div>
             <div className=' open' onClick={() => handleToggle(2)}>
               <div className='d-flex'>
-                <input name='payment_method' type="radio" />
+                <input name='payment_method' type="radio" value='VNPAY'checked={paymentMethod=='VNPAY'} onChange={handleRadioChange}/>
                 <label className='bg-white h-9 rounded shadow justify-content-center'>
                   Thanh toán VNPay
                 </label>
