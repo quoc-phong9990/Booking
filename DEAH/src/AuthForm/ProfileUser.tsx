@@ -51,29 +51,31 @@ const ProfileUser = () => {
   };
 
 
-  const handleUpdate = async (data: any) => {
-    data.file = file;
-    console.log(data);
+
+  const handleUpdate = async (user: any) => {
+    user.file = file;
+    console.log(user);
 
     try {
-      await axios.post('http://127.0.0.1:8000/api/client/user/update', data, {
+      await axios.post('http://127.0.0.1:8000/api/client/user/update', user, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
-      }).then(res=>{
-        console.log(res);
-        setIsLoggedIn(true);
-        setStatus(!status);
-        sessionStorage.setItem('user', JSON.stringify(res.data.data));
-        toast.success(res.statusText);
       })
-      
-      
-    } catch (error) {
-      toast.success(error.message);
-    }
-  };
+        .then((res) => {
+          console.log(res.data.data);
+          reset(user);
+          setStatus(!status);
+          sessionStorage.setItem('user', JSON.stringify(res.data.data));
+          toast.success('Bạn đã cập nhật thành công');
+        });
+      } catch (error) {
+        toast.success('Có lỗi khi cập nhật thông tin người dùng');
+      };
 
+    }
+  
+  
   return (
     <div>
       <Header status={status} />

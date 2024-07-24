@@ -92,6 +92,7 @@ class UserController extends Controller
         }
         
 
+  
         if (Hash::check($request->id, $request->token)) {
             $user = User::find($request->id);
             if ($user) {
@@ -99,9 +100,10 @@ class UserController extends Controller
                     $image = $request->file;
                     $imageName = "storage/users/test-" . time() . '.' . $image->getClientOriginalExtension();
                     $image->move(public_path('storage/users'), $imageName);
-                    
-                    $user->update([...$request->all(),'avatar' => $imageName]);
+               
                 }
+                $user->update([...$request->all(),'avatar' => $imageName]);
+
 
                 $user->token = Hash::make($user->id);
                 return $this->response->responseSuccess($user, 'Cập nhật thành công');

@@ -5,7 +5,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../App.css';
 import Ok from './Ok';
 
+
+
 const Header = ({status}) => {
+
+
   const navigate = useNavigate();
   const [userName, setUserName] = useState<{ name: String, avatar: String } | null>(null);
 
@@ -154,7 +158,7 @@ const Header = ({status}) => {
                                   <Link to={'/profile'}>
                                     <p className='mt-3 mr-2 user-name '>Chào mừng, {userName.name}!</p>
                                   </Link>
-                                  <img className='rounded-circle' width={60} height={100} src={'http://127.0.0.1:8000/' + (userName.avatar ? userName.avatar : '')} alt="" />
+                                  <img className='rounded-circle' width={60} height={60} src={'http://127.0.0.1:8000/' + (userName.avatar ? userName.avatar : '')} alt="" />
                                 </div>
                               ) : (
                                 <p className='mt-3'>Chào mừng, bạn vui lòng đăng nhập!</p>

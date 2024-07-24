@@ -81,8 +81,7 @@ const TourDetails = () => {
                 <div className="thumbnail-images">
                   {data.tour.images.map((imageObj: any, index: any) => (
                     <img
-                      key={index}
-                      src={`http://127.0.0.1:8000/${imageObj.image}`}
+                      key={index}src={`http://127.0.0.1:8000/${imageObj.image}`}
                       alt={`Thumbnail ${index}`}
                       onClick={() => handleImageClick(imageObj.image)}
                       className="thumbnail"
@@ -147,8 +146,7 @@ const TourDetails = () => {
                         <div dangerouslySetInnerHTML={{ __html: data.tour.description }} />
                       </p>
                     </div>
-
-                    <div className="tour-include-exclude radius-6">
+<div className="tour-include-exclude radius-6">
                       <div className="includ-exclude-point">
                         <h4 className="title">Thuộc tính</h4>
                         {data.tour.attributes?.map((attr: any) => (
@@ -217,7 +215,7 @@ const TourDetails = () => {
                     <div className="section-title text-center mx-605 mx-auto position-relative mb-60">
                       <span className="highlights">Khách Sạn</span>
                       <h4 className="title">
-                        Hãy lựa chọn Khách sạn mà bạn yêu thích nhất
+Hãy lựa chọn Khách sạn mà bạn yêu thích nhất
                       </h4>
                     </div>
                   </div>

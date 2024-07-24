@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DateRangePicker } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
@@ -6,7 +6,13 @@ import '../App.css';
 import { format } from 'date-fns';
 import addDays from 'date-fns/addDays';
 
-const DateStar = ({tour_long,setStartDate,setEndDate}) => {
+interface DateStarProps {
+  tour_long: number;
+  setStartDate: (date: string) => void;
+  setEndDate: (date: string) => void;
+}
+
+const DateStar: React.FC<DateStarProps> = ({ tour_long, setStartDate, setEndDate }) => {
   const [openDate, setOpenDate] = useState(false);
   const [date, setDate] = useState({
     startDate: new Date(),
@@ -14,29 +20,34 @@ const DateStar = ({tour_long,setStartDate,setEndDate}) => {
     key: 'selection',
   });
 
+  useEffect(() => {
+    // Ensure dates are valid before formatting
+    if (date.startDate && date.endDate) {
+      const formattedstartDate = format(date.startDate, 'yyyy-MM-dd');
+      const formattedendDate = format(date.endDate, 'yyyy-MM-dd');
+      setStartDate(formattedstartDate);
+      setEndDate(formattedendDate);
+    }
+  }, [date.startDate, date.endDate, setStartDate, setEndDate]);
+
   const handleChange = (ranges: any) => {
-    const startDate = ranges.selection.startDate;
-    const endDate = addDays(startDate, tour_long);
-    if (endDate >= startDate) {
-      setDate({
-        ...date,
-        startDate,
-        endDate,
-      });
-      const formattedstartDate = format(startDate, 'yyyy-MM-dd');
-      const formattedendDate = format(endDate, 'yyyy-MM-dd');
-      setStartDate(formattedstartDate);
-      setEndDate(formattedendDate);
-    } else {
-      setDate({
-        ...date,
-        startDate,
-        endDate: startDate,
-      });
-      const formattedstartDate = format(startDate, 'yyyy-MM-dd');
-      const formattedendDate = format(endDate, 'yyyy-MM-dd');
-      setStartDate(formattedstartDate);
-      setEndDate(formattedendDate);
+    const { startDate, endDate } = ranges.selection;
+    if (startDate && endDate) {
+      const adjustedEndDate = addDays(startDate, tour_long);
+
+      if (adjustedEndDate >= startDate) {
+        setDate({
+          startDate,
+          endDate: adjustedEndDate,
+          key: 'selection',
+        });
+      } else {
+        setDate({
+          startDate,
+          endDate: startDate,
+          key: 'selection',
+        });
+      }
     }
   };
 
