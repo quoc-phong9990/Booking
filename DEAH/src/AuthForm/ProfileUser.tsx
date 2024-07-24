@@ -1,13 +1,14 @@
 
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {  useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../App1.css'
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SideBar from '../components/SideBar';
+import axios from 'axios';
 
 const ProfileUser = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -50,28 +51,26 @@ const ProfileUser = () => {
   };
 
 
-             const handleUpdate = async (data: any) => {
+  const handleUpdate = async (data: any) => {
     data.file = file;
     console.log(data);
-    
+
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/client/user/update`, {
-        method: 'POST',
+      await axios.post('http://127.0.0.1:8000/api/client/user/update', data, {
         headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error('Update failed:', errorData);
-        throw new Error(`Failed to update user data: ${response.statusText}`);
-      }
-      console.log(response);
-      setIsLoggedIn(true);
-      toast.success('Lưu thay đổi thành công!');
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(res=>{
+        console.log(res);
+        setIsLoggedIn(true);
+        setStatus(!status);
+        sessionStorage.setItem('user', JSON.stringify(res.data.data));
+        toast.success(res.statusText);
+      })
+      
+      
     } catch (error) {
-      toast.success('Sảy ra lỗi khi cập nhật thông tin người dùng!');
+      toast.success(error.message);
     }
   };
 
@@ -83,7 +82,7 @@ const ProfileUser = () => {
           <section className="module">
             <div className="module-inner">
 
-              <SideBar userData={userData} avatarUrl={avatarUrl}/>
+              <SideBar userData={userData} avatarUrl={avatarUrl} />
 
               <div className="content-panel">
                 <div className="billing">

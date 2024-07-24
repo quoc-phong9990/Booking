@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../App.css';
 import Ok from './Ok';
 
-const Header = () => {
+const Header = ({status}) => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState<{ name: String, avatar: String } | null>(null);
 
@@ -14,7 +14,7 @@ const Header = () => {
     if (userData) {
       setUserName(JSON.parse(userData));
     }
-  }, []);
+  }, [status]);
 
   const handleLogout = () => {
     sessionStorage.removeItem('user');
