@@ -612,7 +612,7 @@
                                     <div class="col-md-4 mb-3">
                                         <label for="email-field" class="form-label">Giá</label>
                                         <input type="text" id="email-field" class="form-control" name="price"
-                                            value="{{ $tour->price }}" placeholder="" />
+                                            id="price" value="{{ $tour->price }}" placeholder="" />
                                         @error('price')
                                             <span class="text-danger fs-10">{{ $message }}</span>
                                         @enderror
@@ -621,7 +621,7 @@
                                     <div class="col-md-4 mb-3">
                                         <label for="phone-field" class="form-label">Giá khuyến mại</label>
                                         <input type="text" id="phone-field" class="form-control" name="promotion"
-                                            value="{{ $tour->promotion }}" placeholder="" />
+                                            id="promotion" value="{{ $tour->promotion }}" placeholder="" />
                                         @error('promotion')
                                             <span class="text-danger fs-10">{{ $message }}</span>
                                         @enderror
@@ -825,6 +825,20 @@
             });
         }
         $(document).ready(function() {
+            $('#price').on('blur', function() {
+                const value = this.value.replace(/[^0-9]/g, "");
+                this.value = parseFloat(value).toLocaleString('vi-VN');
+                if (value == "") {
+                    this.value = "";
+                }
+            });
+            $('#promotion').on('blur', function() {
+                const value = this.value.replace(/[^0-9]/g, "");
+                this.value = parseFloat(value).toLocaleString('vi-VN');
+                if (value == "") {
+                    this.value = "";
+                }
+            });
             $('.showEdit').click(function() {
                 let id = $(this).attr('data-edit-id');
                 $.ajax({
