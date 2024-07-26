@@ -8,13 +8,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Number;
 use App\Jobs\CreateBookingJob;
+use App\Http\Controllers\ResponseJson;
 
 class PaymentController extends Controller
 {
-    public function createPayment(Request $request)
+    public function createPayment(Request $request, ResponseJson $responseJson)
     {
         // Prepare payment parameters
 
+
+        $max = 45;
+        $totalPeople = Booking::where('tour_id', $request->tour_id)->where('start', $request->start)->sum('people');
+        if ($totalPeople + $request->people > $max) {
+            return $responseJson->responseSuccess($totalPeople > $max, 'Quá số lượng người tham gia trong đợt');
+        } else {
+            CreateBookingJob::dispatch($request->all());
+        }
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         $vnp_Returnurl = "http://localhost:5173/paymentSuccess";
         $vnp_TmnCode = "JNX5BU3J"; //Mã website tại VNPAY 
@@ -75,7 +84,7 @@ class PaymentController extends Controller
         );
 
         // Mail::to($request->email)->send(new BookingSuccess($booking));
-        CreateBookingJob::dispatch($request->all());
+
         if (isset($_POST['redirect'])) {
             header('Location: ' . $vnp_Url);
             die();
@@ -88,10 +97,16 @@ class PaymentController extends Controller
         // Redirect to VNPay payment page
     }
 
-    public function bankingPayment(Request $request)
+    public function bankingPayment(Request $request, ResponseJson $responseJson)
     {
         try {
-            CreateBookingJob::dispatch($request->all());
+            $max = 45;
+            $totalPeople = Booking::where('tour_id', $request->tour_id)->where('start', $request->start)->sum('people');
+            if ($totalPeople + $request->people > $max) {
+                return $responseJson->responseSuccess($totalPeople > $max, 'Quá số lượng người tham gia trong đợt');
+            } else {
+                CreateBookingJob::dispatch($request->all());
+            }
             return response()->json([
                 'message' => 'Đặt Lịch Thành Công!!!',
             ], 200);
@@ -102,10 +117,16 @@ class PaymentController extends Controller
         }
     }
 
-    public function cashPayment(Request $request)
+    public function cashPayment(Request $request, ResponseJson $responseJson)
     {
         try {
-            CreateBookingJob::dispatch($request->all());
+            $max = 45;
+            $totalPeople = Booking::where('tour_id', $request->tour_id)->where('start', $request->start)->sum('people');
+            if ($totalPeople + $request->people > $max) {
+                return $responseJson->responseSuccess($totalPeople > $max, 'Quá số lượng người tham gia trong đợt');
+            } else {
+                CreateBookingJob::dispatch($request->all());
+            }
             return response()->json([
                 'message' => 'Đặt Lịch Thành Công!!!',
             ], 200);
