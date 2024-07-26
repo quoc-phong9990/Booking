@@ -13,7 +13,7 @@ class VNPayController extends Controller
     public function createPayment(Request $request)
     {
         // Prepare payment parameters
-        
+        // dd ($request ->all());
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         $vnp_Returnurl = "http://localhost:5173/paymentSuccess";
         $vnp_TmnCode = "JNX5BU3J"; //Mã website tại VNPAY 

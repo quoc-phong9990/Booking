@@ -65,7 +65,7 @@ const ListBill = () => {
                     <section className="module">
                         <div className="module-inner">
                             <SideBar userData={userData} avatarUrl={avatarUrl}/>
-                            <main className="content-panel table " >
+                            <main className=" billing table " >
                                 <section className="table__header">
                                     <h1>Customer's Bill</h1>
                                     <div className="input-group">
@@ -113,7 +113,7 @@ const ListBill = () => {
                                                     <tr key={item.id}>
                                                         <td> {index + 1} </td>
                                                         <td>{item.booking_code}</td>
-                                                        <td><CurrencyFormatter amount={item.tour_price} /> vnđ</td>
+                                                        <td><CurrencyFormatter amount={item.tour_price} /></td>
                                                         <td >{formattedDate(new Date(item.created_at))}</td>
                                                         <td>
                                                             <StatusPayment status={item.status_payment} />
