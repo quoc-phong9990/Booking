@@ -35,26 +35,26 @@ class NewBooking extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        $total = number_format($this->booking->total_price,0,'.','.');
+        // $total = number_format($this->booking->total_price,0,'.','.');
         return (new MailMessage)
-        // ->view(
-        //     'mail.success', [
-        //         'booking' => $this->booking,
-        //         'title' => "Send Mail"
-        //     ]
-        // );
-        ->subject("Đơn hàng mới của {$this->booking->user_name}")
-        ->greeting("Đơn hàng mới của {$this->booking->user_name}")
-        ->line("Cảm ơn {$this->booking->user_name} đã sử dụng dịch vụ.")
-        ->line("Mã đơn hàng: {$this->booking->booking_code}")
-        ->line("Tên: {$this->booking->user_name}")
-        ->line("Email: {$this->booking->email}")
-        ->line("SĐT: {$this->booking->phone}")
-        ->line("Số người: {$this->booking->people}")
-        ->line("Ngày đặt: {$this->booking->created_at->format('d-m-Y')}")
-        ->line("Tổng tiền: {$total} VNĐ")
-        ->action('Trang chủ', url('http://localhost:5173'))
-        ->line('Xin trân trọng cảm ơn');
+        ->view(
+            'mail.success', [
+                'booking' => $this->booking,
+                'title' => "Send Mail"
+            ]
+        );
+        // ->subject("Đơn hàng mới của {$this->booking->user_name}")
+        // ->greeting("Đơn hàng mới của {$this->booking->user_name}")
+        // ->line("Cảm ơn {$this->booking->user_name} đã sử dụng dịch vụ.")
+        // ->line("Mã đơn hàng: {$this->booking->booking_code}")
+        // ->line("Tên: {$this->booking->user_name}")
+        // ->line("Email: {$this->booking->email}")
+        // ->line("SĐT: {$this->booking->phone}")
+        // ->line("Số người: {$this->booking->people}")
+        // ->line("Ngày đặt: {$this->booking->created_at->format('d-m-Y')}")
+        // ->line("Tổng tiền: {$total} VNĐ")
+        // ->action('Trang chủ', url('http://localhost:5173'))
+        // ->line('Xin trân trọng cảm ơn');
     }
 
     /**
