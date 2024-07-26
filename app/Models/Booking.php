@@ -22,6 +22,8 @@ class Booking extends Model
         'booking_code',
         'user_name',
         'email',
+        'phone',
+        'tour_id',
         'tour_name',
         'tour_price',
         'tour_address',
