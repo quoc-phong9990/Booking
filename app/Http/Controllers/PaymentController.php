@@ -90,18 +90,29 @@ class PaymentController extends Controller
 
     public function bankingPayment(Request $request)
     {
-        CreateBookingJob::dispatch($request->all());
-        return response()->json([
-            'message' => 'success',
-        ], 200);
+        try {
+            CreateBookingJob::dispatch($request->all());
+            return response()->json([
+                'message' => 'Đặt Lịch Thành Công!!!',
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Đã Xảy Ra Lỗi Trong Quá Trình Đặt Lịch! Vui Lòng Thử Lại Sau!',
+            ], 500);
+        }
     }
 
     public function cashPayment(Request $request)
     {
-
-        CreateBookingJob::dispatch($request->all());
-        return response()->json([
-            'message' => 'success',
-        ], 200);
+        try {
+            CreateBookingJob::dispatch($request->all());
+            return response()->json([
+                'message' => 'Đặt Lịch Thành Công!!!',
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Đã Xảy Ra Lỗi Trong Quá Trình Đặt Lịch! Vui Lòng Thử Lại Sau!',
+            ], 500);
+        }
     }
 }
