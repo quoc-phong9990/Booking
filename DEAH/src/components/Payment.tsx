@@ -8,7 +8,10 @@ import DateStar from '../FunctionComponentContext/FunctionApp';
 import addDays from 'date-fns/addDays';
 import UserPicker from './You';
 import Payment_PT from '../FunctionComponentContext/Pament_PT';
+import { useNavigate } from 'react-router-dom';
 
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Payment: React.FC = () => {
     const [username, setUserName] = useState<string>('');
     const [phone, setPhone] = useState<string>('');
@@ -26,6 +29,9 @@ const Payment: React.FC = () => {
     const [startDate, setStartDate] = useState<any>(new Date());
     const [endDate, setEndDate] = useState<any>(addDays(new Date(), tour.tour.day));
 
+    const [children2To5, setChildren2To5] = useState<number>(0);
+    const [children6To12, setChildren6To12] = useState<number>(0);
+    const navigate = useNavigate();
 
     const [paymentMethod, setPaymentMethod] = useState<any>('VPGD');
     useEffect(() => {
@@ -50,7 +56,7 @@ const Payment: React.FC = () => {
         };
         sessionStorage.setItem('user_payment_info', JSON.stringify(user_payment_info));
         const bookingData = {
-            'booking_code': 'Tour'+Date.now(),
+            'booking_code': 'Tour' + Date.now(),
             'user_name': username,
             'email': email,
             'tour_name': tour.tour.title,
@@ -72,24 +78,40 @@ const Payment: React.FC = () => {
             'promotion': tour.tour.promotion,
             'kids': kids,
             'adults': adults,
-            'user_id': user_id
+            'user_id': user_id,
+            'children2To5': children2To5,
+            'children6To12': children6To12,
         }
         switch (paymentMethod) {
             case 'VPGD':
-                
+                var response = await axios.post('http://127.0.0.1:8000/api/client/cashpayment', bookingData);
+                if (response.status === 200) {
+                    toast.success(response.data.message);
+                    navigate('', { state: { data: bookingData } })
+                } else {
+                    toast.error(response.data.message);
+                }
+
                 break;
 
             case 'CKNH':
+                var response = await axios.post('http://127.0.0.1:8000/api/client/bankingPayment', bookingData);
+                if (response.status === 200) {
+                    toast.success(response.data.message);
+                    navigate('', { state: { data: bookingData } })
+                } else {
+                    toast.error(response.data.message);
+                }
+
                 break;
 
             case 'VNPAY':
-                const response = await axios.post('http://127.0.0.1:8000/api/client/vnpayment', bookingData);
+                var response = await axios.post('http://127.0.0.1:8000/api/client/vnpayment', bookingData);
                 window.location.href = response.data.data;
                 break;
             default:
                 break;
         }
-        
     };
 
     const chooseHotel = (e: any) => {
@@ -101,6 +123,8 @@ const Payment: React.FC = () => {
 
     const handleUserChange = (adults: number, children2To5: number, children6To12: number) => {
         const kids = children2To5 + children6To12;
+        setChildren2To5(children2To5);
+        setChildren6To12(children6To12);
         setAdults(adults);
         setKids(kids);
     };
