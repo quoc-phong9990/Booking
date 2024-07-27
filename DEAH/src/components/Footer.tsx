@@ -3,7 +3,7 @@ import React from 'react'
 const Footer = () => {
   return (
     <div>
-        <footer>
+      <footer>
         <div className="footer-wrapper footer-bg">
           <div className="container">
             <div className="footer-area">
@@ -72,21 +72,19 @@ const Footer = () => {
                       <ul className="list-unstyled">
                         <li className="single-list">
                           <a href="#" className="mb-3 d-block">70 Cầu Giấy, châu Úc</a>
+                          <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.041226135841!2d105.77974641059902!3d21.03103638053804!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab4cabbe20b1%3A0x2b464ef03b17a822!2zMTUgUC4gRHV5IFTDom4sIEThu4tjaCBW4buNbmcgSOG6rXUsIEPhuqd1IEdp4bqleSwgSMOgIE7hu5lpLCBWaWV0bmFt!5e0!3m2!1sen!2s!4v1722007949451!5m2!1sen!2s"
+                            width="600"
+                            height="250"
+                            style={{ border: 0 }}
+                            allowFullScreen
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                            title="Google Map"
+                          ></iframe>
                         </li>
-                        <li className="single-list">
-                          <a href="#">
-                            <div className="d-flex gap-2">
-                              <i className="ri-phone-line" />(00) +888 123456 789
-                            </div>
-                          </a>
-                        </li>
-                        <li className="single-list">
-                          <a href="#">
-                            <div className="d-flex gap-2">
-                              <i className="ri-mail-line" />example@gmail.com
-                            </div>
-                          </a>
-                        </li>
+
+
                       </ul>
                     </div>
                   </div>

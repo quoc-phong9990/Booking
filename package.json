@@ -18,7 +18,8 @@
         "react-date-range": "^2.0.1",
         "react-dropdown": "^1.11.0",
         "react-hook-form": "^7.52.0",
-        "react-router-dom": "^6.23.0",
+        "react-router-dom": "^6.25.1",
+        "react-spinners": "^0.14.1",
         "react-toastify": "^10.0.5"
     }
 }

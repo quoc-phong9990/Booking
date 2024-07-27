@@ -39,8 +39,9 @@ const Payment: React.FC = () => {
     }, [adults, kids, hotel]);
 
     const calculateTotalPrice = (adults: number, kids: number) => {
-        const adultPrice = tour.tour.price; // Giả sử giá cho mỗi người lớn
-        const kidPrice = tour.tour.price * 0.5; // Giả sử giá cho mỗi trẻ em là 50% giá người lớn
+        const tourprice = tour.tour.promotion ? tour.tour.promotion : tour.tour.price
+        const adultPrice = tourprice // Giả sử giá cho mỗi người lớn
+        const kidPrice = tourprice * 0.2; // Giả sử giá cho mỗi trẻ em là 50% giá người lớn
         const hotelPrice = hotel ? (hotel.promotion ? Number(hotel.promotion) : hotel.price) : 0;
         const newTotalPrice = (adults * adultPrice) + (kids * kidPrice) + hotelPrice;
         setTotalPrice(newTotalPrice);
@@ -165,19 +166,16 @@ const Payment: React.FC = () => {
                                             <div className="d-flex align-items-center flex-wrap gap-20">
                                                 <div className="count">
                                                     <i className="ri-time-line" />
-                                                    <p className="pera">{tour.tour.day} ngày {tour.tour.day - 1 === 0 ? '' : (tour.tour.day - 1 + ' đêm')}</p>
+                                                    <p className="pera mt-3">{tour.tour.day} ngày {tour.tour.day - 1 === 0 ? '' : (tour.tour.day - 1 + ' đêm')}</p>
                                                 </div>
-                                                <div className="count">
-                                                    <i className="ri-user-line" />
-                                                    <p className="pera">2 người</p>
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
                                     <div className="price-review">
-                                        <div className="d-flex gap-10 align-items-end">
-                                            <p className="light-pera">Thành Tiền</p>
-                                            <p className="pera"><CurrencyFormatter amount={totalPrice + tour.tour.price} /></p>
+                                        <div className="d-flex gap-6  align-items-end">
+                                            <p className="light-pera">Giá tiền: </p>
+                                            <p className="text-lg font-bold "><CurrencyFormatter amount={tour.tour.promotion ? tour.tour.promotion : tour.tour.price} />/Người</p>
 
 
                                         </div>
@@ -189,11 +187,12 @@ const Payment: React.FC = () => {
                                         <div className="tour-include-exclude m-0 mb-30 radius-6">
                                             <div className="includ-exclude-point">
                                                 <h4 className="title">Bao gồm</h4>
-                                                <ul className="expect-list">
-                                                    <li className="list">Tất cả các vé nhập cảnh của các điểm đến nhảy </li>
-                                                    <li className="list">Bữa trưa Platter </li>
-                                                    <li className="list"> Đồ ăn nhẹ buổi tối </li>
-                                                    <li className="list"> Bộ sơ cứu (trong trường hợp khẩn cấp) </li>
+                                                <ul>
+                                                    {tour.tour.attributes?.map((attr: any) => (
+                                                        <li key={attr.id}>
+                                                            <strong> - {attr.attribute}</strong>
+                                                        </li>
+                                                    ))}
                                                 </ul>
                                             </div>
                                         </div>
@@ -239,7 +238,7 @@ const Payment: React.FC = () => {
                                             <div className="price-review">
                                                 <div className="d-flex gap-10 align-items-end">
                                                     <p className="light-pera">Tổng</p>
-                                                    <p className="pera"><CurrencyFormatter amount={totalPrice + tour.tour.price} /></p>
+                                                    <p className="text-lg font-bold text-danger"><CurrencyFormatter amount={totalPrice} /></p>
 
                                                 </div>
                                                 <div className="rating">

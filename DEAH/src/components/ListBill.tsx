@@ -65,7 +65,7 @@ const ListBill = () => {
                     <section className="module">
                         <div className="module-inner">
                             <SideBar userData={userData} avatarUrl={avatarUrl}/>
-                            <main className="content-panel table " >
+                            <main className=" billing table " >
                                 <section className="table__header">
                                     <h1>Customer's Bill</h1>
                                     <div className="input-group">

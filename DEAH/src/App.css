@@ -411,7 +411,39 @@ body{
 .inputindex{
   background-color: #000;
 }
+.i{
+  width: 100px;
+}
+/* loading */
+/* App.css */
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 1000;
+}
 
-/* heder */
+.blob {
+  width: 50px;
+  height: 50px;
+  background-color: #333;
+  border-radius: 50%;
+  animation: blob 1.5s infinite;
+}
+
+@keyframes blob {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+}
 
 }

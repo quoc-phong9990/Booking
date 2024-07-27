@@ -15,8 +15,8 @@ interface DateStarProps {
 const DateStar: React.FC<DateStarProps> = ({ tour_long, setStartDate, setEndDate }) => {
   const [openDate, setOpenDate] = useState(false);
   const [date, setDate] = useState({
-    startDate: new Date(),
-    endDate: addDays(new Date(), tour_long),
+    startDate: addDays(new Date(),2),
+    endDate: addDays(addDays(new Date(),2), tour_long-1),
     key: 'selection',
   });
 
@@ -33,7 +33,7 @@ const DateStar: React.FC<DateStarProps> = ({ tour_long, setStartDate, setEndDate
   const handleChange = (ranges: any) => {
     const { startDate, endDate } = ranges.selection;
     if (startDate && endDate) {
-      const adjustedEndDate = addDays(startDate, tour_long);
+      const adjustedEndDate = addDays(startDate, tour_long-1);
 
       if (adjustedEndDate >= startDate) {
         setDate({
@@ -50,6 +50,8 @@ const DateStar: React.FC<DateStarProps> = ({ tour_long, setStartDate, setEndDate
       }
     }
   };
+  const minDate = new Date();
+  minDate.setDate(minDate.getDate() + 2);
 
   const handleClick = () => {
     setOpenDate((prev) => !prev);
@@ -65,7 +67,7 @@ const DateStar: React.FC<DateStarProps> = ({ tour_long, setStartDate, setEndDate
           className='dateRanger'
           ranges={[date]}
           onChange={handleChange}
-          minDate={new Date()}
+          minDate={minDate}
         />
       )}
     </div>

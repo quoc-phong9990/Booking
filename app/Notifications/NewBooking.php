@@ -37,6 +37,7 @@ class NewBooking extends Notification
     {
         // $total = number_format($this->booking->total_price,0,'.','.');
         return (new MailMessage)
+        ->from($this->booking->email)
         ->view(
             'mail.success', [
                 'booking' => $this->booking,

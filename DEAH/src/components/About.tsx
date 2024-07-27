@@ -4,11 +4,14 @@ import 'react-slideshow-image/dist/styles.css';
 import '../App.css';
 import Header from './Header.js';
 import Footer from './Footer.js';
-const About = () => {
+import { useState } from "react";
 
+const About = () => {
+  // const [status, setStatus] = useState<boolean>(false); // State để lưu URL của ảnh
+  // setStatus(!status);
   return (
     <div>
-      <Header />
+      <Header/>
       <main>
         <section className="breadcrumbs-area breadcrumb-bg">
           <div className="container">
