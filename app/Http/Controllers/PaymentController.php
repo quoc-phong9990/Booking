@@ -10,30 +10,19 @@ use Illuminate\Support\Number;
 use App\Jobs\CreateBookingJob;
 use App\Http\Controllers\ResponseJson;
 
-<<<<<<< HEAD:app/Http/Controllers/VNPayController.php
-class VNPayController extends Controller
-=======
 class PaymentController extends Controller
->>>>>>> dev:app/Http/Controllers/PaymentController.php
 {
     public function createPayment(Request $request, ResponseJson $responseJson)
     {
         // Prepare payment parameters
-<<<<<<< HEAD:app/Http/Controllers/VNPayController.php
-=======
 
 
->>>>>>> dev:app/Http/Controllers/PaymentController.php
         $max = 45;
         $totalPeople = Booking::where('tour_id', $request->tour_id)->where('start', $request->start)->sum('people');
         if ($totalPeople + $request->people > $max) {
-            return $responseJson->responseSuccess($totalPeople > $max, 'Quá số lượng người tham gia trong đợt');
+            return $responseJson->responseSuccess($totalPeople + $request->people - $max, 'Quá số lượng người tham gia trong đợt');
         } else {
             CreateBookingJob::dispatch($request->all());
-<<<<<<< HEAD:app/Http/Controllers/VNPayController.php
-
-=======
->>>>>>> dev:app/Http/Controllers/PaymentController.php
         }
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         $vnp_Returnurl = "http://localhost:5173/paymentSuccess";
@@ -95,10 +84,6 @@ class PaymentController extends Controller
         );
 
         // Mail::to($request->email)->send(new BookingSuccess($booking));
-<<<<<<< HEAD:app/Http/Controllers/VNPayController.php
-=======
-
->>>>>>> dev:app/Http/Controllers/PaymentController.php
         if (isset($_POST['redirect'])) {
             header('Location: ' . $vnp_Url);
             die();
@@ -117,7 +102,7 @@ class PaymentController extends Controller
             $max = 45;
             $totalPeople = Booking::where('tour_id', $request->tour_id)->where('start', $request->start)->sum('people');
             if ($totalPeople + $request->people > $max) {
-                return $responseJson->responseSuccess($totalPeople > $max, 'Quá số lượng người tham gia trong đợt');
+                return $responseJson->responseSuccess($totalPeople + $request->people - $max, 'Quá số lượng người tham gia trong đợt');
             } else {
                 CreateBookingJob::dispatch($request->all());
             }
@@ -137,7 +122,7 @@ class PaymentController extends Controller
             $max = 45;
             $totalPeople = Booking::where('tour_id', $request->tour_id)->where('start', $request->start)->sum('people');
             if ($totalPeople + $request->people > $max) {
-                return $responseJson->responseSuccess($totalPeople > $max, 'Quá số lượng người tham gia trong đợt');
+                return $responseJson->responseSuccess($totalPeople + $request->people - $max, 'Quá số lượng người tham gia trong đợt');
             } else {
                 CreateBookingJob::dispatch($request->all());
             }

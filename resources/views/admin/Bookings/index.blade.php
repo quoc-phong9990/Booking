@@ -110,7 +110,8 @@
                                         <td>{{ number_format($booking->total_price, 0, '.', '.') }} VND</td>
                                         <td>
                                             <p>{{$booking->adults}} Người lớn</p>
-                                            <p>{{$booking->kids}} Trẻ con</p>
+                                            <p>{{$booking->kids6To12}} Trẻ 6-12</p>
+                                            <p>{{$booking->kids0To5}} Trẻ 0-5</p>
                                         </td>
                                         <td>{{ $booking->created_at->format('d-m-Y') }}</td>
                                         <td>
