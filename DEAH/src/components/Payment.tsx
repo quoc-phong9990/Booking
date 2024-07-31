@@ -41,9 +41,9 @@ const Payment: React.FC = () => {
     const calculateTotalPrice = (adults: number, kids: number) => {
         const tourprice = tour.tour.promotion ? tour.tour.promotion : tour.tour.price
         const adultPrice = tourprice // Giả sử giá cho mỗi người lớn
-        const kidPrice = tourprice * 0.2; // Giả sử giá cho mỗi trẻ em là 50% giá người lớn
+        const kidPrice = tourprice * 0.8; // Giả sử giá cho mỗi trẻ em là 80% giá người lớn
         const hotelPrice = hotel ? (hotel.promotion ? Number(hotel.promotion) : hotel.price) : 0;
-        const newTotalPrice = (adults * adultPrice) + (kids * kidPrice) + hotelPrice;
+        const newTotalPrice = (adults * adultPrice) + (children6To12 * kidPrice) + hotelPrice;
         setTotalPrice(newTotalPrice);
     };
 
@@ -61,27 +61,26 @@ const Payment: React.FC = () => {
             'user_name': username,
             'email': email,
             'tour_name': tour.tour.title,
-            'tour_price': tour.tour.price,
-            'tour_address': tour.tour.location.ward + ', ' + tour.tour.location.district + ', ' + tour.tour.location.province,
+            'tour_price': tour.tour.promotion ? tour.tour.promotion : tour.tour.price,
+            'tour_address': tour.tour.location.ward + ', ' + tour.tour.location.district + ',' + tour.tour.location.province,
             'hotel_name': hotel ? hotel.name : '',
             'hotel_price': hotel ? (hotel.promotion ? Number(hotel.promotion) : hotel.price) : 0,
-            'hotel_address': hotel ? (hotel.address + ', ' + tour.tour.location.province) : '',
-            'book_price': tour.tour.price + (hotel ? (hotel.promotion ? Number(hotel.promotion) : hotel.price) : 0),
-            'promotion_price': 1,
-            'total_price': totalPrice,
-            'people': kids + adults,
+            'hotel_address': hotel ? (hotel.address + ',' + tour.tour.location.province) : '',
+            'book_price': totalPrice,
+            'promotion_price': 0,
+            'total_price': totalPrice + (hotel ? (hotel.promotion ? Number(hotel.promotion) : hotel.price) : 0),
+            'people': kids + children2To5 + children6To12,
             'start': startDate,
             'end': endDate,
             'status_tour': 0,
             'status_payment': 0,
             'type': tour.tour.type,
             'phone': phone,
-            'promotion': tour.tour.promotion,
-            'kids': kids,
+            'promotion': (tour.tour.price - tour.tour.promotion) + (hotel.price - hotel.promotion ?? 0) ?? 0,
             'adults': adults,
             'user_id': user_id,
-            'children2To5': children2To5,
-            'children6To12': children6To12,
+            'kids0To5': children2To5,
+            'Kids6To12': children6To12,
         }
         switch (paymentMethod) {
             case 'VPGD':
@@ -113,6 +112,7 @@ const Payment: React.FC = () => {
             default:
                 break;
         }
+
     };
 
     const chooseHotel = (e: any) => {
