@@ -81,7 +81,7 @@ const TourDetails = () => {
                 <div className="thumbnail-images">
                   {data.tour.images.map((imageObj: any, index: any) => (
                     <img
-                      key={index}src={`http://127.0.0.1:8000/${imageObj.image}`}
+                      key={index} src={`http://127.0.0.1:8000/${imageObj.image}`}
                       alt={`Thumbnail ${index}`}
                       onClick={() => handleImageClick(imageObj.image)}
                       className="thumbnail"
@@ -103,7 +103,8 @@ const TourDetails = () => {
                   <div className="d-flex flex-wrap align-items-center gap-30 mt-16">
                     <div className="location">
                       <i className="ri-map-pin-line" />
-                      <div className="name">{data.tour.location.province}</div>
+                      <div className="name"> {data.tour.location.district}, {data.tour.location.province}</div>
+
                     </div>
                     <div className="divider" />
                     <div className="d-flex align-items-center flex-wrap gap-20">
@@ -112,7 +113,7 @@ const TourDetails = () => {
                         <p className="pera mt-3">{data.tour.day} Ngày {data.tour.day - 1} Đêm</p>
                       </div>
                       <div className="count">
-                        <i className="ri-user-line" />
+                        {/* <i className="ri-user-line" /> */}
                         <p className="pera"></p>
                       </div>
                     </div>
@@ -146,14 +147,16 @@ const TourDetails = () => {
                         <div dangerouslySetInnerHTML={{ __html: data.tour.description }} />
                       </p>
                     </div>
-<div className="tour-include-exclude radius-6">
+                    <div className="tour-include-exclude radius-6">
                       <div className="includ-exclude-point">
                         <h4 className="title">Thuộc tính</h4>
-                        {data.tour.attributes?.map((attr: any) => (
+                     <ul>
+                     {data.tour.attributes?.map((attr: any) => (
                           <li key={attr.id}>
-                            {attr.attribute}<br />
+                            <strong> - {attr.attribute}</strong> 
                           </li>
                         ))}
+                     </ul>
                       </div>
                       <div className="divider" />
                     </div>
@@ -215,7 +218,7 @@ const TourDetails = () => {
                     <div className="section-title text-center mx-605 mx-auto position-relative mb-60">
                       <span className="highlights">Khách Sạn</span>
                       <h4 className="title">
-Hãy lựa chọn Khách sạn mà bạn yêu thích nhất
+                        Hãy lựa chọn Khách sạn mà bạn yêu thích nhất
                       </h4>
                     </div>
                   </div>
@@ -257,17 +260,6 @@ Hãy lựa chọn Khách sạn mà bạn yêu thích nhất
               </div>
 
 
-              <div className="col-12 text-center">
-                <div className="section-button d-inline-block wow fadeInUp" data-wow-delay="0.3s">
-                  <a href="news">
-                    <div className="btn-primary-icon-sm pt-3">
-                      <p className="pera">Xem tất cả Các khách sạn </p>
-                      {/* <i className="ri-arrow-right-up-line" /> */}
-
-                    </div>
-                  </a>
-                </div>
-              </div>
             </div>
 
           </div>

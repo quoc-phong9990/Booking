@@ -14,13 +14,13 @@ const SideBar = ({userData,avatarUrl}) => {
           <ul className="meta list list-unstyled">
             <li className="name">{userData.name}</li>
             <li className="email"><a href="#">{userData.email}</a></li>
-            <li className="activity">Last logged in: Today at 2:18pm</li>
+            
           </ul>
         </div>
         <nav className="side-menu ">
           <ul className="nav">
-            <li><Link to={'/profile'}><span className="fa fa-user" /> Profile</Link></li>
-            <li><Link to={'/listbill'}><span className="fa fa-credit-card" /> Billing</Link></li>
+            <li><Link to={'/profile'}><span className="fa fa-user" />Thông tin</Link></li>
+            <li><Link to={'/listbill'}><span className="fa fa-credit-card" /> Đon hàng</Link></li>
             <div className="mt-40">
               <button type="submit" className="send-btn"><a className='text-black' href="/pass">Đổi mật khẩu </a></button>
             </div>

@@ -41,6 +41,7 @@ class NewBooking extends Notification
         return (new BookingSuccess($this->booking))
             ->to($this->booking->email);
 
+
         // ->line("Cảm ơn {$this->booking->user_name} đã sử dụng dịch vụ.")
         // ->line("Mã đơn hàng: {$this->booking->booking_code}")
         // ->line("Tên: {$this->booking->user_name}")

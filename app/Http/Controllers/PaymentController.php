@@ -11,11 +11,11 @@ use App\Jobs\CreateBookingJob;
 use App\Http\Controllers\ResponseJson;
 
 class PaymentController extends Controller
+
 {
     public function createPayment(Request $request, ResponseJson $responseJson)
     {
         // Prepare payment parameters
-
 
         $max = 45;
         $totalPeople = Booking::where('tour_id', $request->tour_id)->where('start', $request->start)->sum('people');
