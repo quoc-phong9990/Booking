@@ -2,8 +2,10 @@
 
 namespace App\Notifications;
 
+use App\Mail\BookingSuccess;
 use App\Models\Booking;
 use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -33,19 +35,13 @@ class NewBooking extends Notification
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail(object $notifiable): MailMessage
+    public function toMail(object $notifiable): Mailable
     {
-        // $total = number_format($this->booking->total_price,0,'.','.');
-        return (new MailMessage)
-        ->from($this->booking->email)
-        ->view(
-            'mail.success', [
-                'booking' => $this->booking,
-                'title' => "Send Mail"
-            ]
-        );
-        // ->subject("Đơn hàng mới của {$this->booking->user_name}")
-        // ->greeting("Đơn hàng mới của {$this->booking->user_name}")
+        // $total = number_format($this->booking->total_price, 0, '.', '.');
+        return (new BookingSuccess($this->booking))
+            ->to($this->booking->email);
+
+
         // ->line("Cảm ơn {$this->booking->user_name} đã sử dụng dịch vụ.")
         // ->line("Mã đơn hàng: {$this->booking->booking_code}")
         // ->line("Tên: {$this->booking->user_name}")

@@ -16,10 +16,11 @@ class PaymentController extends Controller
     public function createPayment(Request $request, ResponseJson $responseJson)
     {
         // Prepare payment parameters
+
         $max = 45;
         $totalPeople = Booking::where('tour_id', $request->tour_id)->where('start', $request->start)->sum('people');
         if ($totalPeople + $request->people > $max) {
-            return $responseJson->responseSuccess($totalPeople > $max, 'Quá số lượng người tham gia trong đợt');
+            return $responseJson->responseSuccess($totalPeople + $request->people - $max, 'Quá số lượng người tham gia trong đợt');
         } else {
             CreateBookingJob::dispatch($request->all());
         }
@@ -101,7 +102,7 @@ class PaymentController extends Controller
             $max = 45;
             $totalPeople = Booking::where('tour_id', $request->tour_id)->where('start', $request->start)->sum('people');
             if ($totalPeople + $request->people > $max) {
-                return $responseJson->responseSuccess($totalPeople > $max, 'Quá số lượng người tham gia trong đợt');
+                return $responseJson->responseSuccess($totalPeople + $request->people - $max, 'Quá số lượng người tham gia trong đợt');
             } else {
                 CreateBookingJob::dispatch($request->all());
             }
@@ -121,7 +122,7 @@ class PaymentController extends Controller
             $max = 45;
             $totalPeople = Booking::where('tour_id', $request->tour_id)->where('start', $request->start)->sum('people');
             if ($totalPeople + $request->people > $max) {
-                return $responseJson->responseSuccess($totalPeople > $max, 'Quá số lượng người tham gia trong đợt');
+                return $responseJson->responseSuccess($totalPeople + $request->people - $max, 'Quá số lượng người tham gia trong đợt');
             } else {
                 CreateBookingJob::dispatch($request->all());
             }
