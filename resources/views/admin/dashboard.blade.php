@@ -155,7 +155,7 @@
                                     Top 5 Tour nổi bật
                                 </h3>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-hover">
+                                    <table class="table table-hover">
                                         <thead class="table-light">
                                             <tr>
                                                 <th style="width: 5%">#</th>
@@ -166,7 +166,7 @@
                                         </thead>
                                         <tbody class="table-group-divider">
                                             @foreach ($dataShow['tours'] as $index => $tour)
-                                                <tr class="table-primary">
+                                                <tr class="">
                                                     <td style="width: 5%" scope="row">{{ $index + 1 }}</td>
                                                     <td style="width: 60%"> <a href="{{ route('tours.show', $tour->id) }}">
                                                             {{ Str::limit($tour->title, 60) }} </a>

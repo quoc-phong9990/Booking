@@ -86,7 +86,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'login'], function () {
     //User
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::post('/users/update', [UserController::class, 'update'])->name('users.update');
-    Route::delete('/users/delete/{id}', [UserController::class, 'index'])->name('users.destroy');
+    Route::delete('/users/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
     //logout
     Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
