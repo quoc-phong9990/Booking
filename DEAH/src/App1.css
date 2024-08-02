@@ -612,7 +612,7 @@ body {
    }*/
 
 
-main.table {
+main .table {
   height: 90vh;
   background-color: #fff5;
 
@@ -620,7 +620,6 @@ main.table {
   box-shadow: 0 .4rem .8rem #0005;
   border-radius: .8rem;
 
-  overflow: hidden;
 }
 
 .table__header {
@@ -668,15 +667,13 @@ main.table {
 }
 
 .table__body {
-  width: 100%;
+  
   max-height: calc(89% - 1.6rem);
   background-color: #fffb;
   font-size: 0.8rem;
   margin: .8rem auto;
   border-radius: .6rem;
-
-  overflow: auto;
-  overflow: overlay;
+ 
 }
 
 

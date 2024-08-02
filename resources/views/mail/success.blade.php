@@ -2,16 +2,16 @@
 <div class="container">
     <strong>Cảm ơn {{ $booking->user_name }} đã sử dụng dịch vụ của chúng tôi.</strong>
     <div>
-        <h4>Thông tin của thượng đế</h4>
+        <h4>Thông tin đơn hàng:</h4>
         <div class="row">
             <div class="col-6">
-                <p>Mã đặt: <strong>{{ $booking->booking_code }}</strong></p>
+                <p>Mã đơn hàng: <strong>{{ $booking->booking_code }}</strong></p>
                 <p>Tên: <strong>{{ $booking->user_name }}</strong></p>
                 <p>Email: <strong>{{ $booking->email }}</strong></p>
                 <p>SĐT: <strong>{{ $booking->phone }}</strong></p>
             </div>
             <div class="col-6">
-                <p>Số người: {{ $booking->people }}</p>
+                <p>Số người: {{ $booking->adults }} người lớn, {{ $booking->kids }} trẻ con,</p>
                 <p>Ngày bắt đầu: {{ $booking->start }} <br>
                     Ngày kết thúc: {{ $booking->end }}</p>
                 <p>Số tiền {{ number_format($booking->total_price, 0, '.', '.') }} VND</p>
@@ -29,6 +29,10 @@
                 <p>Địa chỉ khách sạn: {{ $booking->hotel_address }}</p>
             </div>
         </div>
+    </div>
+    <div>
+        <h3>Xin trân trọng cảm ơn!</h3>
+        <p>DEAH</p>
     </div>
 </div>
 @include('admin.layout.footer')

@@ -8,7 +8,9 @@ use App\Models\Province;
 use App\Models\Rate;
 use App\Models\Tour;
 use App\Models\Tour_image;
+use App\Models\TourComment;
 use App\Models\TourType;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Number;
 
@@ -131,5 +133,24 @@ class TourController extends Controller
             return $this->response->responseSuccess($data);
         }
         return $this->response->responseFailed();
+    }
+    public function review(Request $request)
+    {
+
+        $tour = Tour::where('id', $request->tour_id)->first();
+        if ($tour) {
+            $arr = [
+                'comments' => $request->comments,
+                'tour_id' => $tour->id,
+                'name' => $request->name,
+            ];
+            TourComment::create($arr);
+            if ($request->rate) {
+                $arr['rate'] = $request->rate;
+            }
+            Rate::create($arr);
+            return $this->response->responseSuccess([], "Đánh giá thành công");
+        }
+        return $this->response->responseFailed("Tour không tồn tại");
     }
 }

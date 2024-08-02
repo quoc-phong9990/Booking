@@ -25,7 +25,7 @@ return new class extends Migration {
             $table->integer('book_price');
             $table->integer('promotion_price');
             $table->integer('total_price');
-            $table->varchar('people');
+            $table->string('people');
             $table->date('start');
             $table->date('end');
             $table->integer('status_tour');

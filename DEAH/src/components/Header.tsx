@@ -9,6 +9,7 @@ import Ok from './Ok';
 
 const Header = ({ status }) => {
 
+
   const navigate = useNavigate();
   const [userName, setUserName] = useState<{ name: String, avatar: String } | null>(null);
 

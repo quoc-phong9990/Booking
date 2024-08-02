@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">Quản lý chuyến du lịch</h4>
+                    <h4 class="mb-sm-0">Quản lý Tour</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
@@ -20,7 +20,7 @@
                 <div class="card-header d-flex justify-content-between">
                     <strong class="card-header border-0 fs-5">Danh sách chuyến du lịch</strong>
                     <div>
-                        <a href="{{ route('tours.create') }}" class="btn btn-primary mb-3">Thêm chuyến du lịch mới</a>
+                        <a href="{{ route('tours.create') }}" class="btn btn-primary mb-3">Thêm Tour mới</a>
 
                     </div>
 

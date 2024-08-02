@@ -16,35 +16,45 @@ class DashBoardController extends Controller
     //
     public function index()
     {
-       
+
         $nowMonth = date("m");
         $nowYear = date("Y");
         $title = "Dashboard";
-        // $totalInMonth = Booking::where('deleted_at', null)
-        //     ->where('status_payment', StatusPayment::PAID)
-        //     ->where('status_tour', StatusTour::DONE)
-        //     ->whereRaw('MONTH(created_at) = ' . $nowMonth)
-        //     ->whereRaw('YEAR(created_at) = ' . $nowYear)
-        //     ->sum('total_price');
-        // $totalInMonth = number_format($totalInMonth, 0, ',', '.');
-        // $totalInYear = Booking::where('deleted_at', null)
-        //     ->where('status_payment', StatusPayment::PAID)
-        //     ->where('status_tour', StatusTour::DONE)
-        //     ->whereRaw('YEAR(created_at) = ' . $nowYear)
-        //     ->sum('total_price');
-        // $totalInYear = number_format($totalInYear, 0, ',', '.');
+
+        $tours = Tour::where('is_active', 1)
+            ->orderByDesc('views')
+            ->limit(5)->get();
+
+        $book = Booking::where('deleted_at', null)
+            ->where('status_payment', StatusPayment::PAID)
+            ->where('status_tour', StatusTour::DONE)
+            ->whereRaw('MONTH(created_at) = ' . $nowMonth)
+            ->whereRaw('YEAR(created_at) = ' . $nowYear);
+        $totalInMonth = number_format(
+            $book->sum('total_price')
+            ,
+            0,
+            ',',
+            '.'
+        );
+        $countBookingsDone = $book->count();
+
+
         $countPosts = Post::where('is_active', 1)->count();
         $countPostsInMonth = Post::where('is_active', 1)
             ->whereRaw('MONTH(created_at) = ' . $nowMonth)
             ->whereRaw('YEAR(created_at) = ' . $nowYear)
             ->count();
+
         $countTours = Tour::where('is_active', 1)->count();
         $countToursInMonth = Tour::where('is_active', 1)
             ->whereRaw('MONTH(created_at) = ' . $nowMonth)
             ->whereRaw('YEAR(created_at) = ' . $nowYear)
             ->count();
+
         $countCustomers = User::where('is_active', 1)->where('role', 0)->count();
         $countBookings = Booking::where('deleted_at', null)->count();
+
         $countBookingsInMonth = Booking::where('deleted_at', null)
             ->whereRaw('MONTH(created_at) = ' . $nowMonth)
             ->whereRaw('YEAR(created_at) = ' . $nowYear)
@@ -52,11 +62,12 @@ class DashBoardController extends Controller
         $countCustomersInMonth = User::where('is_active', 1)->where('role', 0)
             ->whereRaw('MONTH(created_at) = ' . $nowMonth)
             ->whereRaw('YEAR(created_at) = ' . $nowYear)
-
             ->count();
+
         $dataShow = [
-            // 'totalInMonth' => $totalInMonth,
-            // 'totalInYear' => $totalInYear,
+            'totalInMonth' => $totalInMonth,
+            'countBookingsDone' => $countBookingsDone,
+            'tours' => $tours,
             'countCustomers' => $countCustomers,
             'countBookings' => $countBookings,
             'countBookingsInMonth' => $countBookingsInMonth,

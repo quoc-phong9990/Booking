@@ -1,9 +1,9 @@
 
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {  useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../App1.css'
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -51,6 +51,7 @@ const ProfileUser = () => {
   };
 
 
+
   const handleUpdate = async (user: any) => {
     user.file = file;
     console.log(user);
@@ -71,6 +72,7 @@ const ProfileUser = () => {
       } catch (error) {
         toast.success('Có lỗi khi cập nhật thông tin người dùng');
       };
+
     }
   
   
@@ -82,7 +84,7 @@ const ProfileUser = () => {
           <section className="module">
             <div className="module-inner">
 
-              <SideBar userData={userData} avatarUrl={avatarUrl}/>
+              <SideBar userData={userData} avatarUrl={avatarUrl} />
 
               <div className="content-panel">
                 <div className="billing">

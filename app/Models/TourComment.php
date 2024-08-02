@@ -13,14 +13,11 @@ class TourComment extends Model
     protected $fillable = [
         'comments',
         'tour_id',
-        'user_id'
+        'name'
     ];
     public function tour()
     {
         return $this->belongsTo(Tour::class);
     }
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+
 }

@@ -22,6 +22,8 @@ class Booking extends Model
         'booking_code',
         'user_name',
         'email',
+        'phone',
+        'tour_id',
         'tour_name',
         'tour_price',
         'tour_address',
@@ -40,7 +42,9 @@ class Booking extends Model
         'statusTour',
         'user_id',
         'kids',
-        'adults'
+        'adults',
+        'children2To5',
+        'children6To12'
 
     ];
     public function getNameStatusPayment()

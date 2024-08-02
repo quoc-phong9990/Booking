@@ -15,17 +15,17 @@
             <li class="nav-item">
                 <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button"
                     aria-expanded="false" aria-controls="sidebarApps">
-                    <i class="ri-apps-2-line"></i> <span data-key="t-apps">Chuyến du lịch</span>
+                    <i class="ri-apps-2-line"></i> <span data-key="t-apps">Tour</span>
                 </a>
                 <div class="collapse menu-dropdown" id="sidebarApps">
                     <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
                             <a href="{{ route('types.index') }}" class="nav-link">
-                                Quản lý kiểu du lịch
+                                Quản lý danh mục Tour
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('tours.index') }}" class="nav-link" data-key="t-chat"> Quản lý chuyến du lịch </a>
+                            <a href="{{ route('tours.index') }}" class="nav-link" data-key="t-chat"> Quản lý Tour </a>
                         </li>
 
                         <li class="nav-item">
@@ -46,7 +46,7 @@
                         <li class="nav-item">
                             <a href="{{ route('hotels.index') }}" class="nav-link" role="button" aria-expanded="false"
                                 aria-controls="sidebarCalendar" data-key="t-calender">
-                                Quản lý khách sạn
+                                Khách sạn hợp tác
                             </a>
                         </li>
                         <li class="nav-item">
