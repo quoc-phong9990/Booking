@@ -59,7 +59,7 @@ const New = () => {
                   <div className="tab-content" id="v-pills-tabContent-two">
                     <div className="tab-pane  fade show active" id="pills-news-one" role="tabpanel" aria-labelledby="pills-news-one">
                       <div className="about-banner imgEffect4">
-                        <img src="/src/assets/category_tour/Nha trang.jpg" alt="travello" />
+                        <img src="/src/assets/category_tour/NhaTrang.jpg" alt="travello" />
                       </div>
                     </div>
                     <div className="tab-pane fade" id="pills-news-two" role="tabpanel" aria-labelledby="pills-news-two">
@@ -97,9 +97,9 @@ const New = () => {
                               <div className="author-img">
                                 <img src={'http://127.0.0.1:8000/' + post.thumbnail} alt="travello" />
                               </div>
-                              <p className="name">Thiếu Tên Người</p>
+                      
                             </div>
-                            <p className="time"> 10 phút Đọc </p>
+                       
                           </div>
                         </div>
                       </a>
@@ -156,7 +156,7 @@ const New = () => {
                                 </div>
                               </div>
                             </div>
-                            <p className="time">10 phút đọc </p>
+                          
                           </div>
                         </div>
                       </article>

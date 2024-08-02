@@ -10,6 +10,7 @@ import UserPicker from './You';
 import Payment_PT from '../FunctionComponentContext/Pament_PT';
 
 const Payment: React.FC = () => {
+    
     const [username, setUserName] = useState<string>('');
     const [phone, setPhone] = useState<string>('');
     const [email, setEmail] = useState<string>('');
@@ -25,6 +26,7 @@ const Payment: React.FC = () => {
     const user_id = user ? user.id : null;
     const [startDate, setStartDate] = useState<any>(new Date());
     const [endDate, setEndDate] = useState<any>(addDays(new Date(), tour.tour.day));
+    
 
     useEffect(() => {
         calculateTotalPrice(adults, kids);
@@ -73,7 +75,7 @@ const Payment: React.FC = () => {
             'adults': adults,
             'user_id': user_id
         });
-      return  window.location.href = response.data.data;
+        window.location.href = response.data.data;
 
 
     };

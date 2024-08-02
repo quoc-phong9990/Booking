@@ -106,7 +106,7 @@ class UserController extends Controller
                    
                 
                 }
-                $user->update([...$request->all(),'avatar' => $imageName]);
+                $user->update([...$request->all(),'avatar' => $imageName ?? $user->avatar]);
 
                 $user->token = Hash::make($user->id);
                 return $this->response->responseSuccess($user, 'Cập nhật thành công');

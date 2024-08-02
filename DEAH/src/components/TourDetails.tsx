@@ -1,29 +1,39 @@
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-import '../App.css'
-import '../App1.css'
+import '../App.css';
+import '../App1.css';
 import Footer from './Footer';
 import Header from './Header';
 import TourSbar from '../FunctionComponentContext/TourSbar';
+import CurrencyFormatter from '../FunctionComponentContext/CurrencyFormatter';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { Slide } from 'react-slideshow-image';
-import { useState, useEffect } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 const TourDetails = () => {
-
   const { slug } = useParams();
-  const [mainImage, setMainImage] = useState(null)
-  console.log(slug);
+  const [mainImage, setMainImage] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [currentDay, setCurrentDay] = useState(null);
 
+  const [formData, setFormData] = useState({
+    name: '',
+    comments: '',
+    rate: '',
+
+  });
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['KEY_POST', slug],
     queryFn: async () => {
       const { data } = await axios.get(`http://127.0.0.1:8000/api/client/get-tour-detail/${slug}`);
-      console.log(data.data.tour.images);
-      localStorage.setItem('tour', JSON.stringify(data.data))
+      localStorage.setItem('tour', JSON.stringify(data.data));
       return data.data;
     }
   });
@@ -34,15 +44,62 @@ const TourDetails = () => {
     }
   }, [data, mainImage]);
 
-  if (isLoading) return
-  <div className="spinner">
-    <div className="blob blob-0" />
-  </div>;
-  if (error) return <div>Error: {error.message}</div>;
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/api/client/review-tour', formData);
+      alert('hadhj')
+      console.log(response);
+      console.log('Success:', response.data);
+      // Optionally clear the form or show a success message
+      setFormData({
+        name: '',
+        comments: '',
+        rate: ''
+      });
+    } catch (error) {
+      console.error('Error:', error);
+      // Optionally handle errors, such as showing an error message
+    }
+  };
 
-  const handleImageClick = (image: any) => {
-    setMainImage(image);
-  }
+
+  // cmt
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+  // cmt
+  const openModal = (day: any) => {
+    setCurrentDay(day);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setCurrentDay(null);
+  };
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 3000,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+  };
+
+  if (isLoading) return (
+    <div className="spinner">
+      <div className="blob blob-0" />
+    </div>
+  );
+
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div>
@@ -54,11 +111,9 @@ const TourDetails = () => {
             <div className="breadcrumb-text">
               <nav aria-label="breadcrumb" className="breadcrumb-nav wow fadeInUp" data-wow-delay="0.1s">
                 <ul className="breadcrumb listing">
-
                   <li className="breadcrumb-item single-list"><Link to="/" className="single">Trang chủ</Link></li>
                   <li className="breadcrumb-item single-list" aria-current="page">
                     <a href="javascript:void(0)" className="single active">Chi tiết tour du lịch</a>
-
                   </li>
                 </ul>
               </nav>
@@ -66,37 +121,27 @@ const TourDetails = () => {
           </div>
         </section>
 
-        {/*/ End-of Breadcrumbs*/}
-        {/* Destination area S t a r t */}
         <section className="tour-details-section section-padding2">
           <div className="tour-details-area">
-            {/* Details Banner Slider */}
             {data.tour.images && data.tour.images.length > 0 && (
               <>
-                <Slide>
-                  <div className="main-image">
-                    <img className='images' src={`http://127.0.0.1:8000/${mainImage}`} alt="Main" />
-                  </div>
-                </Slide>
-                <div className="thumbnail-images">
+                <Slide {...settings}>
                   {data.tour.images.map((imageObj: any, index: any) => (
-                    <img
-                      key={index} src={`http://127.0.0.1:8000/${imageObj.image}`}
-                      alt={`Thumbnail ${index}`}
-                      onClick={() => handleImageClick(imageObj.image)}
-                      className="thumbnail"
-                    />
+                    <div key={index} className="main-image">
+                      <img
+                        src={`http://127.0.0.1:8000/${imageObj.image}`}
+                        alt={`Slide ${index}`}
+                        style={{ width: '90%' }}
+                      />
+                    </div>
                   ))}
-                </div>
+                </Slide>
               </>
             )}
           </div>
-          <div className="tour-details-banner ">
-          </div>
-          {/* / Slider*/}
+
           <div className="tour-details-container">
             <div className="container">
-              {/* Details Heading */}
               <div className="details-heading" key={data.tour.id}>
                 <div className="d-flex flex-column">
                   <h4 className="title">{data.tour.title}</h4>
@@ -104,7 +149,6 @@ const TourDetails = () => {
                     <div className="location">
                       <i className="ri-map-pin-line" />
                       <div className="name"> {data.tour.location.district}, {data.tour.location.province}</div>
-
                     </div>
                     <div className="divider" />
                     <div className="d-flex align-items-center flex-wrap gap-20">
@@ -113,7 +157,6 @@ const TourDetails = () => {
                         <p className="pera mt-3">{data.tour.day} Ngày {data.tour.day - 1} Đêm</p>
                       </div>
                       <div className="count">
-                        {/* <i className="ri-user-line" /> */}
                         <p className="pera"></p>
                       </div>
                     </div>
@@ -121,13 +164,11 @@ const TourDetails = () => {
                 </div>
                 <div className="price-review">
                   <div className="d-flex gap-10 align-items-end">
-
                     <p className="light-pera">Chỉ từ :</p>
                     <div className="price mb-3 d-flex justify-content-center ml-4">
-                      <h6 className="text-danger fw-bold mr-2">Giá mới: {data.tour.promotion}VND</h6>
-                      <h6 className="text-muted text-decoration-line-through">Giá cũ: {data.tour.price}VND</h6>
+                      <h6 className="text-danger fw-bold mr-2">Giá mới: <CurrencyFormatter amount={data.tour.promotion} /></h6>
+                      <h6 className="text-muted text-decoration-line-through">Giá cũ: <CurrencyFormatter amount={data.tour.price} /></h6>
                     </div>
-
                   </div>
                   <div className="rating">
                     <p className="pera mr-5">Đánh giá: {data.rates ? data.rates.qty : 0}</p>
@@ -136,7 +177,6 @@ const TourDetails = () => {
                   </div>
                 </div>
               </div>
-
 
               <div className="mt-30">
                 <div className="row g-4">
@@ -150,48 +190,74 @@ const TourDetails = () => {
                     <div className="tour-include-exclude radius-6">
                       <div className="includ-exclude-point">
                         <h4 className="title">Thuộc tính</h4>
-                     <ul>
-                     {data.tour.attributes?.map((attr: any) => (
-                          <li key={attr.id}>
-                            <strong> - {attr.attribute}</strong> 
-                          </li>
-                        ))}
-                     </ul>
+                        <ul>
+                          {data.tour.attributes?.map((attr: any) => (
+                            <li key={attr.id}>
+                              <strong> - {attr.attribute}</strong>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                       <div className="divider" />
                     </div>
+                    {/* cmt tour */}
+                    <div className="contact-card mt-40">
+                      <h4 className="contact-heading">Viết bình luận của bạn</h4>
+                      <form method="post" className="contact-form" onSubmit={handleSubmit}>
+                        <div className="row g-4">
+                          <div className="col-sm-6">
+                            <input className="custom-form" type="text" placeholder="Enter your name" value={formData.name} onChange={handleChange} name='name' />
+                          </div>
+                          <div className="col-sm-12">
+                            <textarea className="custom-form-textarea" id="exampleFormControlTextarea1" rows={3} placeholder="Enter your message..." defaultValue={""} value={formData.comments} onChange={handleChange} name='comments' />
+                          </div>
+                        </div>
+                        <div className="mt-40">
+                          <button type="submit" className="send-btn"> Đăng bình luận </button>
+                        </div>
+                      </form>
+                    </div>
+                    {/* cmt_tour */}
+                    <div className="tour-details-content mb-30 ">
+                      <h4 className="title">Xem lịch trình của bạn tại đây</h4>
+                      <div className="tour-details-content mb-30">
 
 
-                    <div className="tour-details-content mb-30">
-                      <h4 className="title">Kế hoạch du lịch</h4>
-                      <div className="accordion" id="accordionExample">
-                        {data.tour.itineraries?.length > 0 ? (
-                          data.tour.itineraries.map((day: any, index: any) => (
-                            <div key={index}>
-                              <h2 className="accordion-header">
-                                <button className="accordion-button text-black">
-                                  Ngày {day.day}: {day.title}
-                                </button>
-                              </h2>
-                              <div className='ml-4 text-black' dangerouslySetInnerHTML={{ __html: day.itinerary }} />
-                              <div id={`collapse${index}`} className={`accordion-collapse collapse ${index === 1 ? "show" : ""}`} aria-labelledby={`heading${index}`} data-bs-parent="#accordionExample">
-                                <div className="accordion-body"></div>
-                              </div>
+                        <div className="accordion" id="accordionExample">
+                          {data.tour.itineraries?.map((day: any) => (
+                            <div key={day.day}>
+                              <a href="#" onClick={() => openModal(day)}>Ngày {day.day}:  {day.title}</a>
                             </div>
+                          ))}
 
-
-                          ))
-                        ) : (
-                          <p>Lịch trình không có sẵn.</p>
-                        )}
-
+                          <Modal
+                            show={modalIsOpen}
+                            onHide={closeModal}
+                            centered
+                            dialogClassName="custom-modal-width"
+                          >
+                            <Modal.Header className='schedule-header' closeButton>
+                              <Modal.Title>Lịch trình tour</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body className='schedule-body'>
+                              {currentDay && (
+                                <ul>
+                                  <div className='text-black font-bold' dangerouslySetInnerHTML={{ __html: currentDay.itinerary }} />
+                                  <li>Kết thúc tour</li>
+                                </ul>
+                              )}
+                            </Modal.Body>
+                            <Modal.Footer className='schedule-footer bg-white'>
+                              <Button variant="secondary" onClick={closeModal}>Đóng</Button>
+                            </Modal.Footer>
+                          </Modal>
+                        </div>
                       </div>
 
                     </div>
                   </div>
 
 
-                  {/* / Tour Plan accordion*/}
                   <div className="col-xl-4 col-lg-5">
                     <TourSbar />
                     <div className="row">
@@ -200,83 +266,56 @@ const TourDetails = () => {
                         <a href={`/payment/${slug}`} className="btn btn-primary btn-lg" type="button">
                           Đặt Lịch Ngay
                         </a>
-
                       </div>
-
-
-                      <div />
-                      {/* <p dangerouslySetInnerHTML={{ __html: hotel.description }}></p> */}
-
                     </div>
                   </div>
-                  {/* Tour Privacy Policy */}
-
-
                 </div>
+
                 <div className="row justify-content-center">
                   <div className="col-xl-7 col-lg-7">
                     <div className="section-title text-center mx-605 mx-auto position-relative mb-60">
-                      <span className="highlights">Khách Sạn</span>
-                      <h4 className="title">
-                        Hãy lựa chọn Khách sạn mà bạn yêu thích nhất
-                      </h4>
+                      <span className="highlights">Khách hàng của chúng tôi</span>
+                      <h2 className="title">Nhận Xét Khách Hàng</h2>
                     </div>
                   </div>
                 </div>
-                <div className="row g-4 hotel">
-                  {data.tour.hotels?.map((hotel: any, index: any) => {
-                    return (
-                      <div className="col-xl-6 col-lg-3 col-sm-6" key={index}>
-                        <a href={"news-details/" + hotel.id} />
-                        <article className="news-card-two wow fadeInUp" data-wow-delay="0.0s">
-                          <figure className="news-banner-two imgEffect">
-                            <img className='images' src={'http://127.0.0.1:8000/' + hotel.images} alt="travello" />
-                          </figure>
-                          <div className="price mb-2 d-flex justify-content-center ml-4 ">
-                            <h6 className="text-danger fw-bold  mr-2 ">Giá mới: {hotel.promotion}VND</h6>  <h6 className="text-muted text-decoration-line-through">Giá cũ: {hotel.price}VND</h6>
 
-
-
+                <div className="row g-4">
+                  {data.reviews && data.reviews.map((review: any) => (
+                    <div key={review.id} className="col-lg-6">
+                      <div className="review-card p-4 radius-10">
+                        <div className="reviewer d-flex align-items-center">
+                          <div className="thumb position-relative">
+                            <img src={`http://127.0.0.1:8000/${review.user.avatar}`} alt="reviewer" />
                           </div>
-                          <div className="news-content">
-
-
-                            <h5>Khách Sạn</h5>
-                            <div className="heading line-clamp-1">
-
-
-                              <span className="heading-pera"> <h6>{hotel.name}</h6></span>
-
-                            </div>
-
+                          <div className="name-desination ml-10">
+                            <h6 className="name">{review.user.username}</h6>
+                            <p className="pera">{review.created_at}</p>
                           </div>
-                        </article>
-
+                        </div>
+                        <p className="pera mt-24">{review.content}</p>
+                        <div className="review-stars d-flex align-items-center">
+                          <ul className="star-list d-flex align-items-center mr-2">
+                            {Array.from({ length: review.rate }, (_, index) => (
+                              <li key={index}>
+                                <i className="ri-star-s-fill" />
+                              </li>
+                            ))}
+                          </ul>
+                          <p className="pera">{review.rate}</p>
+                        </div>
                       </div>
-                    )
-                  })}
+                    </div>
+                  ))}
                 </div>
-
               </div>
-
-
             </div>
-
           </div>
         </section>
       </main>
       <Footer />
-
-      <div className="progressParent" id="back-top">
-        <svg className="backCircle svg-inner" width="100%" height="100%" viewBox="-1 -1 102 102">
-          <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
-        </svg>
-      </div>
-      <div className="search-overlay" />
-
-    </div >
-
-  )
-}
+    </div>
+  );
+};
 
 export default TourDetails;

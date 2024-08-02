@@ -102,7 +102,7 @@ const UserPicker: React.FC<UserPickerProps> = ({ onUserChange }) => {
             <div className="dropdown-section position-relative user-picker-dropdown">
                 <div className="d-flex gap-12 align-items-center">
                     <div className="qty-container">
-                        <strong className='mr-4'>Trẻ 2 - 5</strong>
+                        <strong className='mr-4'>Trẻ 0 - 5</strong>
                         <button
                             className="qty-btn-minus mr-1"
                             type="button"
