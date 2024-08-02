@@ -7,7 +7,7 @@ import Ok from './Ok';
 
 
 
-const Header = ({status}) => {
+const Header = ({ status }) => {
 
 
   const navigate = useNavigate();
@@ -21,12 +21,15 @@ const Header = ({status}) => {
   }, [status]);
 
   const handleLogout = () => {
+    toast.success('Bạn đã đăng xuất thành công');
     sessionStorage.removeItem('user');
     localStorage.removeItem('token');
     setUserName(null);
-    toast.success('Bạn đã đăng xuất thành công');
+
+
     navigate('/login');
   };
+
 
   return (
     <div>
@@ -156,10 +159,9 @@ const Header = ({status}) => {
                               {userName ? (
                                 <div className='d-flex'>
                                   <Link className='d-flex' to={'/profile'}>
-                                    <strong className='mt-10 mr-2 user-name '> {userName.name}</strong>
-                                    <i className="bi bi-person mt-2 mr-3 rounded"> </i>
-                              
-                                  <img className='rounded-circle i' width={40} height={100}  src={'http://127.0.0.1:8000/' + (userName.avatar ? userName.avatar : '')} alt="" />
+                                    <h6 className='mt-10 mr-2 user-name '> {userName.name}</h6>
+                                    {/* <i className="bi bi-person mt-2 mr-3 rounded"> </i> */}
+                                    <img className='rounded-circle i' width={40} height={100} src={'http://127.0.0.1:8000/' + (userName.avatar ? userName.avatar : '')} alt="" />
                                   </Link>
                                 </div>
                               ) : (
@@ -175,13 +177,17 @@ const Header = ({status}) => {
                                   <a type='submit' className="btn-secondary-sm " onClick={handleLogout}>Đăng xuất</a>
                                 </div>
                               )}
+                              {userName && (
+                                <li className="single-list">
+                                  <button className="ToggleThemeButton change-theme-mode m-0 p-0 border-0">
+                                    <Ok />
+                                  </button>
+                                </li>
+                              )}
                               {/* Theme Mode */}
-                              <li className="single-list">
-                                <button className="ToggleThemeButton change-theme-mode m-0 p-0 border-0">
-                                  <Ok />
-                                </button>
-                              </li>
                             </div>
+
+
                           </div>
                         </nav>
                       </div>

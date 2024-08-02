@@ -902,3 +902,46 @@ tbody td.active {
   width: 2rem;
   height: auto;
 }
+/* lichtrinh */
+/* .schedule{
+  width: 1000px;
+}
+.right{
+margin-right: 200px;
+} */
+.custom-modal-width .modal-dialog {
+  max-width: 100%;
+  width: auto;
+  margin: 0 auto;
+
+}
+
+.custom-modal-width .modal-content {
+  width: 100%;
+
+}
+
+.schedule-header, .schedule-body, .schedule-footer {
+  background-color: white;
+  /* background-color: #000000; */
+  /* width: 830px; */
+}
+
+@media (min-width: 768px) {
+  .custom-modal-width .modal-dialog {
+    max-width: 80%;
+  }
+}
+
+@media (min-width: 992px) {
+  .custom-modal-width .modal-dialog {
+    max-width: 70%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .custom-modal-width .modal-dialog {
+    max-width: 100%;
+   
+  }
+}

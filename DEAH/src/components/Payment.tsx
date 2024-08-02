@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const Payment: React.FC = () => {
+    
     const [username, setUserName] = useState<string>('');
     const [phone, setPhone] = useState<string>('');
     const [email, setEmail] = useState<string>('');
@@ -28,6 +29,7 @@ const Payment: React.FC = () => {
     const user_id = user ? user.id : null;
     const [startDate, setStartDate] = useState<any>(new Date());
     const [endDate, setEndDate] = useState<any>(addDays(new Date(), tour.tour.day));
+    
 
     const [children2To5, setChildren2To5] = useState<number>(0);
     const [children6To12, setChildren6To12] = useState<number>(0);
@@ -78,6 +80,7 @@ const Payment: React.FC = () => {
             'phone': phone,
             'promotion': (tour.tour.price - tour.tour.promotion) + (hotel.price - hotel.promotion ?? 0) ?? 0,
             'adults': adults,
+
             'user_id': user_id,
             'kids0To5': children2To5,
             'Kids6To12': children6To12,
