@@ -27,7 +27,8 @@ import Password from './AuthForm/Password';
 import Test from './FunctionComponentContext/Longtour';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import PaymentPage from './components/PaymentPage';
+import PaymentBanking from './components/PaymentBanking';
 import Loading from './FunctionComponentContext/Loading';
 import Lisbill2 from './components/Lisbill2';
 import Hi from './FunctionComponentContext/Hi';
@@ -68,7 +69,8 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/slide" element={<SlideShow />} />
         <Route path='/paymentSuccess' element={<PaymentSuccess/>} />
-        
+        <Route path='/paymentpage' element={<PaymentPage/>}/>
+        <Route path='/paymentbanking' element={<PaymentBanking/>}/>
         {/* user */}
         <Route path="/profile" element={<ProfileUser />} />
         <Route path="/listbill" element={<Lisbill2/>} />

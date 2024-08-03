@@ -200,23 +200,6 @@ const TourDetails = () => {
                       </div>
                       <div className="divider" />
                     </div>
-                    {/* cmt tour */}
-                    <div className="contact-card mt-40">
-                      <h4 className="contact-heading">Viết bình luận của bạn</h4>
-                      <form method="post" className="contact-form" onSubmit={handleSubmit}>
-                        <div className="row g-4">
-                          <div className="col-sm-6">
-                            <input className="custom-form" type="text" placeholder="Enter your name" value={formData.name} onChange={handleChange} name='name' />
-                          </div>
-                          <div className="col-sm-12">
-                            <textarea className="custom-form-textarea" id="exampleFormControlTextarea1" rows={3} placeholder="Enter your message..." defaultValue={""} value={formData.comments} onChange={handleChange} name='comments' />
-                          </div>
-                        </div>
-                        <div className="mt-40">
-                          <button type="submit" className="send-btn"> Đăng bình luận </button>
-                        </div>
-                      </form>
-                    </div>
                     {/* cmt_tour */}
                     <div className="tour-details-content mb-30 ">
                       <h4 className="title">Xem lịch trình của bạn tại đây</h4>
@@ -235,6 +218,7 @@ const TourDetails = () => {
                             onHide={closeModal}
                             centered
                             dialogClassName="custom-modal-width"
+                            size='xl'
                           >
                             <Modal.Header className='schedule-header' closeButton>
                               <Modal.Title>Lịch trình tour</Modal.Title>
@@ -255,12 +239,29 @@ const TourDetails = () => {
                       </div>
 
                     </div>
+                    {/* cmt tour */}
+                    <div className="contact-card mt-40">
+                      <h4 className="contact-heading">Viết bình luận của bạn</h4>
+                      <form method="post" className="contact-form" onSubmit={handleSubmit}>
+                        <div className="row g-4">
+                          <div className="col-sm-6">
+                            <input className="custom-form" type="text" placeholder="Enter your name" value={formData.name} onChange={handleChange} name='name' />
+                          </div>
+                          <div className="col-sm-12">
+                            <textarea className="custom-form-textarea" id="exampleFormControlTextarea1" rows={3} placeholder="Enter your message..." defaultValue={""} value={formData.comments} onChange={handleChange} name='comments' />
+                          </div>
+                        </div>
+                        <div className="mt-40">
+                          <button type="submit" className="send-btn"> Đăng bình luận </button>
+                        </div>
+                      </form>
+                    </div>
+                    
                   </div>
 
 
                   <div className="col-xl-4 col-lg-5">
-                    <TourSbar />
-                    <div className="row">
+                  <div className="row">
                       <hr className="mb-4" />
                       <div className="d-grid gap-2">
                         <a href={`/payment/${slug}`} className="btn btn-primary btn-lg" type="button">
@@ -268,6 +269,8 @@ const TourDetails = () => {
                         </a>
                       </div>
                     </div>
+                    <TourSbar />
+                    
                   </div>
                 </div>
 
