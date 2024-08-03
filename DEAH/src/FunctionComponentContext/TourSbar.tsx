@@ -38,7 +38,7 @@ const TourSbar = () => {
                 {tourlist.map((item: any, index: number) => {
                   return (
                     <li className="list  " key={index}>
-                      <a href={`/tour-detail/${item.id}`} className="destination-banner-two h-calc wow fadeInUp" data-wow-delay="0.s">
+                      <a href={`/tour-details/${item.slug}`} className="destination-banner-two h-calc wow fadeInUp" data-wow-delay="0.s">
                         <img className='img' src={'http://127.0.0.1:8000/' + (item.images ? item.images : '')} alt="travello" />
                         <div className="destination-content-two">
                           <div className="destination-info-two">

@@ -99,9 +99,10 @@ class PaymentController extends Controller
     public function bankingPayment(Request $request, ResponseJson $responseJson)
     {
         try {
+            
             $max = 45;
-            $totalPeople = Booking::where('tour_id', $request->tour_id)->where('start', $request->start)->sum('people');
-            if ($totalPeople + $request->people > $max) {
+            $totalPeople = Booking::where('tour_id', $request->tour_id)->where('start', $request->start)->sum('people');   
+            if (($totalPeople + $request->people) > $max) {
                 return $responseJson->responseSuccess($totalPeople + $request->people - $max, 'Quá số lượng người tham gia trong đợt');
             } else {
                 CreateBookingJob::dispatch($request->all());

@@ -99,8 +99,8 @@ const Lisbill2 = () => {
                                     <table className=''>
                                         <thead>
                                             <tr>
-                                                <th>Id <span className=""></span></th>
-                                                <th>Mã Đơn Hàng <span className=""></span></th>
+                                                <th>STT <span className=""></span></th>
+                                                <th>Mã Đặt Tour <span className=""></span></th>
                                                 <th>Giá <span className=""></span></th>
                                                 <th>Ngày Đặt <span className=""></span></th>
                                                 <th>Trạng thái Thanh Toán <span className=""></span></th>
