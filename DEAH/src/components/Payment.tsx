@@ -9,10 +9,11 @@ import addDays from 'date-fns/addDays';
 import UserPicker from './You';
 import Payment_PT from '../FunctionComponentContext/Pament_PT';
 import { useNavigate } from 'react-router-dom';
-
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const Payment: React.FC = () => {
+    // const data= localStorage.getItem('user')
+    // console.log(data);
     
     const [username, setUserName] = useState<string>('');
     const [phone, setPhone] = useState<string>('');
@@ -25,6 +26,8 @@ const Payment: React.FC = () => {
     const tour = tourString ? JSON.parse(tourString) : null;
     const [filteredOptions, setFilteredOptions] = useState<any[]>(tour ? tour.tour.hotels : []);
     const userString = sessionStorage.getItem('user');
+    console.log(userString);
+    
     const user = userString ? JSON.parse(userString) : null;
     const user_id = user ? user.id : null;
     const [startDate, setStartDate] = useState<any>(new Date());
@@ -43,12 +46,24 @@ const Payment: React.FC = () => {
     const calculateTotalPrice = (adults: number, kids: number) => {
         const tourprice = tour.tour.promotion ? tour.tour.promotion : tour.tour.price
         const adultPrice = tourprice // Giả sử giá cho mỗi người lớn
-        const kidPrice = tourprice * 0.8; // Giả sử giá cho mỗi trẻ em là 80% giá người lớn
+        const kidPrice = tourprice * 0.2; // Giả sử giá cho mỗi trẻ em là 20% giá người lớn
         const hotelPrice = hotel ? (hotel.promotion ? Number(hotel.promotion) : hotel.price) : 0;
         const newTotalPrice = (adults * adultPrice) + (children6To12 * kidPrice) + hotelPrice;
         setTotalPrice(newTotalPrice);
     };
 
+
+
+    // Hàm để lấy dữ liệu từ sessionStorage và thiết lập trạng thái
+    useEffect(() => {
+        const userString = sessionStorage.getItem('user');
+        if (userString) {
+            const user = JSON.parse(userString); // Chuyển đổi chuỗi JSON thành đối tượng
+            setUserName(user.name || '');
+            setPhone(user.phone || '');
+            setEmail(user.email || '');
+        }
+    }, []);
     const Payment = async () => {
         const user_payment_info = {
             'user_name': username,
@@ -57,7 +72,10 @@ const Payment: React.FC = () => {
             'start': startDate,
             'end': endDate,
         };
+            //    console.log(user_payment_info.user_name);
         sessionStorage.setItem('user_payment_info', JSON.stringify(user_payment_info));
+ 
+        
         const bookingData = {
             'booking_code': 'Tour' + Date.now(),
             'user_name': username,
@@ -84,6 +102,7 @@ const Payment: React.FC = () => {
             'user_id': user_id,
             'kids0To5': children2To5,
             'Kids6To12': children6To12,
+            
         }
         switch (paymentMethod) {
             case 'VPGD':
