@@ -67,7 +67,7 @@ class BookingController extends Controller
                 $booking->save();
                 return $this->ResponseJson->responseSuccess('Hoàn tiền thành công');
             }
-            return $this->ResponseJson->responseSuccess('Không thể cập nhật dữ liệu');
+            return $this->ResponseJson->responseFailed('Không thể cập nhật dữ liệu');
 
         }
         return $this->ResponseJson->responseFailed('Không có dữ liệu');

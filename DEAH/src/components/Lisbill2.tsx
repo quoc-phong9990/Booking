@@ -32,7 +32,7 @@ const Lisbill2 = () => {
         date_of_birth: ''
     });
 
-   
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -56,29 +56,30 @@ const Lisbill2 = () => {
             reset(user);
         }
         fetchData();
-    }, [reset,statusdelete]);
+    }, [reset, statusdelete]);
 
     const handleDelete = async (code: any) => {
-       
+
         if (window.confirm('Bạn có chắc chắn chắn hủy đơn?')) {
-            
+
             try {
-          
+
                 const response = await axios.post('http://127.0.0.1:8000/api/client/user/booking/update', {
                     action: 'cancel',
                     booking_code: code,
-               
-
                 });
+                const status = response.data.status;
+                if (status === 200) {
+                    toast.success('Đơn hàng đã hủy thành công');
+                } else {
+                    toast.error('Đơn hàng không thể hủy');
+                }
                 setstatusdelete(!statusdelete)
-                toast.success('Bạn đã hủy đơn hàng thành công');
-         
-        
             } catch (error) {
                 toast.error('Có lỗi xảy ra khi hủy đơn hàng');
             }
         }
-    
+
     };
     return (
         <div>
