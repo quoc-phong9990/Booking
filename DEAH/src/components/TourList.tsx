@@ -197,11 +197,7 @@ console.log(location.state);
                     </div>
 
 
-                    <div className="offer-list">
-
-
-
-                    </div>
+                  
 
 
                   </div>

@@ -944,4 +944,71 @@ margin-right: 200px;
     max-width: 100%;
    
   }
+  /* rate_tourdetail */
+  /* Default styles for larger screens */
+.rating-section {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  margin: 20px 0;
+}
+
+.rating-checkbox {
+  position: relative;
+  margin: 0 5px;
+}
+
+.rating-checkbox input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.rating-checkbox label {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rating-checkbox label svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Styles for tablets (width less than 768px) */
+@media (max-width: 768px) {
+  .rating-section {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .rating-checkbox {
+    margin: 0 3px;
+  }
+
+  .rating-checkbox label svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Styles for mobile phones (width less than 480px) */
+@media (max-width: 480px) {
+  .rating-section {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .rating-checkbox {
+    margin: 0 2px;
+  }
+
+  .rating-checkbox label svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
 }
