@@ -13,7 +13,7 @@ class Banner extends Model
 
     protected $table = 'banners';
 
-    protected $fillable = ['title', 'is_active'];
+    protected $fillable = ['title'];
     public function images()
     {
         return $this->hasMany(BannerImages::class);

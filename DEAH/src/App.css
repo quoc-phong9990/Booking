@@ -415,3 +415,29 @@ body{
 /* heder */
 
 }
+.animated-border {
+  border: 2px solid #815c5c;
+  border-radius: 4px;
+  animation: borderAnimation 2s infinite;
+}
+
+@keyframes borderAnimation {
+  0% {
+    border-color: #e2d8d8;
+  }
+  50% {
+    border-color: transparent;
+  }
+  100% {
+    border-color: #000;
+  }
+}
+.text{
+  width: 100%; overflow: hidden; white-space: nowrap; animation: marquee 10s linear infinite;
+  @keyframes marquee {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+    }
+}
+
+

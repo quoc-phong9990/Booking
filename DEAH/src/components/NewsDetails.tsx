@@ -64,8 +64,9 @@ const NewsDetails = () => {
                   </div>
                   <div className="news-details-content">
 
-                    <h5 className="title">{post.title}</h5>
-                    <p className="pera mt-3">{post.body}</p>
+                    <div className='text-black font-bold' dangerouslySetInnerHTML={{ __html: post.title }} />
+                    <div className='text-black font-bold' dangerouslySetInnerHTML={{ __html: post.body }} />
+
                   </div>
 
                   <div className="news-details-quote">
