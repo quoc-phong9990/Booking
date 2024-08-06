@@ -38,7 +38,7 @@
                                                 {{ $dataShow['countTours'] }}
                                             </h4>
                                             <p href="{{ route('bookings.index') }}" class="text-decoration-underline">
-                                                Chuyến du lịch trong tháng: {{ $dataShow['countTours'] }}</p>
+                                                Tour mới trong tháng: {{ $dataShow['countTours'] }}</p>
                                         </div>
                                         <div class="avatar-sm flex-shrink-0">
                                             <span class="avatar-title bg-success-subtle rounded fs-3">
@@ -152,33 +152,47 @@
                         <div class="col-xl-8">
                             <div class="card card-animate">
                                 <h3 class="card-header">
-                                    Top 5 Tour nổi bật
+                                    Đơn hàng mới trong ngày
                                 </h3>
                                 <div class="table-responsive">
                                     <table class="table table-striped table-hover">
                                         <thead class="table-light">
                                             <tr>
                                                 <th style="width: 5%">#</th>
-                                                <th style="width: 60%">Tiêu đề </th>
-                                                <th style="width: 20%">Ảnh đại diện</th>
-                                                <th style="width: 15%">Thành phô</th>
+                                                <th style="width: 20%">Mã book</th>
+                                                <th style="width: 20%">Tên </th>
+                                                <th style="width: 20%">Ngày bắt đầu </th>
+                                                <th style="width: 15%">Số tiền</th>
                                             </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
-                                            @foreach ($dataShow['tours'] as $index => $tour)
-                                                <tr class="table-primary">
-                                                    <td style="width: 5%" scope="row">{{ $index + 1 }}</td>
-                                                    <td style="width: 60%"> <a href="{{ route('tours.show', $tour->id) }}">
-                                                            {{ Str::limit($tour->title, 60) }} </a>
-                                                    </td>
-                                                    <td style="width: 20%">
-                                                        <img src="{{ asset($tour->images()->first()->image) }}"
-                                                            width="100%" height="100px" alt="">
-                                                    </td>
-                                                    <td style="width: 15%">{{ $tour->provinces->name }}</td>
+                                            @if ($dataShow['booksInDay'] && count($dataShow['booksInDay']) > 0)
+                                                @foreach ($dataShow['booksInDay'] as $index => $val)
+                                                    <tr class="table-primary">
+                                                        <td style="width: 5%" scope="row">{{ $index + 1 }}</td>
+                                                        <td style="width: 20%">
+                                                            {{ $val->booking_code }}
+                                                        </td>
+                                                        <td style="width: 20%">
+                                                            {{ $val->user_name }}
 
-                                                </tr>
-                                            @endforeach
+                                                        </td>
+                                                        <td style="width: 20%">
+                                                            {{ $val->start }}
+
+                                                        </td>
+                                                        <td style="width: 15%">
+                                                            {{ number_format($val->total_price, 0, '.', '.') }} VNĐ
+                                                        </td>
+
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <td class="fw-bold text-center" colspan="5">
+                                                    Chưa có đơn mới
+                                                </td>
+                                            @endif
+
 
                                         </tbody>
                                         <tfoot>
@@ -207,7 +221,8 @@
                                                 {{ $dataShow['totalInMonth'] }} VND
                                             </h4>
                                             <p href="{{ route('bookings.index') }}" class="text-decoration-underline">
-                                                Đơn hàng hoàn thành trong tháng: {{ $dataShow['countBookingsDone'] }}</p>
+                                                Đơn hàng hoàn thành trong tháng: {{ $dataShow['countBookingsDoneMonth'] }}
+                                            </p>
                                         </div>
                                         <div class="avatar-sm flex-shrink-0">
                                             <span class="avatar-title bg-primary-subtle rounded fs-3">
@@ -225,7 +240,7 @@
                                     <div class="d-flex align-items-center">
                                         <div class="flex-grow-1 overflow-hidden">
                                             <p class="text-uppercase fw-medium text-muted text-truncate mb-0"> Tổng doanh
-                                                thu trong tháng
+                                                thu trong năm
 
                                             </p>
                                         </div>
@@ -234,10 +249,10 @@
                                     <div class="d-flex align-items-end justify-content-between mt-4">
                                         <div>
                                             <h4 class="fs-22 fw-semibold ff-secondary mb-4">
-                                                {{ $dataShow['totalInMonth'] }} VND
+                                                {{ $dataShow['totalInYear'] }} VND
                                             </h4>
                                             <p href="{{ route('bookings.index') }}" class="text-decoration-underline">
-                                                Đơn hàng hoàn thành trong năm: {{ $dataShow['countBookingsDone'] }}</p>
+                                                Đơn hàng hoàn thành trong năm: {{ $dataShow['countBookingsDoneYear'] }}</p>
                                         </div>
                                         <div class="avatar-sm flex-shrink-0">
                                             <span class="avatar-title bg-primary-subtle rounded fs-3">

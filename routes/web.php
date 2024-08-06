@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\TourTypeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VoucherController;
 use App\Http\Controllers\Admin\HotelServiceController;
+use App\Http\Controllers\Admin\StasticController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'login'], function () {
     Route::get("/", [DashBoardController::class, 'index'])->name('admin.index');
+    Route::get("/stastics", [StasticController::class, 'index'])->name('stastics');
     //Hotels
     Route::resource('/hotels', HotelController::class);
     Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
