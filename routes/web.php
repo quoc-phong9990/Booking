@@ -29,11 +29,16 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::get('/', function () {
     return redirect()->route('auth.form');
 });
 Route::get('/login', [AuthController::class, 'form'])->name('auth.form');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+Route::any('/resgister', [AuthController::class, 'resgister'])->name('auth.resgister');
+Route::any('/repass', [AuthController::class, 'repass'])->name('auth.repass');
+Route::get('/change-pass/{token}', [AuthController::class, 'change'])->name('auth.change');
+Route::post('/change-pass', [AuthController::class, 'changePass'])->name('auth.change-pass');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'login'], function () {
     Route::get("/", [DashBoardController::class, 'index'])->name('admin.index');
