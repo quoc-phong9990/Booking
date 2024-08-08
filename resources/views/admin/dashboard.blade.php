@@ -155,7 +155,7 @@
                                     Đơn hàng mới trong ngày
                                 </h3>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-hover">
+                                    <table class="table table-hover">
                                         <thead class="table-light">
                                             <tr>
                                                 <th style="width: 5%">#</th>
@@ -166,6 +166,7 @@
                                             </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
+
                                             @if ($dataShow['booksInDay'] && count($dataShow['booksInDay']) > 0)
                                                 @foreach ($dataShow['booksInDay'] as $index => $val)
                                                     <tr class="table-primary">
@@ -192,6 +193,7 @@
                                                     Chưa có đơn mới
                                                 </td>
                                             @endif
+
 
 
                                         </tbody>

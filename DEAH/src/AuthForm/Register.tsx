@@ -96,11 +96,11 @@ const Register = () => {
                         )} />
                         {errors.name && <span style={{ color: "red" }}>{errors.name?.message}</span>}
                       </div>
-                      <div className="contact-form mb-24">
+                      {/* <div className="contact-form mb-24">
                         <label className="contact-label">Ngày sinh </label>
                         <input className="form-control contact-input" type="date" placeholder="Enter Your Tên" {...register("date_of_birth",
                           {
-                            required: " Không được để trống name",
+                            required: " Ngày sinh không được để trống",
                             minLength: {
                               value: 2,
                               message: "Nhập ít nhất 2 ký tự "
@@ -108,7 +108,7 @@ const Register = () => {
                           }
                         )} />
                         {errors.name && <span style={{ color: "red" }}>{errors.name?.message}</span>}
-                      </div>
+                      </div> */}
                       <div className="contact-form mb-24">
                         <label className="contact-label">Email </label>
                         <input className="form-control contact-input" type="email" placeholder="Email" {...register("email",

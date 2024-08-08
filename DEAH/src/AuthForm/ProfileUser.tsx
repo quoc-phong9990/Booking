@@ -16,7 +16,6 @@ const ProfileUser = () => {
   const [status, setStatus] = useState<boolean>(false); // State để lưu URL của ảnh
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState({
     id: '',
@@ -32,6 +31,8 @@ const ProfileUser = () => {
 
   useEffect(() => {
     const Data = sessionStorage.getItem('user');
+    console.log(Data);
+    
     if (Data) {
       const user = JSON.parse(Data);
       setUserData(user);
@@ -49,8 +50,6 @@ const ProfileUser = () => {
       setAvatarUrl(imageUrl); // Cập nhật URL ảnh trong form
     }
   };
-
-
 
   const handleUpdate = async (user: any) => {
     user.file = file;

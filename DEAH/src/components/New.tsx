@@ -51,19 +51,11 @@ const New = () => {
                   <div className="tab-content" id="v-pills-tabContent-two">
                     <div className="tab-pane  fade show active" id="pills-news-one" role="tabpanel" aria-labelledby="pills-news-one">
                       <div className="about-banner imgEffect4">
-                        <img src="/src/assets/category_tour/Nha trang.jpg" alt="travello" />
+                        <img src="/src/assets/category_tour/HaNoi.png" alt="travello" />
                       </div>
                     </div>
-                    <div className="tab-pane fade" id="pills-news-two" role="tabpanel" aria-labelledby="pills-news-two">
-                      <div className="about-banner imgEffect4">
-                        <img src="/src/assets/images/news/banner-1.png" alt="travello" />
-                      </div>
-                    </div>
-                    <div className="tab-pane fade" id="pills-news-three" role="tabpanel" aria-labelledby="pills-news-three">
-                      <div className="about-banner imgEffect4">
-                        <img src="/src/assets/images/news/banner-2.png" alt="travello" />
-                      </div>
-                    </div>
+                   
+                   
                   </div>
                 </div>
 

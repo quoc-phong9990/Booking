@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('bookings', function (Blueprint $table) {
-            $table->dropColumn('kids');
-            $table->integer('kids0To5')->nullable()->after('adults');
-            $table->integer('kids6To12')->nullable()->after('kids0To5');
+            $table->integer('children2To5')->nullable()->after('adults');
+            $table->integer('children6To12')->nullable()->after('children2To5');
         });
     }
 
@@ -24,9 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('bookings', function (Blueprint $table) {
-            $table->integer('kids')->nullable()->after('adults');
-            $table->dropColumn('kids0To5');
-            $table->dropColumn('kids6To12');
+            $table->dropColumn('children2To5');
+            $table->dropColumn('children6To12');
         });
     }
 };

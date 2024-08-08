@@ -15,21 +15,24 @@ class BookingController extends Controller
 
     public function index(Request $request)
     {
+
         $query = Booking::query();
         if ($request->code && $request->code != null) {
-            $query->where('booking_code', 'LIKE', $request->code);
+            $query->where('booking_code', 'LIKE', '%' . $request->code . '%');
         }
         if ($request->user_name && $request->user_name != null) {
             $query->where('user_name', 'LIKE', '%' . $request->user_name . '%');
         }
-        if (isset($request->status_payment)) {
+        if (isset($request->status_payment) && $request->status_payment != null) {
             $query->where('status_payment', intval($request->status_payment));
         }
-        if (isset($request->status_tour)) {
+        if (isset($request->status_tour) && $request->status_tour != null) {
             $query->where('status_tour', intval($request->status_tour));
         }
         $bookings = $query->orderByDesc('created_at')->paginate(10);
+
         $title = 'Bookings';
+
         return view('admin.Bookings.index', compact('bookings', 'title'));
     }
 
@@ -63,7 +66,6 @@ class BookingController extends Controller
         if ($booking) {
             if ($request->status_payment < $booking->status_payment || $request->status_tour < $booking->status_tour) {
                 return redirect()->route('bookings.index')->with('error', "Không thể cập nhật trạng thái đơn hàng");
-
             }
             if ($request->status_tour == StatusTour::DONE) {
                 $booking->update([
@@ -82,17 +84,12 @@ class BookingController extends Controller
                         'status_tour' => StatusTour::CANCEL,
                     ]);
                 }
-
             } else {
                 $booking->update($request->all());
             }
             return redirect()->route('bookings.index')->with('success', 'Cập nhật trạng thái đơn hàng thành công');
-
-
-
         }
         return redirect()->route('bookings.index')->with('error', "Đơn hàng không tồn tại");
-
     }
 
     public function updatePaymentStatus(Request $request, $id, Booking $booking)
@@ -107,5 +104,4 @@ class BookingController extends Controller
         $booking->delete();
         return redirect()->route('bookings.index')->with('success', 'Booking deleted successfully.');
     }
-
 }

@@ -38,12 +38,11 @@ class Booking extends Model
         'end',
         'status_payment',
         'status_tour',
-        'statusPayment',
-        'statusTour',
         'user_id',
+        'kids',
         'adults',
-        'kids0To5',
-        'kids6To12'
+        'children2To5',
+        'children6To12'
 
     ];
     public function getNameStatusPayment()
