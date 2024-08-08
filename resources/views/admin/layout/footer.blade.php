@@ -5,6 +5,13 @@
   <script src="{{ url('assets/libs/feather-icons/feather.min.js', []) }} "></script>
   <script src="{{ url('assets/js/pages/plugins/lord-icon-2.1.0.js', []) }} "></script>
   <script src="{{ url('assets/js/plugins.js', []) }} "></script>
+  <!-- apexcharts -->
+  <script src="{{ url('assets/libs/apexcharts/apexcharts.min.js') }} "></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.0/dayjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.0/plugin/quarterOfYear.min.js"></script>
+
+  <!-- apexcharts init -->
+  <script src="{{ url('assets/js/pages/apexcharts-column.init.js') }} "></script>
   <!-- prismjs plugin -->
   <script src="{{ url('assets/libs/prismjs/prism.js', []) }} "></script>
   <script src="{{ url('assets/libs/list.js/list.min.js', []) }}"></script>

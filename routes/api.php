@@ -55,6 +55,10 @@ Route::group(['middleware' => 'cors'], function () {
             Route::post('change-pass', [UserController::class, 'changePass']);
             Route::get('logout', [UserController::class, 'logout']);
         });
+        //Quên mật khẩu
+        Route::post('mail-forget-pass', [UserController::class, 'forgetPassMail']);
+        Route::post('change-pass', [UserController::class, 'changeForgetPass']);
+
         Route::post('review-tour',[TourController::class,'review']);
         Route::post('update-payment-status/{id}', [BookingController::class, 'updatePaymentStatus']);
         Route::post('vnpayment', [PaymentController::class, 'createPayment']);
