@@ -7,7 +7,7 @@ import Ok from './Ok';
 
 
 
-const Header = ({status}) => {
+const Header = ({ status }) => {
 
 
   const navigate = useNavigate();
@@ -21,12 +21,15 @@ const Header = ({status}) => {
   }, [status]);
 
   const handleLogout = () => {
+    toast.success('Bạn đã đăng xuất thành công');
     sessionStorage.removeItem('user');
     localStorage.removeItem('token');
     setUserName(null);
-    toast.success('Bạn đã đăng xuất thành công');
+
+
     navigate('/login');
   };
+
 
   return (
     <div>
@@ -155,11 +158,20 @@ const Header = ({status}) => {
                             <div className="header-right">
                               {userName ? (
                                 <div className='d-flex'>
-                                  <Link to={'/profile'}>
-                                    <p className='mt-3 mr-2 user-name '>Chào mừng, {userName.name}!</p>
+                                  <Link className='d-flex' to={'/profile'}>
+                                    <h6 className='mt-10 mr-2 user-name '> {userName.name}</h6>
+                                    {/* <i className="bi bi-person mt-2 mr-3 rounded"> </i> */}
+                                    {/* <img className='rounded-circle i' width={40} height={100} src={'http://127.0.0.1:8000/' + (userName.avatar ? userName.avatar : '')} alt="" /> */}
                                   </Link>
-                                  <img className='rounded-circle' width={60} height={60} src={'http://127.0.0.1:8000/' + (userName.avatar ? userName.avatar : '')} alt="" />
+                                  {userName && (
+                                <li className="single-list">
+                                  <button className="ToggleThemeButton change-theme-mode m-0 p-0 border-0">
+                                    <Ok />
+                                  </button>
+                                </li>
+                              )}
                                 </div>
+                                
                               ) : (
                                 <p className='mt-3'>Chào mừng, bạn vui lòng đăng nhập!</p>
                               )}
@@ -173,13 +185,11 @@ const Header = ({status}) => {
                                   <a type='submit' className="btn-secondary-sm " onClick={handleLogout}>Đăng xuất</a>
                                 </div>
                               )}
+                           
                               {/* Theme Mode */}
-                              <li className="single-list">
-                                <button className="ToggleThemeButton change-theme-mode m-0 p-0 border-0">
-                                  <Ok />
-                                </button>
-                              </li>
                             </div>
+
+
                           </div>
                         </nav>
                       </div>

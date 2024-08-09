@@ -59,6 +59,9 @@ const New = () => {
                     <div className="tab-pane  fade show active" id="pills-news-one" role="tabpanel" aria-labelledby="pills-news-one">
                       <div className="about-banner imgEffect4">
                         <img src="/src/assets/category_tour/NhaTrang.jpg" alt="travello" />
+
+                        <img src="/src/assets/category_tour/Nhatrang.jpg" alt="travello" />
+
                       </div>
                     </div>
                     <div className="tab-pane fade" id="pills-news-two" role="tabpanel" aria-labelledby="pills-news-two">

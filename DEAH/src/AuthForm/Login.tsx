@@ -11,7 +11,7 @@ type Input = {
 }
 const Login = () => {
   const navigate = useNavigate()
-  const { register, handleSubmit } = useForm<Input>()
+  const { register, handleSubmit , formState :{errors}} = useForm<Input>()
   function onSubmit(data: Input) {
     fetch('http://127.0.0.1:8000/api/client/user/login', {
       method: "POST",
@@ -50,11 +50,11 @@ const Login = () => {
           }
           toast.success('Chúc mừng bạn đã đăng nhập thành công');
           navigate('/index-two');
+        }else{
+          toast.error('Hãy kiểm tra lại thông tin mật khẩu của bạn ')
         }
       })
-      .catch(err => {           
-         toast.success('Sai thông tin xin mời nhập lại');
-      })
+    
   }
   return (
     <div>
@@ -94,7 +94,15 @@ const Login = () => {
                     <form onSubmit={handleSubmit(onSubmit)} action="#" method="POST">
                       <div className="position-relative contact-form mb-24">
                         <label className="contact-label">Email </label>
-                        <input {...register('email')} className="form-control contact-input" type="text" placeholder="Enter Your Email" />
+                        <input  className="form-control contact-input" type="text" placeholder="Enter Your Email" {...register('email',
+                          {
+                            required : "Email của bạn đang trống",
+                            pattern: {
+                              value: /^\S+@\S+\.\S+$/,
+                              message: "Không đúng định dạng email"
+                            }
+                          })} />
+                          {errors.email && <span className='text-danger'>{errors.email?.message}</span>}
                       </div>
                       <div className="contact-form mb-24">
                         <div className="position-relative ">
@@ -103,7 +111,15 @@ const Login = () => {
                             <a href="forgot-pass"><span className="text-primary text-15"> Quên
                               mật khẩu?</span></a>
                           </div>
-                          <input {...register('password')} type="password" className="form-control contact-input password-input" id="txtPasswordLogin" placeholder="Enter Password" />
+                          <input  type="password" className="form-control contact-input password-input" id="txtPasswordLogin" placeholder="Enter Password" {...register('password',
+                            {required:'Mật khẩu của bạn đang bị trống',
+                              minLength:{
+                                value:6,
+                                message:'mật khẩu không được nhỏ hơn 6 ký tự !'
+                              }
+                            }
+                          )} />
+                          {errors.password && <span className='text-danger'>{errors.password?.message}</span>}
                           <i className="toggle-password ri-eye-line" />
                         </div>
                       </div>

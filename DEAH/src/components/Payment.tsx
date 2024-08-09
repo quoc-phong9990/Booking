@@ -9,10 +9,12 @@ import addDays from 'date-fns/addDays';
 import UserPicker from './You';
 import Payment_PT from '../FunctionComponentContext/Pament_PT';
 import { useNavigate } from 'react-router-dom';
-
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const Payment: React.FC = () => {
+    // const data= localStorage.getItem('user')
+    // console.log(data);
+    
     const [username, setUserName] = useState<string>('');
     const [phone, setPhone] = useState<string>('');
     const [email, setEmail] = useState<string>('');
@@ -24,10 +26,13 @@ const Payment: React.FC = () => {
     const tour = tourString ? JSON.parse(tourString) : null;
     const [filteredOptions, setFilteredOptions] = useState<any[]>(tour ? tour.tour.hotels : []);
     const userString = sessionStorage.getItem('user');
+    console.log(userString);
+    
     const user = userString ? JSON.parse(userString) : null;
     const user_id = user ? user.id : null;
     const [startDate, setStartDate] = useState<any>(new Date());
     const [endDate, setEndDate] = useState<any>(addDays(new Date(), tour.tour.day));
+
 
     const [children2To5, setChildren2To5] = useState<number>(0);
     const [children6To12, setChildren6To12] = useState<number>(0);
@@ -39,13 +44,26 @@ const Payment: React.FC = () => {
     }, [adults, kids, hotel]);
 
     const calculateTotalPrice = (adults: number, kids: number) => {
-        const adultPrice = tour.tour.price; // Giả sử giá cho mỗi người lớn
-        const kidPrice = tour.tour.price * 0.5; // Giả sử giá cho mỗi trẻ em là 50% giá người lớn
+        const tourprice = tour.tour.promotion ? tour.tour.promotion : tour.tour.price
+        const adultPrice = tourprice // Giả sử giá cho mỗi người lớn
+        const kidPrice = tourprice * 0.2; // Giả sử giá cho mỗi trẻ em là 20% giá người lớn
         const hotelPrice = hotel ? (hotel.promotion ? Number(hotel.promotion) : hotel.price) : 0;
-        const newTotalPrice = (adults * adultPrice) + (kids * kidPrice) + hotelPrice;
+        const newTotalPrice = (adults * adultPrice) + (children6To12 * kidPrice) + hotelPrice;
         setTotalPrice(newTotalPrice);
     };
 
+
+
+    // Hàm để lấy dữ liệu từ sessionStorage và thiết lập trạng thái
+    useEffect(() => {
+        const userString = sessionStorage.getItem('user');
+        if (userString) {
+            const user = JSON.parse(userString); // Chuyển đổi chuỗi JSON thành đối tượng
+            setUserName(user.name || '');
+            setPhone(user.phone || '');
+            setEmail(user.email || '');
+        }
+    }, []);
     const Payment = async () => {
         const user_payment_info = {
             'user_name': username,
@@ -54,29 +72,33 @@ const Payment: React.FC = () => {
             'start': startDate,
             'end': endDate,
         };
+            //    console.log(user_payment_info.user_name);
         sessionStorage.setItem('user_payment_info', JSON.stringify(user_payment_info));
+ 
+        
         const bookingData = {
             'booking_code': 'Tour' + Date.now(),
             'user_name': username,
             'email': email,
+            'tour_id': tour.tour.id,
             'tour_name': tour.tour.title,
-            'tour_price': tour.tour.price,
-            'tour_address': tour.tour.location.ward + ', ' + tour.tour.location.district + ', ' + tour.tour.location.province,
+            'tour_price': tour.tour.promotion ? tour.tour.promotion : tour.tour.price,
+            'tour_address': tour.tour.location.ward + ', ' + tour.tour.location.district + ',' + tour.tour.location.province,
             'hotel_name': hotel ? hotel.name : '',
             'hotel_price': hotel ? (hotel.promotion ? Number(hotel.promotion) : hotel.price) : 0,
-            'hotel_address': hotel ? (hotel.address + ', ' + tour.tour.location.province) : '',
-            'book_price': tour.tour.price + (hotel ? (hotel.promotion ? Number(hotel.promotion) : hotel.price) : 0),
-            'promotion_price': 1,
-            'total_price': totalPrice,
-            'people': kids + adults,
+            'hotel_address': hotel ? (hotel.address + ',' + tour.tour.location.province) : '',
+            'book_price': totalPrice,
+            'promotion_price': 0,
+            'total_price': totalPrice + (hotel ? (hotel.promotion ? Number(hotel.promotion) : hotel.price) : 0),
+            'people': children2To5 + children6To12 + adults,
             'start': startDate,
             'end': endDate,
             'status_tour': 0,
             'status_payment': 0,
             'type': tour.tour.type,
             'phone': phone,
-            'promotion': tour.tour.promotion,
-            'kids': kids,
+            'kids': children2To5 + children6To12,
+            // 'promotion': (tour.tour.price - tour.tour.promotion) + (hotel.price - hotel.promotion ?? 0) ?? 0,
             'adults': adults,
             'user_id': user_id,
             'children2To5': children2To5,
@@ -87,7 +109,7 @@ const Payment: React.FC = () => {
                 var response = await axios.post('http://127.0.0.1:8000/api/client/cashpayment', bookingData);
                 if (response.status === 200) {
                     toast.success(response.data.message);
-                    navigate('', { state: { data: bookingData } })
+                    navigate('/paymentpage', { state: { data: bookingData } })
                 } else {
                     toast.error(response.data.message);
                 }
@@ -97,8 +119,10 @@ const Payment: React.FC = () => {
             case 'CKNH':
                 var response = await axios.post('http://127.0.0.1:8000/api/client/bankingPayment', bookingData);
                 if (response.status === 200) {
+                    console.log(response.data.message);
+
                     toast.success(response.data.message);
-                    navigate('', { state: { data: bookingData } })
+                    navigate('/paymentbanking', { state: { data: bookingData } })
                 } else {
                     toast.error(response.data.message);
                 }
@@ -112,6 +136,7 @@ const Payment: React.FC = () => {
             default:
                 break;
         }
+
     };
 
     const chooseHotel = (e: any) => {
@@ -165,19 +190,16 @@ const Payment: React.FC = () => {
                                             <div className="d-flex align-items-center flex-wrap gap-20">
                                                 <div className="count">
                                                     <i className="ri-time-line" />
-                                                    <p className="pera">{tour.tour.day} ngày {tour.tour.day - 1 === 0 ? '' : (tour.tour.day - 1 + ' đêm')}</p>
+                                                    <p className="pera mt-3">{tour.tour.day} ngày {tour.tour.day - 1 === 0 ? '' : (tour.tour.day - 1 + ' đêm')}</p>
                                                 </div>
-                                                <div className="count">
-                                                    <i className="ri-user-line" />
-                                                    <p className="pera">2 người</p>
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
                                     <div className="price-review">
-                                        <div className="d-flex gap-10 align-items-end">
-                                            <p className="light-pera">Thành Tiền</p>
-                                            <p className="pera"><CurrencyFormatter amount={totalPrice + tour.tour.price} /></p>
+                                        <div className="d-flex gap-6  align-items-end">
+                                            <p className="light-pera">Giá tiền: </p>
+                                            <p className="text-lg font-bold "><CurrencyFormatter amount={tour.tour.promotion ? tour.tour.promotion : tour.tour.price} />/Người</p>
 
 
                                         </div>
@@ -189,11 +211,12 @@ const Payment: React.FC = () => {
                                         <div className="tour-include-exclude m-0 mb-30 radius-6">
                                             <div className="includ-exclude-point">
                                                 <h4 className="title">Bao gồm</h4>
-                                                <ul className="expect-list">
-                                                    <li className="list">Tất cả các vé nhập cảnh của các điểm đến nhảy </li>
-                                                    <li className="list">Bữa trưa Platter </li>
-                                                    <li className="list"> Đồ ăn nhẹ buổi tối </li>
-                                                    <li className="list"> Bộ sơ cứu (trong trường hợp khẩn cấp) </li>
+                                                <ul>
+                                                    {tour.tour.attributes?.map((attr: any) => (
+                                                        <li key={attr.id}>
+                                                            <strong> - {attr.attribute}</strong>
+                                                        </li>
+                                                    ))}
                                                 </ul>
                                             </div>
                                         </div>
@@ -239,7 +262,7 @@ const Payment: React.FC = () => {
                                             <div className="price-review">
                                                 <div className="d-flex gap-10 align-items-end">
                                                     <p className="light-pera">Tổng</p>
-                                                    <p className="pera"><CurrencyFormatter amount={totalPrice + tour.tour.price} /></p>
+                                                    <p className="text-lg font-bold text-danger"><CurrencyFormatter amount={totalPrice} /></p>
 
                                                 </div>
                                                 <div className="rating">

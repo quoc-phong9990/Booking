@@ -132,7 +132,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (count($hotel->images)>0)
+                                    @if (count($hotel->images) > 0)
                                         @foreach ($hotel->images as $index => $image)
                                             <tr class="">
                                                 <td class="text-black" scope="col">{{ $index + 1 }}</td>
@@ -183,7 +183,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if (count($hotel->services)>0)
+                                        @if (count($hotel->services) > 0)
                                             @foreach ($hotel->services as $index => $service)
                                                 <tr class="">
                                                     <td class="text-black" scope="col">{{ $index + 1 }}</td>
@@ -258,7 +258,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (count($hotel->comments)>0)
+                                    @if (count($hotel->comments) > 0)
                                         @foreach ($hotel->comments as $index => $comment)
                                             <tr class="">
                                                 <td class="text-black" scope="col">{{ $index + 1 }}</td>
@@ -324,7 +324,7 @@
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <label for="email-field" class="form-label">Giá</label>
-                                        <input type="text" id="email-field" class="form-control" name="price"
+                                        <input type="text" id="email-field" class="form-control" name="price"  id="price"
                                             value="{{ $hotel->price }}" placeholder="" />
                                         @error('price')
                                             <span class="text-danger fs-10">{{ $message }}</span>
@@ -334,7 +334,7 @@
                                     <div class="col-md-4 mb-3">
                                         <label for="phone-field" class="form-label">Giá khuyến mại</label>
                                         <input type="text" id="phone-field" class="form-control" name="promotion"
-                                            value="{{ $hotel->promotion }}" placeholder="" />
+                                            id="promotion" value="{{ $hotel->promotion }}" placeholder="" />
                                         @error('promotion')
                                             <span class="text-danger fs-10">{{ $message }}</span>
                                         @enderror
@@ -531,6 +531,20 @@
                 });
             }
             $(document).ready(function() {
+                $('#price').on('blur', function() {
+                    const value = this.value.replace(/[^0-9]/g, "");
+                    this.value = parseFloat(value).toLocaleString('vi-VN');
+                    if (value == "") {
+                        this.value = "";
+                    }
+                });
+                $('#promotion').on('blur', function() {
+                    const value = this.value.replace(/[^0-9]/g, "");
+                    this.value = parseFloat(value).toLocaleString('vi-VN');
+                    if (value == "") {
+                        this.value = "";
+                    }
+                });
                 upload();
                 $("#preview-container").on("click", ".delete", function() {
                     $(this).parent(".preview").remove();

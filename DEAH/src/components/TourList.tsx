@@ -7,11 +7,18 @@ import Header from './Header.js';
 import Footer from './Footer.js';
 import CurrencyFormatter from '../FunctionComponentContext/CurrencyFormatter.js';
 import Longtour from '../FunctionComponentContext/Longtour.js';
+import { useLocation } from 'react-router-dom';
 const TourList = () => {
-  const [selectedProvince, setSelectedProvince] = useState<any>(null);
-  const [selectedType, setSelectedType] = useState<any>(null);
+  const location = useLocation();
+  const { province, type_id } = location.state || {};
+  const [selectedProvince, setSelectedProvince] = useState<any>(province?province:null);
+  const [selectedType, setSelectedType] = useState<any>(type_id?type_id:null);
   const [tour, setTour] = useState<any>([]);
+console.log(location.state);
 
+
+
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -19,7 +26,7 @@ const TourList = () => {
           type_id: selectedType,
           province: selectedProvince
         });
-        console.log(response.data.data);
+        // console.log(response.data.data);
 
         setTour(response.data.data);
       } catch (error) {
@@ -73,7 +80,8 @@ const TourList = () => {
                           <option className='rounded' value=''>Lọc theo điểm đến</option>
                           {tour.provinces?.map((province: any) => {
                             return (
-                              <option value={province.id}>{province.name}</option>
+                              <option selected={province.id==selectedProvince?true:false}  value={province.id}>{province.name}</option>
+                              
                             )
                           })}
                         </select>
@@ -87,7 +95,7 @@ const TourList = () => {
                           <option value=''>Lọc theo loại du lịch</option>
                           {tour.types?.map((type: any) => {
                             return (
-                              <option value={type.id}>{type.name_type}</option>
+                              <option selected={type.id==selectedType?true:false} value={type.id}>{type.name_type}</option>
                             )
                           })}
 
@@ -189,11 +197,7 @@ const TourList = () => {
                     </div>
 
 
-                    <div className="offer-list">
-
-
-
-                    </div>
+                  
 
 
                   </div>

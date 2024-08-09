@@ -1,5 +1,6 @@
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import About from './components/About';
 import Contact from './components/Contact';
 import Faq from './components/Faq';
@@ -26,15 +27,28 @@ import Password from './AuthForm/Password';
 import Test from './FunctionComponentContext/Longtour';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import UserPicker from './components/You';
-
-
-
+import PaymentPage from './components/PaymentPage';
+import PaymentBanking from './components/PaymentBanking';
+import Loading from './FunctionComponentContext/Loading';
+import Lisbill2 from './components/Lisbill2';
+import Hi from './FunctionComponentContext/Hi';
+import Ap from './Test/Ap';
 
 function App() {
+  const [loading, setLoading] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000); 
+    return () => clearTimeout(timer);
+  }, [location]);
+
   return (
     <>
+      {loading && <Loading />}
       <Routes>
         <Route path="/" element={<Indextwo />} />
         <Route path="/index-two" element={<Indextwo />} />
@@ -55,18 +69,15 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/slide" element={<SlideShow />} />
         <Route path='/paymentSuccess' element={<PaymentSuccess/>} />
-        
-
-
+        <Route path='/paymentpage' element={<PaymentPage/>}/>
+        <Route path='/paymentbanking' element={<PaymentBanking/>}/>
         {/* user */}
         <Route path="/profile" element={<ProfileUser />} />
-       <Route path="/listbill" element={<ListBill/>}/>
-            {/* user */}
-            <Route path="/pass" element={<Password />} />
-            <Route path="/t" element={<Test/>} />
-            <Route path="/y" element={<UserPicker/>} />
-           
-
+        <Route path="/listbill" element={<Lisbill2/>} />
+        <Route path="/pass" element={<Password />} />
+        <Route path="/t" element={<Test/>} />
+        <Route path="/c" element={<Hi/>} />
+        <Route path="/test" element={<Ap />} />
       </Routes>
       <ToastContainer />
     </>

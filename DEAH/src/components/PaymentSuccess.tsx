@@ -68,7 +68,7 @@ const PaymentSuccess = () => {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-black dark:text-gray-400">Giá:</span>
-                  <span className="font-medium text-black dark:text-gray-50">{<CurrencyFormatter amount={(params.vnp_Amount)/100} />} Đồng</span>
+                  <span className="font-medium text-black dark:text-gray-50">{<CurrencyFormatter amount={(params.vnp_Amount)/100} />}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-black dark:text-gray-400">Phương thức thanh toán:</span>

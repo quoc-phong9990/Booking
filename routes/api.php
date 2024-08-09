@@ -55,7 +55,7 @@ Route::group(['middleware' => 'cors'], function () {
             Route::post('change-pass', [UserController::class, 'changePass']);
             Route::get('logout', [UserController::class, 'logout']);
         });
-
+        Route::post('review-tour',[TourController::class,'review']);
         Route::post('update-payment-status/{id}', [BookingController::class, 'updatePaymentStatus']);
         Route::post('vnpayment', [PaymentController::class, 'createPayment']);
         Route::post('cashpayment', [PaymentController::class, 'cashPayment']);

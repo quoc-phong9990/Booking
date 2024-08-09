@@ -102,7 +102,7 @@ class UserController extends Controller
                     $image->move(public_path('storage/users'), $imageName);
                
                 }
-                $user->update([...$request->all(),'avatar' => $imageName]);
+                $user->update([...$request->all(),'avatar' => $imageName ?? $user->avatar]);
 
 
                 $user->token = Hash::make($user->id);

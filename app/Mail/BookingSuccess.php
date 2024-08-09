@@ -39,10 +39,9 @@ class BookingSuccess extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.success',
+            view: 'mail.new-email',
             with: [
-                'booking' => $this->booking,
-                'title' => "Send Mail"
+                'booking' => $this->booking
             ]
         );
     }

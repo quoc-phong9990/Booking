@@ -98,6 +98,36 @@ const UserPicker: React.FC<UserPickerProps> = ({ onUserChange }) => {
                     </div>
                 </div>
             </div>
+            <div className="dropdown-section position-relative user-picker-dropdown">
+                <div className="d-flex gap-12 align-items-center">
+                    <div className="qty-container">
+                        <strong className='mr-4'>Trẻ 6-12 </strong>
+                        <button
+                            className="qty-btn-minus mr-1"
+                            type="button"
+                            onClick={() => handleChildrenChange('6-12', false)}
+                            disabled={children6To12 === 0}
+                        >
+                            <i className="ri-subtract-fill" />
+                        </button>
+                        <input
+                            type="text"
+                            name="children6To12"
+                            className="input-qty input-rounded"
+                            value={children6To12}
+                            readOnly
+                        />
+                        <button
+                            className="qty-btn-plus ml-1"
+                            type="button"
+                            onClick={() => handleChildrenChange('6-12', true)}
+                            disabled={totalUsers >= 20 || children2To5 + children6To12 >= adults * maxChildren}
+                        >
+                            <i className="ri-add-fill" />
+                        </button>
+                    </div>
+                </div>
+            </div>
 
             <div className="dropdown-section position-relative user-picker-dropdown">
                 <div className="d-flex gap-12 align-items-center">
@@ -130,36 +160,7 @@ const UserPicker: React.FC<UserPickerProps> = ({ onUserChange }) => {
                 </div>
             </div>
 
-            <div className="dropdown-section position-relative user-picker-dropdown">
-                <div className="d-flex gap-12 align-items-center">
-                    <div className="qty-container">
-                        <strong className='mr-4'>Trẻ 6-12 </strong>
-                        <button
-                            className="qty-btn-minus mr-1"
-                            type="button"
-                            onClick={() => handleChildrenChange('6-12', false)}
-                            disabled={children6To12 === 0}
-                        >
-                            <i className="ri-subtract-fill" />
-                        </button>
-                        <input
-                            type="text"
-                            name="children6To12"
-                            className="input-qty input-rounded"
-                            value={children6To12}
-                            readOnly
-                        />
-                        <button
-                            className="qty-btn-plus ml-1"
-                            type="button"
-                            onClick={() => handleChildrenChange('6-12', true)}
-                            disabled={totalUsers >= 20 || children2To5 + children6To12 >= adults * maxChildren}
-                        >
-                            <i className="ri-add-fill" />
-                        </button>
-                    </div>
-                </div>
-            </div>
+          
         </div>
     );
 };

@@ -11,7 +11,8 @@ class Rate extends Model
     protected $table = 'rates';
     protected $fillable = [
         'tour_id',
-        'rate'
+        'rate',
+        'name'
     ];
     public function tour(){
         return $this->belongsTo(Tour::class);
