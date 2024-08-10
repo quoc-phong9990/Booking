@@ -37,6 +37,7 @@ const TourDetails = () => {
       try {
         const response = await axios.get(`http://127.0.0.1:8000/api/client/get-tour-detail/${slug}`);
         console.log(response.data.data.tour.id); // Log dữ liệu API để kiểm tra
+        localStorage.setItem('tour', JSON.stringify(response.data.data))
         return response.data.data;
       } catch (error) {
         console.error('Error fetching tour detail:', error);
@@ -127,6 +128,8 @@ const TourDetails = () => {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
+
+  
   return (
 
     <div>
@@ -322,9 +325,9 @@ const TourDetails = () => {
                   <div className="row">
                       <hr className="mb-4" />
                       <div className="d-grid gap-2">
-                        <a href={`/payment/${slug}`} className="btn btn-primary btn-lg" type="button">
+                        <Link to={`/payment/${slug}`} className="btn btn-primary btn-lg" type="button">
                           Đặt Lịch Ngay
-                        </a>
+                        </Link>
                       </div>
                     </div>
                     <TourSbar />
