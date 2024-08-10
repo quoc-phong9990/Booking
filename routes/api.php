@@ -64,6 +64,7 @@ Route::group(['middleware' => 'cors'], function () {
         Route::post('vnpayment', [PaymentController::class, 'createPayment']);
         Route::post('cashpayment', [PaymentController::class, 'cashPayment']);
         Route::post('bankingPayment', [PaymentController::class, 'bankingPayment']);
+        Route::post('repay', [PaymentController::class, 'rePay']);
     });
 });
 

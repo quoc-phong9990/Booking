@@ -81,6 +81,13 @@ const Lisbill2 = () => {
         }
 
     };
+
+    const handleRepay = async (item) =>{
+        
+        let response = await axios.post('http://127.0.0.1:8000/api/client/repay', item);
+        window.location.href = response.data.data;
+                
+    }
     return (
         <div>
             <Header />
@@ -114,7 +121,7 @@ const Lisbill2 = () => {
                                                 <tr key={item.id}>
                                                     <td>{index + 1}</td>
                                                     <td>{item.booking_code}</td>
-                                                    <td><CurrencyFormatter amount={item.tour_price} /></td>
+                                                    <td><CurrencyFormatter amount={item.total_price} /></td>
                                                     <td>{formattedDate(new Date(item.created_at))}</td>
                                                     <td><StatusPayment status={item.status_payment} /></td>
                                                     <td><StatusTour status={item.status_tour} /></td>
@@ -127,6 +134,7 @@ const Lisbill2 = () => {
                                                                 className="ri-delete-bin-7-fill text-danger fs-4"
                                                             />
                                                         ) : ''}
+                                                        {item.status_payment == 0 ? <i onClick={()=>handleRepay(item)} className="ri-refund-2-line"></i> : ''}
                                                     </td>
                                                 </tr>
                                             ))}
