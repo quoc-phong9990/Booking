@@ -80,6 +80,7 @@ const Payment: React.FC = () => {
             'booking_code': 'Tour' + Date.now(),
             'user_name': username,
             'email': email,
+            'tour_id': tour.tour.id,
             'tour_name': tour.tour.title,
             'tour_price': tour.tour.promotion ? tour.tour.promotion : tour.tour.price,
             'tour_address': tour.tour.location.ward + ', ' + tour.tour.location.district + ',' + tour.tour.location.province,
@@ -89,27 +90,32 @@ const Payment: React.FC = () => {
             'book_price': totalPrice,
             'promotion_price': 0,
             'total_price': totalPrice + (hotel ? (hotel.promotion ? Number(hotel.promotion) : hotel.price) : 0),
-            'people': kids + children2To5 + children6To12,
+            'people': children2To5 + children6To12 + adults,
             'start': startDate,
             'end': endDate,
             'status_tour': 0,
             'status_payment': 0,
             'type': tour.tour.type,
             'phone': phone,
-            'promotion': (tour.tour.price - tour.tour.promotion) + (hotel.price - hotel.promotion ?? 0) ?? 0,
+            'kids': children2To5 + children6To12,
+            // 'promotion': (tour.tour.price - tour.tour.promotion) + (hotel.price - hotel.promotion ?? 0) ?? 0,
             'adults': adults,
-
             'user_id': user_id,
+<<<<<<< HEAD
             'kids0To5': children2To5,
             'Kids6To12': children6To12,
 
+=======
+            'children2To5': children2To5,
+            'children6To12': children6To12,
+>>>>>>> 46072741409bd78b235bf53bd3233badda8730da
         }
         switch (paymentMethod) {
             case 'VPGD':
                 var response = await axios.post('http://127.0.0.1:8000/api/client/cashpayment', bookingData);
                 if (response.status === 200) {
                     toast.success(response.data.message);
-                    navigate('', { state: { data: bookingData } })
+                    navigate('/paymentpage', { state: { data: bookingData } })
                 } else {
                     toast.error(response.data.message);
                 }
@@ -119,8 +125,10 @@ const Payment: React.FC = () => {
             case 'CKNH':
                 var response = await axios.post('http://127.0.0.1:8000/api/client/bankingPayment', bookingData);
                 if (response.status === 200) {
+                    console.log(response.data.message);
+
                     toast.success(response.data.message);
-                    navigate('', { state: { data: bookingData } })
+                    navigate('/paymentbanking', { state: { data: bookingData } })
                 } else {
                     toast.error(response.data.message);
                 }

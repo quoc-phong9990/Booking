@@ -11,15 +11,16 @@ return new class extends Migration {
     public function up(): void
     {
 
-            Schema::create('tour_comments', function (Blueprint $table) {
-                $table->id();
-                $table->string('comments')->nullable();
-                $table->integer('tour_id')->nullable();
-                $table->string('name')->nullable();
-                $table->timestamps();
+        Schema::create('tour_comments', function (Blueprint $table) {
+            $table->id();
+            $table->string('comments');
+            $table->integer('tour_id');
+            $table->integer('user_id');
+            $table->foreign('tour_id')->references('id')->on('tours');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
+        });
 
-            });
-        
     }
 
     /**

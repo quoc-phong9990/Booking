@@ -224,7 +224,7 @@ const Indextwo = () => {
                 <div className="col-lg-8">
                   <div className="section-title mx-526 mb-30">
                     <span className="highlights">về chúng tôi</span>
-                    <h4 className="title"> Trải nghiệm thế giới với công ty của chúng tôiy</h4>
+                    <h4 className="title"> Trải nghiệm thế giới với công ty của chúng tôi</h4>
                     <p className="pera">
                       Du lịch là một trải nghiệm biến đổi và phong phú
                       cho phép các cá nhân khám phá các điểm đến, văn hóa mới và

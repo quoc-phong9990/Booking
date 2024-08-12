@@ -38,8 +38,6 @@ class Booking extends Model
         'end',
         'status_payment',
         'status_tour',
-        'statusPayment',
-        'statusTour',
         'user_id',
         'kids',
         'adults',
