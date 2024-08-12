@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import '../App.css';
@@ -19,6 +19,7 @@ import Button from 'react-bootstrap/Button';
 
 
 const TourDetails = () => {
+  const navigate = useNavigate();
   const { slug } = useParams();
   const [mainImage, setMainImage] = useState<string | null>(null);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
@@ -39,7 +40,7 @@ const TourDetails = () => {
         console.log(response.data.data.tour.id); // Log dữ liệu API để kiểm tra
         return response.data.data;
       } catch (error) {
-        console.error('Error fetching tour detail:', error);
+        navigate(-1);
         throw error; // Đẩy lỗi lên phía trên để xử lý
       }
     }
@@ -233,7 +234,6 @@ const TourDetails = () => {
                       <form method="post" className="contact-form" onSubmit={handleSubmit}>
                         <div className="row g-4">
                           <div className="col-sm-12 text-center">
-
                             <input className="custom-form" type="text" placeholder="Nhập tên của bạn" value={formData.name} onChange={handleChange} name='name' />
                           </div>
                           <div className="col-sm-12">
@@ -335,33 +335,48 @@ const TourDetails = () => {
                   </div>
                 </div>
 
-                <div className="row g-4">
-                  {data.reviews && data.reviews.map((review: any) => (
-                    <div key={review.id} className="col-lg-6">
-                      <div className="review-card p-4 radius-10">
-                        <div className="reviewer d-flex align-items-center">
-                          <div className="thumb position-relative">
-                            <img src={`http://127.0.0.1:8000/${review.user.avatar}`} alt="reviewer" />
-                          </div>
-                          <div className="name-desination ml-10">
-                            <h6 className="name">{review.user.username}</h6>
-                            <p className="pera">{review.created_at}</p>
-                          </div>
-                        </div>
-                        <p className="pera mt-24">{review.content}</p>
-                        <div className="review-stars d-flex align-items-center">
-                          <ul className="star-list d-flex align-items-center mr-2">
-                            {Array.from({ length: review.rate }, (_, index) => (
-                              <li key={index}>
-                                <i className="ri-star-s-fill" />
-                              </li>
-                            ))}
-                          </ul>
-                          <p className="pera">{review.rate}</p>
-                        </div>
+                <div className="row g-4   d-flex">
+                  <div className="container mt-4">        
+                      <div className="col-12">
+
                       </div>
-                    </div>
-                  ))}
+                      <section className='bg-orange-50 comments'  >
+                        <div className="container   ">
+                            <div className="col-md-12 col-lg-10">
+                          <div className="row d-flex justify-content-center  ">
+                              <div className="">
+                              
+                                {data.tour.comments?.map((comment:any) => (
+                                <div className="card-body p-4">
+                                  <div className="d-flex flex-start">
+                                    <img className="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(24).webp" alt="avatar" width={60} height={60} />
+                                    <div>
+                                      <h6 className="fw-bold mb-1">Betty Walker</h6>
+                                      <div className="d-flex align-items-center mb-3">
+                                        <p className="mb-0">
+                                          March 30, 2021
+                                          <span className="badge bg-primary">Pending</span>
+                                        </p>
+                                        <a href="#!" className="link-muted"><i className="fas fa-pencil-alt ms-2" /></a>
+                                        <a href="#!" className="link-muted"><i className="fas fa-redo-alt ms-2" /></a>
+                                        <a href="#!" className="link-muted"><i className="fas fa-heart ms-2" /></a>
+                                      </div>
+                                      <p className="mb-0">
+                                      {comment.comments}
+                                      <p> {comment.name}</p>
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+
+                  
+                  </div>
                 </div>
               </div>
             </div>

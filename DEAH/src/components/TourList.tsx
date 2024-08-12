@@ -207,6 +207,7 @@ console.log(location.state);
                 <div className="col-xl-9">
                   <div className="showing-result">
                     <h4 className="title"><Longtour /></h4>
+               
                     <div className="d-flex gap-10 align-items-center">
                       <div className="expand-icon hamburger block d-xl-none" id="hamburger">
                         <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none">

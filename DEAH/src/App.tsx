@@ -19,8 +19,6 @@ import Verification from './components/Verification';
 import Indextwo from './components/Indextwo';
 import SlideShow from './FunctionComponentContext/SlideShow';
 import ProfileUser from './AuthForm/ProfileUser';
-
-import ListBill from './components/ListBill';
 import PaymentSuccess from './components/PaymentSuccess';
 import Password from './AuthForm/Password';
 
@@ -31,7 +29,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Loading from './FunctionComponentContext/Loading';
 import Lisbill2 from './components/Lisbill2';
 import Hi from './FunctionComponentContext/Hi';
-import Ap from './Test/Ap';
+
+import Ab from './Test/Ab';
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -75,7 +74,8 @@ function App() {
         <Route path="/pass" element={<Password />} />
         <Route path="/t" element={<Test/>} />
         <Route path="/c" element={<Hi/>} />
-        <Route path="/test" element={<Ap />} />
+        {/* <Route path="/test" element={<Ap />} /> */}
+        <Route path="/test1" element={<Ab />} />
       </Routes>
       <ToastContainer />
     </>
