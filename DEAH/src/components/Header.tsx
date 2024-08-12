@@ -56,24 +56,19 @@ const Header = ({ status }) => {
                           </a>
                         </div>
                         {/* Search box */}
-                        <div className="search-box search-bar d-none d-lg-block">
-                          <div className="header-search">
-                            <span className="pera">Điểm Đến Thu Hút</span>
-                            <div className="search-icon">
-                              <i className="ri-search-line" />
-                            </div>
-                            <kbd className="light-text">
-                              <abbr title="Ctrl">Ctrl +</abbr> k
-                            </kbd>
-                          </div>
-                        </div>
+                        <section className="header">
+                       
+                                <div className="input-header">
+                                    <input type="search" placeholder="tìm kiếm tour " />
+                                    <button className='' type='submit'> <img width={30} src="/src/assets/category_tour/search.png" alt="" /></button>
+                                </div>
+                       
+                            </section>
                         {/* Mobile Device Search & Theme Mode */}
                         <div className="search-header-position d-block d-lg-none">
                           <div className="d-flex gap-15">
                             <div className="search-bar">
-                              <a href="javascript:void(0)" className="rounded-btn">
-                                <i className="ri-search-line" />
-                              </a>
+                        
                             </div>
                             {/* Theme Mode */}
                             <button className="ToggleThemeButton change-theme-mode m-0 p-0 border-0">
