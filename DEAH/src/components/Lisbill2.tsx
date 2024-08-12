@@ -33,7 +33,22 @@ const Lisbill2 = () => {
         date_of_birth: ''
     });
 
-   
+    const perpage = 6;
+    const [billCount, setBillCount] = useState<any>();
+    const [totalPages, setTotalPages] = useState<any>();
+    const [currentPageBills, setCurrentPageBills] = useState<any>();
+    const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState<any>(1);
+
+
+    const changePage = (page) => {
+        var start = (page - 1) * perpage;
+        var end = start + perpage;
+        var userListBillPage = listbill.slice(start, end);
+        setCurrentPage(page);
+        setCurrentPageBills(userListBillPage)
+        return userListBillPage;
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -49,7 +64,7 @@ const Lisbill2 = () => {
                 var arrayLi = [];
                 for (let index = 0; index < pageNum; index++) {
                     arrayLi.push(<li className="page-item m-1" aria-current="page" key={index + 1}>
-                        <button className="page-link btn" disabled={index + 1 === currentPage} onClick={() => changePage(index + 1)}>{index + 1}</button>
+                        <button className="page-link btn" disabled={index+1 === currentPage} onClick={() => changePage(index + 1)}>{index + 1}</button>
                     </li>)
                 }
                 setTotalPages(arrayLi);
@@ -59,6 +74,7 @@ const Lisbill2 = () => {
 
             } catch (error) {
                 console.error('Có lỗi xảy ra khi lấy dữ liệu đơn hàng');
+                setLoading(false);
             }
         };
 
@@ -70,27 +86,47 @@ const Lisbill2 = () => {
             reset(user);
         }
         fetchData();
-    }, [reset, statusdelete, loading, currentPage]);
+    }, [reset, statusdelete, loading,currentPage]);
 
     const handleDelete = async (code: any) => {
-       
+
         if (window.confirm('Bạn có chắc chắn chắn hủy đơn?')) {
+            setLoading(true);
             try {
+
                 const response = await axios.post('http://127.0.0.1:8000/api/client/user/booking/update', {
                     action: 'cancel',
                     booking_code: code,
-                    
                 });
+                const status = response.data.status;
+                if (status === 200) {
+                    toast.success('Đơn hàng đã hủy thành công');
+                } else {
+                    toast.error('Đơn hàng không thể hủy');
+                }
                 setstatusdelete(!statusdelete)
-                toast.success('Bạn đã hủy đơn hàng thành công');
-         
-        
             } catch (error) {
                 toast.error('Có lỗi xảy ra khi hủy đơn hàng');
             }
         }
-    
+
     };
+
+    const handleRepay = async (item) => {
+
+        let response = await axios.post('http://127.0.0.1:8000/api/client/repay', item);
+        window.location.href = response.data.data;
+
+    }
+    if (loading) {
+        return (
+            <div className="loading">
+                <div className="spinner">
+                    <div className="blob blob-0" />
+                </div>
+            </div>
+        );
+    }
     return (
         <div>
             <Header status={undefined} />
@@ -120,11 +156,11 @@ const Lisbill2 = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {listbill.map((item: any, index: number) => (
+                                            {currentPageBills.map((item: any, index: number) => (
                                                 <tr key={item.id}>
                                                     <td>{index + 1}</td>
                                                     <td>{item.booking_code}</td>
-                                                    <td><CurrencyFormatter amount={item.tour_price} /></td>
+                                                    <td><CurrencyFormatter amount={item.total_price} /></td>
                                                     <td>{formattedDate(new Date(item.created_at))}</td>
                                                     <td><StatusPayment status={item.status_payment} /></td>
                                                     <td><StatusTour status={item.status_tour} /></td>
@@ -137,11 +173,24 @@ const Lisbill2 = () => {
                                                                 className="ri-delete-bin-7-fill text-danger fs-4"
                                                             />
                                                         ) : ''}
+                                                        {item.status_payment == 0 ? <i onClick={() => handleRepay(item)} className="ri-refund-2-line"></i> : ''}
                                                     </td>
                                                 </tr>
                                             ))}
+
+
                                         </tbody>
+
                                     </table>
+                                    <nav aria-label="Page navigation">
+                                        <ul
+                                            className="pagination"
+                                        >
+
+                                            {totalPages}
+
+                                        </ul>
+                                    </nav>
                                 </div>
                             </div>
                         </div>

@@ -19,11 +19,12 @@ class DashBoardController extends Controller
 
         $nowMonth = date("m");
         $nowYear = date("Y");
+        $nowDay = date("d");
         $title = "Dashboard";
 
-        $tours = Tour::where('is_active', 1)
-            ->orderByDesc('views')
-            ->limit(5)->get();
+        $booksInDay = Booking::where('deleted_at', null)
+        ->whereRaw('DAY(start) = ' . $nowDay)
+        ->limit(5)->get();
 
         $book = Booking::where('deleted_at', null)
             ->where('status_payment', StatusPayment::PAID)
@@ -37,8 +38,21 @@ class DashBoardController extends Controller
             ',',
             '.'
         );
-        $countBookingsDone = $book->count();
 
+        $countBookingsDoneMonth = $book->count();
+
+        $bookYear = Booking::where('deleted_at', null)
+            ->where('status_payment', StatusPayment::PAID)
+            ->where('status_tour', StatusTour::DONE)
+            ->whereRaw('YEAR(created_at) = ' . $nowYear);
+        $totalInYear = number_format(
+            $bookYear->sum('total_price')
+            ,
+            0,
+            ',',
+            '.'
+        );
+        $countBookingsDoneYear = $bookYear->count();
 
         $countPosts = Post::where('is_active', 1)->count();
         $countPostsInMonth = Post::where('is_active', 1)
@@ -65,9 +79,11 @@ class DashBoardController extends Controller
             ->count();
 
         $dataShow = [
+            'totalInYear' => $totalInYear,
+            'countBookingsDoneYear' => $countBookingsDoneYear,
             'totalInMonth' => $totalInMonth,
-            'countBookingsDone' => $countBookingsDone,
-            'tours' => $tours,
+            'countBookingsDoneMonth' => $countBookingsDoneMonth,
+            'booksInDay' => $booksInDay,
             'countCustomers' => $countCustomers,
             'countBookings' => $countBookings,
             'countBookingsInMonth' => $countBookingsInMonth,

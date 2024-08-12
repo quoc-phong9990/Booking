@@ -38,6 +38,7 @@ const TourDetails = () => {
       try {
         const response = await axios.get(`http://127.0.0.1:8000/api/client/get-tour-detail/${slug}`);
         console.log(response.data.data.tour.id); // Log dữ liệu API để kiểm tra
+        localStorage.setItem('tour', JSON.stringify(response.data.data))
         return response.data.data;
       } catch (error) {
         navigate(-1);
@@ -128,6 +129,8 @@ const TourDetails = () => {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
+
+  
   return (
 
     <div>
@@ -228,6 +231,47 @@ const TourDetails = () => {
                       </div>
                       <div className="divider" />
                     </div>
+                    
+                    {/* cmt_tour */}
+                    <div className="tour-details-content mb-30 ">
+                      <h4 className="title">Xem lịch trình của bạn tại đây</h4>
+                      <div className="tour-details-content mb-30">
+
+
+                        <div className="accordion" id="accordionExample">
+                          {data.tour.itineraries?.map((day: any) => (
+                            <div key={day.day}>
+                              <a href="#" onClick={() => openModal(day)}>Ngày {day.day}:  {day.title}</a>
+                            </div>
+                          ))}
+
+                          <Modal
+                            show={modalIsOpen}
+                            onHide={closeModal}
+                            centered
+                            dialogClassName="custom-modal-width"
+                            size='xl'
+                          >
+                            <Modal.Header className='schedule-header' closeButton>
+                              <Modal.Title>Lịch trình tour</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body className='schedule-body'>
+                              {currentDay && (
+                                <ul>
+                                  <div className='text-black font-bold' dangerouslySetInnerHTML={{ __html: currentDay.itinerary }} />
+                                  <li>Kết thúc tour</li>
+                                </ul>
+                              )}
+                            </Modal.Body>
+                            <Modal.Footer className='schedule-footer bg-white'>
+                              <Button variant="secondary" onClick={closeModal}>Đóng</Button>
+                            </Modal.Footer>
+                          </Modal>
+                        </div>
+                      </div>
+
+                    </div>
+
                     {/* cmt tour */}
                     <div className="contact-card mt-40">
                       <h4 className="contact-heading">Viết bình luận của bạn</h4>
@@ -272,62 +316,7 @@ const TourDetails = () => {
                         </div>
                       </form>
                     </div>
-                    {/* cmt_tour */}
-                    <div className="tour-details-content mb-30 ">
-                      <h4 className="title">Xem lịch trình của bạn tại đây</h4>
-                      <div className="tour-details-content mb-30">
-
-
-                        <div className="accordion" id="accordionExample">
-                          {data.tour.itineraries?.map((day: any) => (
-                            <div key={day.day}>
-                              <a href="#" onClick={() => openModal(day)}>Ngày {day.day}:  {day.title}</a>
-                            </div>
-                          ))}
-
-                          <Modal
-                            show={modalIsOpen}
-                            onHide={closeModal}
-                            centered
-                            dialogClassName="custom-modal-width"
-                            size='xl'
-                          >
-                            <Modal.Header className='schedule-header' closeButton>
-                              <Modal.Title>Lịch trình tour</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body className='schedule-body'>
-                              {currentDay && (
-                                <ul>
-                                  <div className='text-black font-bold' dangerouslySetInnerHTML={{ __html: currentDay.itinerary }} />
-                                  <li>Kết thúc tour</li>
-                                </ul>
-                              )}
-                            </Modal.Body>
-                            <Modal.Footer className='schedule-footer bg-white'>
-                              <Button variant="secondary" onClick={closeModal}>Đóng</Button>
-                            </Modal.Footer>
-                          </Modal>
-                        </div>
-                      </div>
-
-                    </div>
-                    {/* cmt tour */}
-                    <div className="contact-card mt-40">
-                      <h4 className="contact-heading">Viết bình luận của bạn</h4>
-                      <form method="post" className="contact-form" onSubmit={handleSubmit}>
-                        <div className="row g-4">
-                          <div className="col-sm-6">
-                            <input className="custom-form" type="text" placeholder="Enter your name" value={formData.name} onChange={handleChange} name='name' />
-                          </div>
-                          <div className="col-sm-12">
-                            <textarea className="custom-form-textarea" id="exampleFormControlTextarea1" rows={3} placeholder="Enter your message..." defaultValue={""} value={formData.comments} onChange={handleChange} name='comments' />
-                          </div>
-                        </div>
-                        <div className="mt-40">
-                          <button type="submit" className="send-btn"> Đăng bình luận </button>
-                        </div>
-                      </form>
-                    </div>
+                    
                     
                   </div>
 
@@ -336,9 +325,9 @@ const TourDetails = () => {
                   <div className="row">
                       <hr className="mb-4" />
                       <div className="d-grid gap-2">
-                        <a href={`/payment/${slug}`} className="btn btn-primary btn-lg" type="button">
+                        <Link to={`/payment/${slug}`} className="btn btn-primary btn-lg" type="button">
                           Đặt Lịch Ngay
-                        </a>
+                        </Link>
                       </div>
                     </div>
                     <TourSbar />

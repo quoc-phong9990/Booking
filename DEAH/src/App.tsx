@@ -55,7 +55,7 @@ function App() {
         <Route path="/tour-list" element={<TourList />} />
         <Route path="/tour-details/:slug" element={<TourDetails />} />
         <Route path="/news-details/:slug" element={<NewsDetails />} />
-        <Route path="/payment/:id" element={<Payment />} />
+        <Route path="/payment/:slug" element={<Payment />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-pass" element={<Forgot />} />
