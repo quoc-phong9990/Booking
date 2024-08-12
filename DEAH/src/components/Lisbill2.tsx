@@ -41,8 +41,21 @@ const Lisbill2 = () => {
                     id: user.id
                 });
                 console.log(response.data.data);
-                setListBill(response.data.data);
-                console.log(listbill);
+                var userListBill = response.data.data;
+                setListBill(userListBill);
+                setBillCount(userListBill.length);
+                var pageNum = Math.ceil(billCount / perpage);
+                var arrayLi = [];
+                for (let index = 0; index < pageNum; index++) {
+                    arrayLi.push(<li className="page-item m-1" aria-current="page" key={index + 1}>
+                        <button className="page-link btn" disabled={index + 1 === currentPage} onClick={() => changePage(index + 1)}>{index + 1}</button>
+                    </li>)
+                }
+                setTotalPages(arrayLi);
+                var userListBillPage = changePage(currentPage);
+                setCurrentPageBills(userListBillPage);
+                setLoading(false);
+
             } catch (error) {
                 console.error('Có lỗi xảy ra khi lấy dữ liệu đơn hàng');
             }
@@ -56,7 +69,7 @@ const Lisbill2 = () => {
             reset(user);
         }
         fetchData();
-    }, [reset,statusdelete]);
+    }, [reset, statusdelete, loading, currentPage]);
 
     const handleDelete = async (code: any) => {
        
