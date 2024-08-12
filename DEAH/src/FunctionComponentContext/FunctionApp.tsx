@@ -62,7 +62,8 @@ const DateStar: React.FC<DateStarProps> = ({ tour_long, setStartDate, setEndDate
       <span className='select2-title' onClick={handleClick}>
         {format(date.startDate, 'MMM dd, yyyy')} - {format(date.endDate, 'MMM dd, yyyy')}
       </span>
-      {openDate && (
+   <div className='h'>
+   {openDate && (
         <DateRangePicker
           className='dateRanger'
           ranges={[date]}
@@ -70,6 +71,7 @@ const DateStar: React.FC<DateStarProps> = ({ tour_long, setStartDate, setEndDate
           minDate={minDate}
         />
       )}
+   </div>
     </div>
   );
 };

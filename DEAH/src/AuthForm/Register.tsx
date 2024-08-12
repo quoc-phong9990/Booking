@@ -162,7 +162,7 @@ const Register = () => {
                         <p>
                           Bạn co săn san để tạo một tai khoản?
                           <a href="login">
-                            <span className="text-primary">Đăng nhập</span>
+                            <span className="text-primary">Đổi mật khẩu</span>
                           </a>
                         </p>
                       </div>

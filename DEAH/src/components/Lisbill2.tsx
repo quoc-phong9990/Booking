@@ -12,10 +12,11 @@ import Popup from '../FunctionComponentContext/Popup';
 import { useForm } from 'react-hook-form';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 const Lisbill2 = () => {
-    const formattedDate = (currentDate) => format(currentDate, 'yyyy-MM-dd');
+    const formattedDate = (currentDate:any) => format(currentDate, 'yyyy-MM-dd');
     const user = JSON.parse(sessionStorage.getItem("user"));
+    console.log(user);
+    
     const [listbill, setListBill] = useState<any>([]);
     const [avatarUrl, setAvatarUrl] = useState<string>('');
     const [statusdelete, setstatusdelete] = useState<boolean>(false);
@@ -74,14 +75,11 @@ const Lisbill2 = () => {
     const handleDelete = async (code: any) => {
        
         if (window.confirm('Bạn có chắc chắn chắn hủy đơn?')) {
-            
             try {
-          
                 const response = await axios.post('http://127.0.0.1:8000/api/client/user/booking/update', {
                     action: 'cancel',
                     booking_code: code,
-               
-
+                    
                 });
                 setstatusdelete(!statusdelete)
                 toast.success('Bạn đã hủy đơn hàng thành công');
@@ -95,7 +93,7 @@ const Lisbill2 = () => {
     };
     return (
         <div>
-            <Header />
+            <Header status={undefined} />
             <div className="container">
                 <div className="view-account">
                     <section className="module">
