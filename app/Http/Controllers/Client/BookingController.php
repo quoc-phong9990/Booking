@@ -47,6 +47,7 @@ class BookingController extends Controller
         $bookings = Booking::where('user_id', $request->id)->orderByDesc('created_at')->get();
         $booking = Booking::where('booking_code', 'LIKE', $request->booking_code)->first();
         $now = date("");
+        
         if ($booking && $bookings->created_at < $now) {
             if ($booking->status_tour == StatusTour::WAITING && $request->action == 'cancel') {
                 if ($booking->status_payment == 1) {

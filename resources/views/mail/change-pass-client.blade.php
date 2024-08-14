@@ -202,7 +202,7 @@
 <w:anchorlock/>
 <v:textbox inset="5px,0px,0px,0px">
 <center dir="false" style="color:#ffffff;font-family:Arial, sans-serif;font-size:15px">
-<![endif]--><a href="http://127.0.0.1:8000/change-pass/{{ $token }}" target="_blank"
+<![endif]--><a href="http://localhost:5173/forgot-pass/{{ $token }}" target="_blank"
                                                                         style="background-color:#506bec;border-bottom:0px solid TRANSPARENT;border-left:0px solid TRANSPARENT;border-radius:16px;border-right:0px solid TRANSPARENT;border-top:0px solid TRANSPARENT;color:#ffffff;display:inline-block;font-family:Helvetica Neue, Helvetica, Arial, sans-serif;font-size:15px;font-weight:undefined;mso-border-alt:none;padding-bottom:8px;padding-top:8px;text-align:center;text-decoration:none;width:auto;word-break:keep-all;"><span
                                                                             style="word-break: break-word; padding-left: 25px; padding-right: 20px; font-size: 15px; display: inline-block; letter-spacing: normal;"><span
                                                                                 style="word-break: break-word;"><span
