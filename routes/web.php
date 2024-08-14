@@ -29,6 +29,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::fallback(function () {
+    return redirect()->back();
+});
 
 Route::get('/', function () {
     return redirect()->route('auth.form');
