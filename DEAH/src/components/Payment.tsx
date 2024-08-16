@@ -89,7 +89,7 @@ const Payment: React.FC = () => {
             'hotel_address': hotel ? (hotel.address + ',' + tour.tour.location.province) : '',
             'book_price': totalPrice,
             'promotion_price': 0,
-            'total_price': totalPrice + (hotel ? (hotel.promotion ? Number(hotel.promotion) : hotel.price) : 0),
+            'total_price': totalPrice,
             'people': children2To5 + children6To12 + adults,
             'start': startDate,
             'end': endDate,

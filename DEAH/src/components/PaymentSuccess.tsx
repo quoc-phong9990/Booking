@@ -4,7 +4,9 @@ import { Link, useLocation } from 'react-router-dom'
 import { JSX } from 'react/jsx-runtime'
 import CurrencyFormatter from '../FunctionComponentContext/CurrencyFormatter';
 import axios from 'axios';
-
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import { format, parse } from 'date-fns';
 const PaymentSuccess = () => {
   const [params, setParams] = useState({});
 
@@ -12,7 +14,7 @@ const PaymentSuccess = () => {
   console.log(user_payment_info);
 
   const updatePaymentState = async (vnp_TxnRef) => {
-    
+
     const response = await axios.post(`http://127.0.0.1:8000/api/client/update-payment-status/${vnp_TxnRef}`, {
       'status_payment': 1
     })
@@ -25,25 +27,42 @@ const PaymentSuccess = () => {
     for (let [key, value] of urlParams.entries()) {
       paramsObject[key] = value;
     }
+
+    paramsObject.vnp_PayDate = parse(paramsObject.vnp_PayDate, 'yyyyMMddHHmmss', new Date());
+
+    // Format the date using date-fns
+    paramsObject.vnp_PayDate = format(paramsObject.vnp_PayDate, 'PPpp'); // Example: Aug 16, 2024, 2:33:08 PM
     setParams(paramsObject);
-    
+
     if (paramsObject.vnp_ResponseCode !== '00') {
-      console.log(paramsObject,'1');
-      
+      console.log(paramsObject, '1');
+
       // setTimeout(() => {
       //   window.location.href = '/';
       // }, 3000);   
-    }else{
-      console.log(paramsObject,'2');
-      updatePaymentState(paramsObject.vnp_TxnRef);    
-      
+    } else {
+      console.log(paramsObject, '2');
+      updatePaymentState(paramsObject.vnp_TxnRef);
+
     }
 
   }, []);
+
+  const handlePDF = (booking_code) => {
+    const capture = document.querySelector('.pdfBill');
+    html2canvas(capture).then((canvas) => {
+      const imgData = canvas.toDataURL('img/png');
+      const doc = new jsPDF('p', 'mm', 'a4');
+      const componentWidth = doc.internal.pageSize.getWidth();
+      const componentHeight = doc.internal.pageSize.getHeight();
+      doc.addImage(imgData, 'PNG', 0, 0, componentWidth, componentHeight)
+      doc.save(booking_code + '.pdf')
+    })
+  }
   return (
     <>
       <div className="flex flex-col items-center justify-center min-h-screen bg-green dark:bg-green">
-        <div className="max-w-xl w-full space-y-6 p-6 bg-white rounded-lg shadow-lg dark:bg-gray-800">
+        <div className="max-w-xl w-full space-y-6 p-6 bg-white rounded-lg shadow-lg dark:bg-gray-800 pdfBill">
           <div className="flex flex-col items-center">
             {params.vnp_ResponseCode == '00' ? <CircleCheckIcon className="text-green-500 h-16 w-16" /> : <ErrorIcon className="text-green-500 h-16 w-16" />}
             <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-700 mt-4">{params.vnp_ResponseCode == '00' ? 'Thanh Toán Thành công' : 'Thanh Toán Không Thành Công'}</h1>
@@ -68,11 +87,11 @@ const PaymentSuccess = () => {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-black dark:text-gray-400">Giá:</span>
-                  <span className="font-medium text-black dark:text-gray-50">{<CurrencyFormatter amount={(params.vnp_Amount)/100} />}</span>
+                  <span className="font-medium text-black dark:text-gray-50">{<CurrencyFormatter amount={(params.vnp_Amount) / 100} />}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-black dark:text-gray-400">Phương thức thanh toán:</span>
-                  <span className="font-medium text-black dark:text-gray-50">VN Pay</span>
+                  <span className="font-medium text-black dark:text-gray-50">VNPay</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-black dark:text-gray-400">Ngày đi:</span>
@@ -99,6 +118,7 @@ const PaymentSuccess = () => {
                 </a>
                 <a
                   className="btn btn-warning"
+                  onClick={() => handlePDF(params.vnp_TxnRef)}
                 >
                   Xuất hoá đơn
                 </a>
