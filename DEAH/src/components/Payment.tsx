@@ -101,14 +101,14 @@ const Payment: React.FC = () => {
             // 'promotion': (tour.tour.price - tour.tour.promotion) + (hotel.price - hotel.promotion ?? 0) ?? 0,
             'adults': adults,
             'user_id': user_id,
-<<<<<<< HEAD
+
             'kids0To5': children2To5,
             'Kids6To12': children6To12,
 
-=======
+
             'children2To5': children2To5,
             'children6To12': children6To12,
->>>>>>> 46072741409bd78b235bf53bd3233badda8730da
+
         }
         switch (paymentMethod) {
             case 'VPGD':
@@ -162,7 +162,7 @@ const Payment: React.FC = () => {
 
     return (
         <div>
-            <Header />
+            <Header status={undefined} />
             <main>
                 {/* Breadcrumbs Start */}
                 <section className="breadcrumbs-area breadcrumb-bg">

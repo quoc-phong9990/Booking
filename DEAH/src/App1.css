@@ -8,14 +8,17 @@ body {
   background: #FFFFFF;
   margin-top: 20px;
   overflow: hidden;
+  /* max-width: 100%; */
+  margin-left: auto;
+  margin-right: auto;
+width: 1320px;
+
   /* Ensures content doesn't overflow */
 }
 
 .view-account .pro-label {
   font-size: 13px;
   padding: 4px 5px;
-  position: relative;
-  top: -5px;
   margin-left: 10px;
   display: inline-block;
 }
@@ -24,12 +27,10 @@ body {
 .view-account .side-bar {
   padding-bottom: 30px;
   width: 100%;
-  /* Adjust as needed */
 }
 
 .module-inner.side-bar {
   width: 100%;
-  /* Adjust as needed */
 }
 
 .view-account .side-bar .user-info {
@@ -42,9 +43,7 @@ body {
 
 .view-account .side-bar .user-info .img-profile {
   width: 120px;
-  /* Adjust size as needed */
   height: 120px;
-  /* Adjust size as needed */
   margin-bottom: 15px;
   border-radius: 100px;
 }
@@ -62,10 +61,6 @@ body {
 
 .view-account .side-bar .user-info .meta li a {
   color: #616670;
-}
-
-.view-account .side-bar .user-info .meta li.activity {
-  color: #a2a6af;
 }
 
 .view-account .side-bar .side-menu {
@@ -103,23 +98,19 @@ body {
   color: #40babd;
   border-bottom: 2px solid #40babd;
   background: none;
-  border-right: none;
 }
 
 /* Content panel styles */
 .view-account .content-panel {
   padding: 30px;
-  /* background-color: #e2f4f3; */
 }
 
 .content-panel {
   margin-left: 0;
-  /* Adjust as needed */
 }
 
 .content-panel input {
   width: 100%;
-  /* Adjust as needed */
 }
 
 .view-account .content-panel .title {
@@ -195,7 +186,7 @@ body {
   }
 
   .content-panel input {
-    width: 500px;
+    width: 100%;
   }
 
   .view-account .content-panel .title {
@@ -257,6 +248,7 @@ body {
     text-align: left;
   }
 }
+
 
 @media (min-width: 992px) {
 
@@ -329,6 +321,8 @@ body {
     border-right: 4px solid #40babd;
     border-bottom: none;
   }
+}
+
 
   @keyframes spin {
     0% {
@@ -593,7 +587,7 @@ body {
   position: absolute;
 }
 
-}
+
 
 
 @media print {

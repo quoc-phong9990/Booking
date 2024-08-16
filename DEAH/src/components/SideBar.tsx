@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import '../App1.css'
-
+                
 const SideBar = ({userData,avatarUrl}) => {
   
 
@@ -19,11 +19,10 @@ const SideBar = ({userData,avatarUrl}) => {
         </div>
         <nav className="side-menu ">
           <ul className="nav">
-            <li><Link to={'/profile'}><span className="fa fa-user" />Thông tin</Link></li>
+            <li><Link to={'/profile'}><span className="fa fa-user" /> Thông tin</Link></li> 
             <li><Link to={'/listbill'}><span className="fa fa-credit-card" /> Đon hàng</Link></li>
-            <div className="mt-40">
-              <button type="submit" className="send-btn"><a className='text-black' href="/pass">Đổi mật khẩu </a></button>
-            </div>
+            <li><Link to={'/pass'}><span className="fa fa-key" /> Đổi Mật khẩu</Link></li>
+       
           </ul>
         </nav>
       </div>
