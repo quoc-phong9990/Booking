@@ -102,23 +102,26 @@ class AuthController extends Controller
     }
     public function changePass(Request $request)
     {
-        $user = User::find($request->id);
-        if (!$user) {
-            return redirect(route('auth.login'));
-        }
-        $request->validate([
-            'password_old' => 'required',
-            'password' => 'required|min:8|max:32',
-            'password_confirm' => 'required|min:8|max:32|same:password'
-        ]);
-        if (!Hash::check($request->password_old, $user->password)) {
-            return redirect()->back()->with('error', 'Mật khẩu cũ không chính xác.');
+        try {
+            $user = User::find($request->id);
+            if (!$user) {
+                return redirect(route('auth.login'));
+            }
+            $request->validate([
+                'password' => 'required|min:8|max:32',
+                'password_confirm' => 'required|min:8|max:32|same:password'
+            ]);
+
+
+            // Cập nhật mật khẩu mới
+            $user->password = Hash::make($request->password);
+            $user->save();
+            return redirect(route('auth.login'))->with('success', 'Đổi mật khẩu thành công');
+        }catch(\Exception $e){
+            return redirect()->back()->with('error', 'Đổi mật khẩu thất bại');
+
         }
 
-        // Cập nhật mật khẩu mới
-        $user->password = Hash::make($request->password);
-        $user->save();
-        return redirect(route('auth.login'))->with('success','Đổi mật khẩu thành công');
     }
     public function logout()
     {

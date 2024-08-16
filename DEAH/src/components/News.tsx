@@ -1,4 +1,3 @@
-
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -59,6 +58,7 @@ const New = () => {
                   <div className="tab-content" id="v-pills-tabContent-two">
                     <div className="tab-pane  fade show active" id="pills-news-one" role="tabpanel" aria-labelledby="pills-news-one">
                       <div className="about-banner imgEffect4">
+                        <img src="/src/assets/category_tour/NhaTrang.jpg" alt="travello" />
 
                         <img src="/src/assets/category_tour/Nhatrang.jpg" alt="travello" />
 
@@ -70,7 +70,7 @@ const New = () => {
                       </div>
                     </div>
                     <div className="tab-pane fade" id="pills-news-three" role="tabpanel" aria-labelledby="pills-news-three">
-                      <div className="about-banner imgEffect4">
+<div className="about-banner imgEffect4">
                         <img src="/src/assets/images/news/banner-2.png" alt="travello" />
                       </div>
                     </div>
@@ -127,7 +127,7 @@ const New = () => {
                     <a href={"news-details/" + post.slug}>
 
                       <article className="news-card-two">
-                        <figure className="news-banner-two imgEffect ">
+<figure className="news-banner-two imgEffect ">
                           <img className='image' src={'http://127.0.0.1:8000/' + post.thumbnail} alt="travello" />
                         </figure>
                         <div className="news-content">

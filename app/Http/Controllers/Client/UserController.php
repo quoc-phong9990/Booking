@@ -143,10 +143,8 @@ class UserController extends Controller
             $id = Crypt::decryptString($request->token);
             $user = User::where('id', $id)->where('is_active', 1)->first();
             $validator = Validator::make($request->all(), [
-             
                 'password' => 'required|min:8|max:32',
                 'password_confirm' => 'required|min:8|max:32|same:password'
-
             ]);
             if ($validator->fails()) {
                 return $this->response->responseFailed($validator->errors()->first());
@@ -154,7 +152,6 @@ class UserController extends Controller
             if (!$user) {
                 return $this->response->responseFailed('Tài khoản không tồn tại hoặc chưa được kích hoạt');
             }
-           
             // Cập nhật mật khẩu mới
             $user->password = Hash::make($request->password);
             $user->save();
