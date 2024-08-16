@@ -23,8 +23,8 @@ class TourRequest extends FormRequest
     {
         return [
             'title' => 'required|max:255',
-            'price' => 'required|numeric',
-            'promotion' => 'required|numeric|lt:price',
+            'price' => 'required',
+            'promotion' => 'required|lt:price',
             'day' => 'required|numeric',
             'attributes' => 'required|array',
             'attributes.*' => 'required|numeric|exists:attributes,id',

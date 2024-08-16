@@ -56,24 +56,19 @@ const Header = ({ status }) => {
                           </a>
                         </div>
                         {/* Search box */}
-                        <div className="search-box search-bar d-none d-lg-block">
-                          <div className="header-search">
-                            <span className="pera">Điểm Đến Thu Hút</span>
-                            <div className="search-icon">
-                              <i className="ri-search-line" />
-                            </div>
-                            <kbd className="light-text">
-                              <abbr title="Ctrl">Ctrl +</abbr> k
-                            </kbd>
-                          </div>
-                        </div>
+                        <section className="header">
+                       
+                                <div className="input-header">
+                                    <input type="search" placeholder="tìm kiếm tour " />
+                                    <button className='' type='submit'> <img width={30} src="/src/assets/category_tour/search.png" alt="" /></button>
+                                </div>
+                       
+                            </section>
                         {/* Mobile Device Search & Theme Mode */}
                         <div className="search-header-position d-block d-lg-none">
                           <div className="d-flex gap-15">
                             <div className="search-bar">
-                              <a href="javascript:void(0)" className="rounded-btn">
-                                <i className="ri-search-line" />
-                              </a>
+                        
                             </div>
                             {/* Theme Mode */}
                             <button className="ToggleThemeButton change-theme-mode m-0 p-0 border-0">
@@ -160,16 +155,16 @@ const Header = ({ status }) => {
                                 <div className='d-flex'>
                                   <Link className='d-flex' to={'/profile'}>
                                     <h6 className='mt-10 mr-2 user-name '> {userName.name}</h6>
-                                    {/* <i className="bi bi-person mt-2 mr-3 rounded"> </i> */}
-                                    {/* <img className='rounded-circle i' width={40} height={100} src={'http://127.0.0.1:8000/' + (userName.avatar ? userName.avatar : '')} alt="" /> */}
+                                    
+                                    {<img className='rounded-circle i' width={40} height={100} src={'http://127.0.0.1:8000/' + (userName.avatar ? userName.avatar : '')} alt="" />}
                                   </Link>
-                                  {userName && (
+                                  {/* {userName && (
                                 <li className="single-list">
                                   <button className="ToggleThemeButton change-theme-mode m-0 p-0 border-0">
                                     <Ok />
                                   </button>
                                 </li>
-                              )}
+                              )} */}
                                 </div>
                                 
                               ) : (

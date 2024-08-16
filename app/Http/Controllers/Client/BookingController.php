@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\ResponseJson;
 use App\Models\Booking;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 
 class BookingController extends Controller
 {
@@ -45,7 +46,9 @@ class BookingController extends Controller
     {
         $bookings = Booking::where('user_id', $request->id)->orderByDesc('created_at')->get();
         $booking = Booking::where('booking_code', 'LIKE', $request->booking_code)->first();
-        if ($booking) {
+        $now = date("");
+        
+        if ($booking && $bookings->created_at < $now) {
             if ($booking->status_tour == StatusTour::WAITING && $request->action == 'cancel') {
                 if ($booking->status_payment == 1) {
                     $booking->status_payment = StatusPayment::REFUND;
@@ -55,7 +58,7 @@ class BookingController extends Controller
                 }
                 $booking->status_tour = StatusTour::CANCEL;
                 $booking->save();
-                return $this->ResponseJson->responseSuccess($bookings,'Hủy thành công');
+                return $this->ResponseJson->responseSuccess($bookings, 'Hủy thành công');
             }
             if (
                 $booking->status_payment == StatusPayment::PAID

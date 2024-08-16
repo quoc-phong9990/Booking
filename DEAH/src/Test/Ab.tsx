@@ -5,16 +5,16 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-import Header from "./Header.js";
-import Footer from "./Footer.js";
+
 import CurrencyFormatter from "../FunctionComponentContext/CurrencyFormatter.js";
 import { Link } from "react-router-dom";
 import '../App.css'
 import { useNavigate } from 'react-router-dom';
+import Header from "../components/Header.js";
+import Footer from "../components/Footer.js";
+import { Slide } from "react-slideshow-image";
 
-import SearchListBill from "../FunctionComponentContext/Shearchbill.js";
-
-const Indextwo = () => {
+const Ab = () => {
   const [tourFeature, setToursFeature] = useState<any>([]);
   const [tourNew, setToursNew] = useState<any>([]);
   const [postsNew, setPostsNew] = useState<any>([]);
@@ -22,10 +22,9 @@ const Indextwo = () => {
   const [selectedProvince, setSelectedProvince] = useState<any>(null);
   const [selectedType, setSelectedType] = useState<any>(null);
   const [tour, setTour] = useState<any>([]);
-
   const navigate = useNavigate();
 
-  // console.log(selectedType);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,15 +32,12 @@ const Indextwo = () => {
         let tours_new = 'http://127.0.0.1:8000/api/client/get-tours-new';
         let tours_lists = 'http://127.0.0.1:8000/api/client/get-tours-feature';
         let posts = 'http://127.0.0.1:8000/api/client/get-posts-new';
+
         const [tourNew, tourFeature, postsNew] = await Promise.all([
           axios.get(tours_new),
           axios.get(tours_lists),
-          axios.get(posts),
-
-      
+          axios.get(posts)
         ]);
-      
-        
         const response = await axios.post('http://127.0.0.1:8000/api/client/get-tours-list'
 
         );
@@ -51,12 +47,8 @@ const Indextwo = () => {
         // console.log(response1.data.data);
         setStatus(!status);
         setToursNew(tourNew.data.data);
-        // console.log(tourNew.data.data);
-        
         setToursFeature(tourFeature.data.data);
         setPostsNew(postsNew.data.data);
-       
-        
 
       } catch (error) {
         if (error) return <div>loi...</div>
@@ -85,83 +77,105 @@ const Indextwo = () => {
         <Header status={status} />
         <main>
           {/* Hero area S t a r t*/}
-          <section className="hero-padding-two  position-relative banner">
-      
+          <section className="hero-padding-two  position-relative mb-10 search">
             <div className="container">
-   <SearchListBill/>
-           
-              <div className="row  g-4 align-items-center justify-content-between position-relative">
-                <div className="col-xl-7 col-lg-6">
-                  <div className="hero-caption-two position-relative">
-                    <span className="highlights wow fadeInUp d-block p-1" data-wow-delay="0.0s">Khám phá từ này</span>
-                    <h4 className="title wow fadeInUp fs-1 p-1 " data-wow-delay="0.1s">  Kế  hoạch  chuyến  tham  quan  đến  các  địa  điểm  mơ  ước  chỉ  bằng  một  cú  nhấp  chuột ! </h4>
-                    <p className="pera wow fadeInUp" data-wow-delay="0.3s">
-                      Tận hưởng từng khoảnh khắc tại các địa điểm mơ ước, tham gia các hoạt động thú vị và lưu giữ những kỷ niệm đẹp.<br />
-                    </p>
-                    <div className="button-section wow fadeInUp" data-wow-delay="0.5s">
-                      <a href="/tour-list" className="btn-secondary-sm hero-book-btn">Bắt đầu đặt phòng</a>
-                    </div>
-                  </div>
+              <div className="section-title text-center mx-430 mx-auto position-relative">
+                <span className="highlights">Xin mời Quý khách chọn thông tin cần tìm kiếm</span>
+
+              </div>
+              <form action="" onSubmit={handleSubmit}>
+                <div className="search-bar">
+
+                  <select className="js-example-basic-single  destination-dropdown" onChange={(e) => setSelectedProvince(e.target.value)} >
+                    <option className='rounded' value=''>Lọc theo điểm đến</option>
+                    {tour.provinces?.map((province: any) => {
+                      return (
+                        <option value={province.id}>{province.name}</option>
+                      )
+                    })}
+                  </select>
+
+                  <select className="destination-dropdown" onChange={(e) => setSelectedType(e.target.value)}>
+                    <option value=''>Lọc theo loại du lịch</option>
+                    {tour.types?.map((type: any) => {
+                      return (
+                        <option value={type.id}>{type.name_type}</option>
+                      )
+                    })}
+                  </select>
+
+                  <select className="destination-dropdown" onChange={(e) => setSelectedType(e.target.value)}>
+                    <option value=''>Lọc theo giá</option>
+                    {tour.promotion?.map((promotion: any) => {
+                      return (
+                        <option value={promotion.id}>{promotion.name_type}</option>
+                      )
+                    })}
+                  </select>
+
+                  <button className="btn">  <i className="fas fa-search"></i> Tìm kiếm</button>
+
                 </div>
-                <div className="col-xl-5 col-lg-6 relative">
-                  <div className="search-tour-card sidenav-active">
-                    <div className="section-title text-center">
-                      <h4 className="title">Các tour du lịch tìm kiếm</h4>
-                      <p className="pera">Hãy nhập những thông tin dưới đây .</p>
-                    </div>
-                    <form action="" onSubmit={handleSubmit}>
-                      <div className="plan-section-two">
-                        <div className="select-dropdown-section">
-                          <div className="d-flex gap-10 align-items-center">
-                            <i className="ri-map-pin-line" />
-                            <h4 className="select2-title">Điểm đến</h4>
+              </form>
+            </div>
+          </section>
+
+          {/* 2222 */}
+          <section className="hero-padding-two position-relative">
+            <div className="container">
+              <Slide>
+                <div className="row g-4">
+                  {tourFeature?.map((tour: any, index: any) => {
+                    return (
+                      <div className="col-xl-3 col-lg-4 col-sm-6" key={index}>
+                        <div className="package-card">
+                          <div className="package-img imgEffect4">
+                            <a href={`/tour-details/${tour.slug}`}>
+                              <img src="/src/assets/category_tour/NhaTrang.jpg" alt="" />
+                              {/* <img src={'http://127.0.0.1:8000/' + (tour.images ? tour.images : '')} alt="travello" /> */}
+                            </a>
                           </div>
-                          <select className="js-example-basic-single  destination-dropdown" onChange={(e) => setSelectedProvince(e.target.value)} >
-                            <option className='rounded' value=''>Lọc theo điểm đến</option>
-                            {tour.provinces?.map((province: any) => {
-                              return (
-                                <option value={province.id}>{province.name}</option>
-                              )
-                            })}
-                          </select>
+                          <div className="package-content">
+                            <h4 className="area-name line-clamp-1">
+                              <Link to={`/tour-details/${tour.slug}`}>{tour.title}</Link>
+                            </h4>
+                            <div className="location">
+                              <i className="ri-map-pin-line" />
+                              {tour.location.province}
+                            </div>
+                            <div className="packages-person">
+                              <div className="count">
+                                <i className="ri-time-line" />
+                                <p className="pera mt-3 ml-2">{tour.day} Ngày {(tour.day - 1) == 0 ? '' : tour.day - 1 + ' Đêm'}</p>
+                              </div>
 
-                        </div>
-                        <div className="select-dropdown-section">
-                          <div className="d-flex gap-10 align-items-center">
-                            <i className="ri-flight-takeoff-fill" />
-                            <h4 className="select2-title">Tour Type</h4>
+                            </div>
+                            <div className="price-review">
+                              <div className="d-flex gap-10">
+                                <p className="text-muted text-decoration-line-through  mr-3 "><CurrencyFormatter amount={tour.promotion} /> </p>
+                                <p className="text-danger fw-bold"> <CurrencyFormatter amount={tour.price} /> </p>
+
+
+                              </div>
+
+                            </div>
                           </div>
-                          <select className="destination-dropdown" onChange={(e) => setSelectedType(e.target.value)}>
-                            <option value=''>Lọc theo loại du lịch</option>
-                            {tour.types?.map((type: any) => {
-                              return (
-                                <option value={type.id}>{type.name_type}</option>
-                              )
-                            })}
-                          </select>
-                        </div>
-
-                        <div className="dropdown-section position-relative user-picker-dropdown">
-                          <div className="d-flex gap-10 align-items-center">
-                          </div>
-
-                        </div>
-                        <div className="sign-btn">
-                          <button type="submit" className="btn-secondary-lg">Kế hoạch tìm kiếm</button>
-
                         </div>
                       </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* shape 01 */}
+                    )
 
-            {/* shape 02 */}
-            {/* <div className="shape-two d-none d-lg-block">
-              <img className='' src="/src/assets/category_tour/Hue.jpg" alt="travello" />
-            </div> */}
+
+
+                  })}
+                  {/*  */}
+                </div>
+              </Slide>
+
+            </div>
+
+
+
+
           </section>
           {/*/ End-of Hero*/}
           {/* Brand S t a r t */}
@@ -224,7 +238,7 @@ const Indextwo = () => {
                 <div className="col-lg-8">
                   <div className="section-title mx-526 mb-30">
                     <span className="highlights">về chúng tôi</span>
-                    <h4 className="title"> Trải nghiệm thế giới với công ty của chúng tôi</h4>
+                    <h4 className="title"> Trải nghiệm thế giới với công ty của chúng tôiy</h4>
                     <p className="pera">
                       Du lịch là một trải nghiệm biến đổi và phong phú
                       cho phép các cá nhân khám phá các điểm đến, văn hóa mới và
@@ -465,4 +479,4 @@ const Indextwo = () => {
   )
 }
 
-export default Indextwo
+export default Ab

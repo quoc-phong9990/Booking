@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ResponseJson;
 use App\Models\User;
+use App\Notifications\RepassUserClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -90,9 +92,9 @@ class UserController extends Controller
         if ($validator->fails()) {
             return $this->response->responseFailed($validator->errors()->first());
         }
-        
 
-  
+
+
         if (Hash::check($request->id, $request->token)) {
             $user = User::find($request->id);
             if ($user) {
@@ -100,10 +102,9 @@ class UserController extends Controller
                     $image = $request->file;
                     $imageName = "storage/users/test-" . time() . '.' . $image->getClientOriginalExtension();
                     $image->move(public_path('storage/users'), $imageName);
-               
-                }
-                $user->update([...$request->all(),'avatar' => $imageName ?? $user->avatar]);
 
+                }
+                $user->update([...$request->all(), 'avatar' => $imageName ?? $user->avatar]);
 
                 $user->token = Hash::make($user->id);
                 return $this->response->responseSuccess($user, 'Cập nhật thành công');
@@ -118,6 +119,50 @@ class UserController extends Controller
 
 
     }
+    public function forgetPassMail(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:users,email'
+        ]);
+        if ($validator->fails()) {
+            return $this->response->responseFailed($validator->errors()->first());
+        }
+        $user = User::where('is_active', 1)->where('email', $request->email)->first();
+        if ($user) {
+            $token = Crypt::encryptString($user->id);
+            $user->notify(new RepassUserClient($token));
+            return $this->response->responseSuccess();
+        }
+        return $this->response->responseFailed("Tài khoản không tồn tại hoặc chưa được kích hoạt");
+
+    }
+    public function changeForgetPass(Request $request)
+    {
+        try {
+            $id = Crypt::decryptString($request->token);
+            $user = User::where('id', $id)->where('is_active', 1)->first();
+            $validator = Validator::make($request->all(), [
+                'password' => 'required|min:8|max:32',
+                'password_confirm' => 'required|min:8|max:32|same:password'
+
+            ]);
+            if ($validator->fails()) {
+                return $this->response->responseFailed($validator->errors()->first());
+            }
+            if (!$user) {
+                return $this->response->responseFailed('Tài khoản không tồn tại hoặc chưa được kích hoạt');
+            }
+            // Cập nhật mật khẩu mới
+            $user->password = Hash::make($request->password);
+            $user->save();
+            return $this->response->responseSuccess('Đổi mật khẩu thành công.');
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            // Nếu không thể giải mã token, chuyển hướng về trang đăng nhập
+            return $this->response->responseFailed('Token không hợp lệ.');
+        }
+    }
+
     public function changePass(Request $request)
     {
         $validator = Validator::make($request->all(), [

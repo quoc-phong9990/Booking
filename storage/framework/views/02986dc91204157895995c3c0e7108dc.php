@@ -13,6 +13,13 @@
 
             </li> <!-- end Dashboard Menu -->
             <li class="nav-item">
+                <a class="nav-link menu-link" href="<?php echo e(route('stastics')); ?>" role="button" aria-expanded="false"
+                    aria-controls="sidebarDashboards">
+                    <i class="ri-bar-chart-2-fill"></i> <span data-key="t-dashboards">Thống kê</span>
+                </a>
+
+            </li> <!-- end Dashboard Menu -->
+            <li class="nav-item">
                 <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button"
                     aria-expanded="false" aria-controls="sidebarApps">
                     <i class="ri-apps-2-line"></i> <span data-key="t-apps">Tour</span>
