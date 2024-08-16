@@ -56,14 +56,7 @@ const Header = ({ status }) => {
                           </a>
                         </div>
                         {/* Search box */}
-                        <section className="header">
-                       
-                                <div className="input-header">
-                                    <input type="search" placeholder="tìm kiếm tour " />
-                                    <button className='' type='submit'> <img width={30} src="/src/assets/category_tour/search.png" alt="" /></button>
-                                </div>
-                       
-                            </section>
+                      
                         {/* Mobile Device Search & Theme Mode */}
                         <div className="search-header-position d-block d-lg-none">
                           <div className="d-flex gap-15">

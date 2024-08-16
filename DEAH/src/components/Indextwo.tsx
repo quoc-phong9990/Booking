@@ -38,10 +38,10 @@ const Indextwo = () => {
           axios.get(tours_lists),
           axios.get(posts),
 
-      
+
         ]);
-      
-        
+
+
         const response = await axios.post('http://127.0.0.1:8000/api/client/get-tours-list'
 
         );
@@ -52,11 +52,11 @@ const Indextwo = () => {
         setStatus(!status);
         setToursNew(tourNew.data.data);
         // console.log(tourNew.data.data);
-        
+
         setToursFeature(tourFeature.data.data);
         setPostsNew(postsNew.data.data);
-       
-        
+
+
 
       } catch (error) {
         if (error) return <div>loi...</div>
@@ -86,10 +86,10 @@ const Indextwo = () => {
         <main>
           {/* Hero area S t a r t*/}
           <section className="hero-padding-two  position-relative banner">
-      
+
             <div className="container">
-   <SearchListBill/>
-           
+              <SearchListBill />
+
               <div className="row  g-4 align-items-center justify-content-between position-relative">
                 <div className="col-xl-7 col-lg-6">
                   <div className="hero-caption-two position-relative">
@@ -195,7 +195,7 @@ const Indextwo = () => {
                     return (
                       <div className="col-xl-3 col-lg-4 col-sm-6" key={index}>
                         <a href={`/tour-details/${tours.slug}`} className="destination-banner-two h-calc wow fadeInUp" data-wow-delay="0.s">
-                          <img src={'http://127.0.0.1:8000/' + (tours.images ? tours.images : '')} alt="travello" />
+                          <img className="image" src={'http://127.0.0.1:8000/' + (tours.images ? tours.images : '')} alt="travello" />
                           <div className="destination-content-two">
 
                             <div className="destination-info-two">

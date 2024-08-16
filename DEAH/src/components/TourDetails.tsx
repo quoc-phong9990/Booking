@@ -134,7 +134,7 @@ const TourDetails = () => {
   return (
 
     <div>
-      <Header />
+      <Header status={undefined} />
       <main>
         <section className="breadcrumbs-area breadcrumb-bg">
           <div className="container">

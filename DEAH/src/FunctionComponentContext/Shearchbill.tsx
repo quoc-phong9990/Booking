@@ -16,7 +16,7 @@ interface OrderInfo {
   created_at: string;
   status_payment: number;
   status_tour: number;
-  updated_at:string;
+  end:string;
   user_name:string;
 }
 
@@ -64,7 +64,7 @@ const SearchListBill: React.FC = () => {
     <div>
       <div className="shadow-2xl searchlistbill">
         <input
-          className="col-6"
+          className="col-6 mb-4"
           type="search"
           placeholder="Nhập mã đơn hàng"
           value={booking_code}
@@ -98,7 +98,7 @@ const SearchListBill: React.FC = () => {
                 <td> {orderInfo.user_name}</td>
                 <td><CurrencyFormatter amount={orderInfo.tour_price} /></td>
                 <td>{formattedDate(orderInfo.created_at)}</td>
-                <td>{formattedDate(orderInfo.updated_at)}</td>
+                <td>{formattedDate(orderInfo.end)}</td>
               
               
                 <td className='g-2 d-flex'>

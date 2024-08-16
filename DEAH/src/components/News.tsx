@@ -33,7 +33,7 @@ const New = () => {
 
     <div>
       <div>
-        <Header />
+        <Header status={undefined} />
         <main>
           {/* Breadcrumbs S t a r t */}
           <section className="breadcrumbs-area breadcrumb-bg">

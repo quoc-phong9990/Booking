@@ -156,7 +156,7 @@ const Payment: React.FC = () => {
 
     return (
         <div>
-            <Header />
+            <Header status={undefined} />
             <main>
                 {/* Breadcrumbs Start */}
                 <section className="breadcrumbs-area breadcrumb-bg">

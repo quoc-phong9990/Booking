@@ -145,7 +145,6 @@ class UserController extends Controller
             $validator = Validator::make($request->all(), [
                 'password' => 'required|min:8|max:32',
                 'password_confirm' => 'required|min:8|max:32|same:password'
-
             ]);
             if ($validator->fails()) {
                 return $this->response->responseFailed($validator->errors()->first());

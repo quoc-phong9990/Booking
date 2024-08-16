@@ -15,7 +15,6 @@ import Register from './AuthForm/Register';
 import TermsCondition from './components/TermsCondition';
 import TourDetails from './components/TourDetails';
 import TourList from './components/TourList';
-import Verification from './components/Verification';
 import Indextwo from './components/Indextwo';
 import SlideShow from './FunctionComponentContext/SlideShow';
 import ProfileUser from './AuthForm/ProfileUser';
@@ -59,8 +58,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-pass" element={<Forgot />} />
-        <Route path="/verification" element={<Verification />} />
-        <Route path="/new-password" element={<NewPassword />} />
+       
+        <Route path="/new-password/:token" element={<NewPassword />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-condition" element={<TermsCondition />} />

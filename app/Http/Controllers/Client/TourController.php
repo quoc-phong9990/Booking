@@ -30,9 +30,13 @@ class TourController extends Controller
         $province = $request->province;
         $rate = $request->rate;
         $sortByPrice = $request->sort;
-        if (isset($rate) && $rate !== null) {
-            $id = Rate::groupBy('tour_id')->havingRaw('AVG(rate)=' . $rate)->get('tour_id');
-            $this->query->whereIn('id', $id);
+        if (isset($rate) && $rate !== []) {
+            $id = Rate::select('tour_id')
+            ->selectRaw('AVG(rate) as avg_rate')
+            ->groupBy('tour_id')
+            ->havingRaw('ROUND(AVG(rate)) IN (' . implode(',', array_map('intval', $rate)) . ')')
+            ->pluck('tour_id');
+        $this->query->whereIn('id', $id);
         }
         if (isset($province) && $province !== null) {
             $this->query->where('province_id', $province);
@@ -58,7 +62,7 @@ class TourController extends Controller
         foreach ($tours as $tour) {
             $tour->type = $tour->types()->value('name_type');
             $tour->rates = [
-                'rate' => number_format($tour->rates()->avg('rate'), 1),
+                'rate' => number_format($tour->rates()->avg('rate'), 0),
                 'qty' => $tour->rates()->count('rate')
             ];
             $tour->images = $tour->images()->value('image');

@@ -72,7 +72,7 @@ const UserPicker: React.FC<UserPickerProps> = ({ onUserChange }) => {
                 <div className="d-flex gap-12 align-items-center">
                     <div className="qty-container">
                         <strong className='mr-2'>Người lớn 
-                            (100%)
+                            (100% giá tiền)
                         </strong>
                         <button
                             className="qty-btn-minus mr-1"
@@ -103,7 +103,7 @@ const UserPicker: React.FC<UserPickerProps> = ({ onUserChange }) => {
             <div className="dropdown-section position-relative user-picker-dropdown">
                 <div className="d-flex gap-12 align-items-center">
                     <div className="qty-container">
-                        <strong className='mr-4'>Trẻ 6-12 (20%)</strong>
+                        <strong className='mr-4'>Trẻ 6-12 (20% giá tiền)</strong>
                         <button
                             className="qty-btn-minus mr-1"
                             type="button"
@@ -134,7 +134,7 @@ const UserPicker: React.FC<UserPickerProps> = ({ onUserChange }) => {
             <div className="dropdown-section position-relative user-picker-dropdown">
                 <div className="d-flex gap-12 align-items-center">
                     <div className="qty-container">
-                        <strong className='mr-4'>Trẻ 2 - 5 (free)  </strong>
+                        <strong className='mr-4'>Trẻ 2 - 5 (miễn phí)  </strong>
                         <button
                             className="qty-btn-minus mr-1"
                             type="button"
