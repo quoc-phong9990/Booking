@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\Admin\AttributeController;
+use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\DashBoardController;
 use App\Http\Controllers\Admin\Hotel_CommentController;
@@ -107,7 +108,6 @@ Route::get('/get-provinces', [LocationController::class, 'getProvinces'])->name(
 Route::get('/get-districts/{province_id}', [LocationController::class, 'getDistricts'])->name('districts');
 Route::get('/get-wards/{district_id}', [LocationController::class, 'getWards'])->name('wards');
 Route::get('/get-hotels/{province_id}', [HotelController::class, 'getHotelByProvince']);
-
 
 
 
