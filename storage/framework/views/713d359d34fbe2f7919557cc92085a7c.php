@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">Quản lý chuyến du lịch</h4>
+                    <h4 class="mb-sm-0">Quản lý Tour</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
@@ -40,7 +40,7 @@ unset($__errorArgs, $__bag); ?>
                             <div class="col-4">
                                 <label for="date-field" class="form-label">Giá
                                 </label>
-                                <input type="text" value="<?php echo e(old('price')); ?>" name="price" id=""
+                                <input type="text" value="<?php echo e(old('price')); ?>" name="price" id="price"
                                     class="form-control" placeholder="Nhập giá">
                                 <?php $__errorArgs = ['price'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -58,7 +58,7 @@ unset($__errorArgs, $__bag); ?>
                                 </label>
 
                                 <input type="text" value="<?php echo e(old('promotion')); ?>" name="promotion"
-                                    placeholder="Nhập giá khuyến mại" id="" class="form-control">
+                                    placeholder="Nhập giá khuyến mại" id="promotion" class="form-control">
                                 <?php $__errorArgs = ['promotion'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -296,7 +296,20 @@ unset($__errorArgs, $__bag); ?>
 <?php $__env->startSection('scripts'); ?>
     <script>
         $(document).ready(function() {
-
+            $('#price').on('blur', function() {
+                const value = this.value.replace(/[^0-9]/g, "");
+                this.value = parseFloat(value).toLocaleString('vi-VN');
+                if (value == "") {
+                    this.value = "";
+                }
+            });
+            $('#promotion').on('blur', function() {
+                const value = this.value.replace(/[^0-9]/g, "");
+                this.value = parseFloat(value).toLocaleString('vi-VN');
+                if (value == "") {
+                    this.value = "";
+                }
+            });
             $('#itine').hide();
             $('#day').on('change', function() {
                 $('#itine').show();

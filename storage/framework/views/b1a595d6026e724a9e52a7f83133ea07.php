@@ -1,182 +1,182 @@
 <?php $__env->startSection('content'); ?>
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">Quản lý đơn hàng</h4>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0">Quản lý đơn hàng</h4>
 
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="<?php echo e(route('bookings.index')); ?>">Bookings</a></li>
-                            <li class="breadcrumb-item active"><a href="<?php echo e(route('bookings.index')); ?>">List</a></li>
-                        </ol>
-                    </div>
-
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="<?php echo e(route('bookings.index')); ?>">Bookings</a></li>
+                        <li class="breadcrumb-item active"><a href="<?php echo e(route('bookings.index')); ?>">List</a></li>
+                    </ol>
                 </div>
+
             </div>
-            <div class="col-md-12 card">
-                <div class="row">
-                    <strong class="card-header border-0 fs-5">Danh sách đơn hàng</strong>
-
-                    <div class="filter mt-2">
-                        <form action="<?php echo e(route('bookings.index')); ?>" method="get">
-                            <div class="row">
-                                <div class="col-4 form-group">
-                                    <div class="d-inline-flex w-100">
-                                        <div style="width: calc(100% - 135px); margin-left: 15px">
-                                            <input type="text" name="code" id="" placeholder="Mã đơn hàng"
-                                                value="<?php echo e(request()->code); ?>" class="form-control mt-2">
-                                        </div>
-                                        <div style="width: calc(100% - 135px); margin-left: 15px">
-                                            <input type="text" name="user_name" id=""
-                                                placeholder="Tên khách hàng" value="<?php echo e(request()->user_name); ?>"
-                                                class="form-control mt-2">
-                                        </div>
+        </div>
+        <div class="col-md-12 card">
+            <div class="row">
+                <strong class="card-header border-0 fs-5">Danh sách đơn hàng</strong>
+                <div class="filter mt-2">
+                    <form action="<?php echo e(route('bookings.index')); ?>" method="get">
+                        <div class="row">
+                            <div class="col-4 form-group">
+                                <div class="d-inline-flex w-100">
+                                    <div style="width: calc(100% - 135px); margin-left: 15px">
+                                        <input type="text" name="code" id="" placeholder="Mã đơn hàng"
+                                            value="<?php echo e(request()->code); ?>" class="form-control mt-2">
                                     </div>
-
-
-                                </div>
-                                <div class="col-md-5">
-                                    <div class="form-group">
-                                        <div class="d-inline-flex w-100">
-                                            <div style="width: calc(40%); margin-right: 15px">
-
-                                                <select class="form-control mt-2" name="status_payment">
-                                                    <option value="">Trạng thái thanh toán</option>
-                                                    <?php $__currentLoopData = \App\Enums\StatusPayment::getKeys(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $status): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                        <option value="<?php echo e($index); ?>"
-                                                            <?php if(request()->status_payment == $index): ?> selected <?php endif; ?>>
-                                                            <?php echo \App\Enums\StatusPayment::getValueByKey($index); ?></option>
-                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                </select>
-                                            </div>
-
-                                            <div style="width: calc(40%); margin-right: 15px">
-
-                                                <select class="form-control mt-2" name="status_tour">
-                                                    <option value="">Trạng thái đơn hàng</option>
-
-                                                    <?php $__currentLoopData = \App\Enums\StatusTour::getKeys(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $status): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                        <option value="<?php echo e($index); ?>"
-                                                            <?php if(request()->status_tour == $index): ?> selected <?php endif; ?>>
-                                                            <?php echo \App\Enums\StatusTour::getValueByKey($index); ?></option>
-                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 form-group mt-2">
-                                    <div class="pull-right " style="margin-bottom: 15px">
-                                        <a href="<?php echo e(route('bookings.index')); ?>" class="btn btn-primary">
-                                            Bỏ lọc
-                                        </a>
-                                        <button type="submit" class="btn btn-info">Lọc</button>
+                                    <div style="width: calc(100% - 135px); margin-left: 15px">
+                                        <input type="text" name="user_name" id="" placeholder="Tên khách hàng"
+                                            value="<?php echo e(request()->user_name); ?>" class="form-control mt-2">
                                     </div>
                                 </div>
 
 
                             </div>
-                        </form>
-                    </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <div class="d-inline-flex w-100">
+                                        <div style="width: calc(40%); margin-right: 15px">
 
+                                            <select class="form-control mt-2" name="status_payment">
+                                                <option value="" selected>Trạng thái thanh toán</option>
+                                                <?php $__currentLoopData = \App\Enums\StatusPayment::getKeys(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $status): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($index); ?>" <?php if(request()->status_payment == $index && request()->status_payment !=null): ?>
+                                                    selected <?php endif; ?>>
+                                                    <?php echo \App\Enums\StatusPayment::getValueByKey($index); ?></option>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            </select>
+                                        </div>
+
+                                        <div style="width: calc(40%); margin-right: 15px">
+
+                                            <select class="form-control mt-2" name="status_tour">
+                                                <option value="" selected>Trạng thái đơn hàng</option>
+
+                                                <?php $__currentLoopData = \App\Enums\StatusTour::getKeys(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $status): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($index); ?>" <?php if(request()->status_tour == $index && request()->status_tour !=null): ?>
+                                                    selected <?php endif; ?>>
+                                                    <?php echo \App\Enums\StatusTour::getValueByKey($index); ?></option>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 form-group mt-2">
+                                <div class="pull-right " style="margin-bottom: 15px">
+                                    <a href="<?php echo e(route('bookings.index')); ?>" class="btn btn-primary">
+                                        Bỏ lọc
+                                    </a>
+                                    <button type="submit" class="btn btn-info">Lọc</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </form>
                 </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Tên KH</th>
-                                <th>Email</th>
-                                <th>Mã đơn</th>
-                                <th>Tổng tiền</th>
-                                <th>Số người</th>
-                                <th>Ngày đặt</th>
-                                <th>Trạng thái thanh toán</th>
-                                <th>Trạng thái đơn hàng</th>
-                                <th>Hành động</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if(count($bookings)>0): ?>
-                                <?php $__currentLoopData = $bookings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <tr>
-                                        <td><?php echo e($index + 1); ?></td>
-                                        <td><?php echo e($booking->user_name); ?></td>
-                                        <td><?php echo e($booking->email); ?></td>
-                                        <td><?php echo e($booking->booking_code); ?></td>
-                                        <td><?php echo e(number_format($booking->total_price, 0, '.', '.')); ?> VND</td>
-                                        <td><?php echo e($booking->people); ?></td>
-                                        <td><?php echo e($booking->created_at->format('d-m-Y')); ?></td>
-                                        <td>
-                                            <?php echo $booking->getNameStatusPayment(); ?>
+
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Tên KH</th>
+                            
+                            <th>Mã đơn</th>
+                            <th>Tổng tiền</th>
+                            <th>Số người</th>
+                            <th>Ngày đặt</th>
+                            <th>Trạng thái thanh toán</th>
+                            <th>Trạng thái đơn hàng</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if(count($bookings)>0): ?>
+                        <?php $__currentLoopData = $bookings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        
+
+                        <tr>
+                            <td><?php echo e($index + 1); ?></td>
+                            <td><?php echo e($booking->user_name); ?></td>
+                            
+                            <td><?php echo e($booking->booking_code); ?></td>
+                            <td><?php echo e(number_format($booking->total_price, 0, '.', '.')); ?> VND</td>
+                            <td>
+                                <p><?php echo e($booking->adults); ?> Người lớn</p>
+                                <p><?php echo e($booking->kids6To12); ?> Trẻ 6-12</p>
+                                <p><?php echo e($booking->kids0To5); ?> Trẻ 0-5</p>
+                            </td>
+                            <td><?php echo e($booking->created_at->format('d-m-Y')); ?></td>
+                            <td>
+                                <?php echo $booking->getNameStatusPayment(); ?>
 
 
-                                        </td>
-                                        <td>
-                                            <?php echo $booking->getNameStatusTour(); ?>
+                            </td>
+                            <td>
+                                <?php echo $booking->getNameStatusTour(); ?>
 
 
-                                        </td>
-                                        <td class="d-flex justify-content-between">
-                                            <i class="ri-eye-fill fs-5 showDetail" data-bs-toggle="modal"
-                                                data-bs-target="#showDetail" role="button" tabindex="0"
-                                                data-detail-id="<?php echo e($booking->id); ?>"></i>
-                                            <i class="ri-pencil-fill fs-5 text-warning showEdit" data-bs-toggle="modal"
-                                                role="button" tabindex="0" data-bs-target="#showModal"
-                                                data-edit-id="<?php echo e($booking->id); ?>"></i>
+                            </td>
+                            <td class="d-flex justify-content-between">
+                                <i class="ri-eye-fill fs-5 showDetail" data-bs-toggle="modal"
+                                    data-bs-target="#showDetail" role="button" tabindex="0"
+                                    data-detail-id="<?php echo e($booking->id); ?>"></i>
+                                <?php if($booking->status_tour == \App\Enums\StatusTour::WAITING): ?>
+                                <i class="ri-pencil-fill fs-5 text-warning showEdit" data-bs-toggle="modal"
+                                    role="button" tabindex="0" data-bs-target="#showModal"
+                                    data-edit-id="<?php echo e($booking->id); ?>"></i>
+                                <?php endif; ?>
 
 
-                                            <form action="<?php echo e(route('bookings.destroy', $booking)); ?>" method="POST"
-                                                class="d-inline">
-                                                <?php echo csrf_field(); ?>
-                                                <?php echo method_field('DELETE'); ?>
-                                                <button type="submit" class="btn border-0 border-spacing-0 p-0"
-                                                    onclick="return confirm('Bạn có chắc chắn muốn xóa đơn hàng này?')">
-                                                    <i class="ri-delete-bin-7-fill fs-5 text-danger"></i></button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            <?php else: ?>
-                                <td class="fw-bold">Không có dữ liệu</td>
-                            <?php endif; ?>
+
+                                
+                            </td>
+                        </tr>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php else: ?>
+                        <td class="fw-bold">Không có dữ liệu</td>
+                        <?php endif; ?>
 
 
-                        </tbody>
-                    </table>
-                    <?php echo e($bookings->links()); ?>
+                    </tbody>
+                </table>
+                <?php echo e($bookings->links()); ?>
 
-                </div>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-light p-3">
-                    <h5 class="modal-title" id="exampleModalLabel"></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        id="close-modal"></button>
-                </div>
-                <div id="formEdit">
-
-                </div>
+<div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    id="close-modal"></button>
             </div>
-        </div>
-    </div>
-    <div class="modal fade modal-lg" id="showDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" id="view">
+            <div id="formEdit">
 
             </div>
         </div>
     </div>
+</div>
+<div class="modal fade modal-lg" id="showDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" id="view">
+
+        </div>
     </div>
+</div>
+</div>
 <?php $__env->startSection('scripts'); ?>
-    <script>
-        $(document).ready(function() {
+<script>
+    $(document).ready(function() {
             $('.showEdit').click(function() {
                 let id = $(this).attr('data-edit-id');
                 $.ajax({
@@ -198,8 +198,7 @@
                               <select name="status_payment" class="form-control">
                         <option value="0" ${data.status_payment ==0?'selected':'' }>Chưa thanh toán</option>
                         <option value="1" ${data.status_payment ==1?'selected':'' }>Đã thanh toán</option>
-                        <option value="2" ${data.status_payment ==2?'selected':'' }>Hủy</option>
-                        <option value="3" ${data.status_payment ==3?'selected':'' }>Hoàn tiền</option>
+                        
                                 </select>
                                 
                                 
@@ -319,8 +318,7 @@
                 });
             });
         });
-    </script>
+</script>
 <?php $__env->stopSection(); ?>
 <?php $__env->stopSection(); ?>
-
 <?php echo $__env->make('admin.layout.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\Desktop\laragon\www\DEAH-Booking\resources\views/admin/Bookings/index.blade.php ENDPATH**/ ?>
