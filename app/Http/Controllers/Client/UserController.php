@@ -143,7 +143,7 @@ class UserController extends Controller
             $id = Crypt::decryptString($request->token);
             $user = User::where('id', $id)->where('is_active', 1)->first();
             $validator = Validator::make($request->all(), [
-                'password_old' => 'required',
+             
                 'password' => 'required|min:8|max:32',
                 'password_confirm' => 'required|min:8|max:32|same:password'
 
@@ -154,10 +154,7 @@ class UserController extends Controller
             if (!$user) {
                 return $this->response->responseFailed('Tài khoản không tồn tại hoặc chưa được kích hoạt');
             }
-            if (!Hash::check($request->password_old, $user->password)) {
-                return $this->response->responseFailed('Mật khẩu cũ không chính xác');
-            }
-
+           
             // Cập nhật mật khẩu mới
             $user->password = Hash::make($request->password);
             $user->save();

@@ -11,34 +11,64 @@ import { useLocation } from 'react-router-dom';
 const TourList = () => {
   const location = useLocation();
   const { province, type_id } = location.state || {};
-  const [selectedProvince, setSelectedProvince] = useState<any>(province?province:null);
-  const [selectedType, setSelectedType] = useState<any>(type_id?type_id:null);
+  const [selectedProvince, setSelectedProvince] = useState<any>(province ? province : null);
+  const [selectedType, setSelectedType] = useState<any>(type_id ? type_id : null);
   const [tour, setTour] = useState<any>([]);
-console.log(location.state);
+  const [sortOder, setSortOder] = useState<string>('')
+  const [arrRate, setArrRate] = useState<any>([])
 
+  const handleRate = (e:any) => {
+    console.log(e.target);
+    if (e.target.checked) {
+      setArrRate([...arrRate ,e.target.value])
+    }else{
+      setArrRate((arrRate:any) => arrRate.filter((item:any) => item !== e.target.value));
+    }
+    console.log(arrRate);
+    
 
+  }
 
-  
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.post('http://127.0.0.1:8000/api/client/get-tours-list', {
           type_id: selectedType,
-          province: selectedProvince
+          province: selectedProvince,
+          hightprice: sortOder,
+          rate:arrRate
+          
         });
-        // console.log(response.data.data);
+        // console.log();
+        const data = response.data.data.tours
 
-        setTour(response.data.data);
+        let sortedTour = data
+
+        if (sortOder === 'low_price') {
+          sortedTour.sort((a: any, b: any) => a.promotion - b.promotion)
+        }
+        else if (sortOder === 'high_price') {
+          sortedTour.sort((a: any, b: any) => b.promotion - a.promotion)
+        } else if (sortOder === 'null') {
+          setTour(response.data.data,);
+        }
+
+
+
+        setTour(response.data.data,);
       } catch (error) {
         if (error) return <div>loi...</div>
       }
     };
     fetchData();
-  }, [selectedProvince, selectedType]);
+
+  }, [selectedProvince, selectedType, sortOder,arrRate]);
+
+
   return (
     <div>
       <div>
-        <Header />
+        <Header status={undefined} />
         <main>
           {/* Breadcrumbs S t a r t */}
           <section className="breadcrumbs-area breadcrumb-bg">
@@ -80,8 +110,8 @@ console.log(location.state);
                           <option className='rounded' value=''>Lọc theo điểm đến</option>
                           {tour.provinces?.map((province: any) => {
                             return (
-                              <option selected={province.id==selectedProvince?true:false}  value={province.id}>{province.name}</option>
-                              
+                              <option selected={province.id == selectedProvince ? true : false} value={province.id}>{province.name}</option>
+
                             )
                           })}
                         </select>
@@ -95,7 +125,7 @@ console.log(location.state);
                           <option value=''>Lọc theo loại du lịch</option>
                           {tour.types?.map((type: any) => {
                             return (
-                              <option selected={type.id==selectedType?true:false} value={type.id}>{type.name_type}</option>
+                              <option selected={type.id == selectedType ? true : false} value={type.id}>{type.name_type}</option>
                             )
                           })}
 
@@ -120,7 +150,7 @@ console.log(location.state);
                     </div>
 
                     <div className="price-range-slider">
-                      <div id="slider-range" className="range-bar" />
+                      {/* <div id="slider-range" className="range-bar" /> */}
                       <div className="d-flex justify-content-between align-items-center">
 
                       </div>
@@ -133,7 +163,7 @@ console.log(location.state);
                     </div>
                     <div className="ratting-section">
                       <div className="ratting-checkbox">
-                        <input type="checkbox" id="{1}" />
+                        <input type="checkbox" id="{1}" onChange={(e) => handleRate(e)} value={1} />
 
                         <div>
                           <span>
@@ -145,7 +175,7 @@ console.log(location.state);
                         </div>
                       </div>
                       <div className="ratting-checkbox">
-                        <input type="checkbox" id="{2}" />
+                        <input type="checkbox" id="{2}" onChange={(e) => handleRate(e)} value={2} />
 
                         <div>
                           <span>
@@ -157,7 +187,7 @@ console.log(location.state);
                         </div>
                       </div>
                       <div className="ratting-checkbox">
-                        <input type="checkbox" id="{3}" />
+                        <input type="checkbox" id="{3}" onChange={(e) => handleRate(e)} value={3} />
 
                         <div>
                           <span>
@@ -169,7 +199,7 @@ console.log(location.state);
                         </div>
                       </div>
                       <div className="ratting-checkbox">
-                        <input type="checkbox" id="{4}" />
+                        <input type="checkbox" id="{4}" onChange={(e) => handleRate(e)} value={4} />
 
 
 
@@ -183,7 +213,7 @@ console.log(location.state);
                         </div>
                       </div>
                       <div className="ratting-checkbox">
-                        <input type="checkbox" id="{5}" />
+                        <input type="checkbox" id="{5}" onChange={(e) => handleRate(e)} value={5} />
 
                         <div>
                           <span>
@@ -195,11 +225,6 @@ console.log(location.state);
                         </div>
                       </div>
                     </div>
-
-
-                  
-
-
                   </div>
                   <div className="cover" />
 
@@ -207,7 +232,7 @@ console.log(location.state);
                 <div className="col-xl-9">
                   <div className="showing-result">
                     <h4 className="title"><Longtour /></h4>
-               
+
                     <div className="d-flex gap-10 align-items-center">
                       <div className="expand-icon hamburger block d-xl-none" id="hamburger">
                         <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none">
@@ -215,11 +240,11 @@ console.log(location.state);
                         </svg>
                       </div>
                       <div className="sorting-dropdown">
-                        <select className="select2">
-                          <option value="popular"> Sắp xếp theo phổ biến</option>
-                          <option value="low">Giá thấp đến cao</option>
-                          <option value="high">Giá cao đến thấp </option>
-                          <option value="new">Sắp xếp bằng tờ báo </option>
+                        <select onChange={(e) => setSortOder(e.target.value)} className="select2">
+                          <option value="null"> Tour  mới nhất </option>
+                          <option value="low_price">Giá thấp đến cao</option>
+                          <option value="high_price">Giá cao đến thấp </option>
+
                         </select>
                       </div>
                     </div>
@@ -268,18 +293,7 @@ console.log(location.state);
                     </div>
                     {/* nsdkjasn */}
 
-                    <div className="row">
-                      <div className="col-12 text-center">
-                        <div className="section-button d-inline-block">
-                          <a href="javascript:void(0)">
-                            <div className="btn-primary-icon-sm">
-                              <i className="ri-loader-2-line" />
-                              <p className="pera mt-3">Đang tải</p>
-                            </div>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
+
                   </div>
                 </div>
               </div>

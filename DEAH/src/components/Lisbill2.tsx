@@ -13,10 +13,10 @@ import { useForm } from 'react-hook-form';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const Lisbill2 = () => {
-    const formattedDate = (currentDate:any) => format(currentDate, 'yyyy-MM-dd');
+    const formattedDate = (currentDate: any) => format(currentDate, 'yyyy-MM-dd');
     const user = JSON.parse(sessionStorage.getItem("user"));
     console.log(user);
-    
+
     const [listbill, setListBill] = useState<any>([]);
     const [avatarUrl, setAvatarUrl] = useState<string>('');
     const [statusdelete, setstatusdelete] = useState<boolean>(false);
@@ -64,7 +64,7 @@ const Lisbill2 = () => {
                 var arrayLi = [];
                 for (let index = 0; index < pageNum; index++) {
                     arrayLi.push(<li className="page-item m-1" aria-current="page" key={index + 1}>
-                        <button className="page-link btn" disabled={index+1 === currentPage} onClick={() => changePage(index + 1)}>{index + 1}</button>
+                        <button className="page-link btn" disabled={index + 1 === currentPage} onClick={() => changePage(index + 1)}>{index + 1}</button>
                     </li>)
                 }
                 setTotalPages(arrayLi);
@@ -86,7 +86,7 @@ const Lisbill2 = () => {
             reset(user);
         }
         fetchData();
-    }, [reset, statusdelete, loading,currentPage]);
+    }, [reset, statusdelete, loading, currentPage]);
 
     const handleDelete = async (code: any) => {
 
@@ -112,7 +112,7 @@ const Lisbill2 = () => {
 
     };
 
-    const handleRepay = async (item) => {
+    const handleRepay = async (item: any) => {
 
         let response = await axios.post('http://127.0.0.1:8000/api/client/repay', item);
         window.location.href = response.data.data;
@@ -139,15 +139,13 @@ const Lisbill2 = () => {
                                 <div className="">
                                     <section className="table__header">
                                         <h1>Danh Sách Đơn hàng</h1>
-                                        <div className="input-group">
-                                            <input type="search" placeholder="Search Data..." />
-                                        </div>
+                                       
                                     </section>
                                     <table className=''>
                                         <thead>
                                             <tr>
                                                 <th>STT <span className=""></span></th>
-                                                <th>Mã Đặt Tour <span className=""></span></th>
+                                                <th>Mã Tour <span className=""></span></th>
                                                 <th>Giá <span className=""></span></th>
                                                 <th>Ngày Đặt <span className=""></span></th>
                                                 <th>Trạng thái Thanh Toán <span className=""></span></th>
@@ -173,7 +171,7 @@ const Lisbill2 = () => {
                                                                 className="ri-delete-bin-7-fill text-danger fs-4"
                                                             />
                                                         ) : ''}
-                                                        {item.status_payment == 0 ? <i onClick={() => handleRepay(item)} className="ri-refund-2-line"></i> : ''}
+                                                        {item.status_payment == 0 ? <i onClick={() => handleRepay(item)} className="ri-refund-2-line mt-2 ml-2"></i> : ''}
                                                     </td>
                                                 </tr>
                                             ))}
