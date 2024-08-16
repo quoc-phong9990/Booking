@@ -447,32 +447,141 @@ body{
 }
 
 
-}
-.animated-border {
-  border: 2px solid #815c5c;
-  border-radius: 4px;
-  animation: borderAnimation 2s infinite;
+
 }
 
-@keyframes borderAnimation {
-  0% {
-    border-color: #e2d8d8;
+.h {
+  /* background-color: #007bff; */
+  margin-left: -250px;
+  
+}
+.search{
+ width: 1300px; 
+ margin: auto;
+ border-radius: 20px;
+ height: 200px;
+
+}
+.hero-padding-two {
+  padding: 20px;
+}
+
+.bg-red-400 {
+  background-color: #f87171;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
+
+.search-bar {
+ 
+  display: flex;
+  gap: 30px;
+  align-items: center;
+
+}
+
+.search-bar select {
+  height: 50px;
+  width: 300px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.search-bar button {
+  height: 50px;
+  width: 300px;
+  padding: 5px 10px;
+  background-color:#47b1b3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background-color:#69f7e7
+}
+.banner{
+  background-image: url('/src/assets/images/videos/travel4.mp4');
+  background-repeat: no-repeat;
+  background-size:cover;
+}
+.searchlistbill {
+  height: 100px;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+.listbill{
+  height: 200px;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.searchlistbill input {
+  margin-top: 22px;
+  width: 70%; /* Điều chỉnh width theo % */
+  height: 50px;
+  border-radius: 10px;
+  background-color: #f3f1f1;
+  padding-left: 10px;
+}
+
+.searchlistbill button {
+  width: 25%; /* Điều chỉnh width theo % */
+  height: 50px;
+  border-radius: 10px;
+  background-color: coral;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+}
+
+.searchlistbill button:hover {
+  background-color: rgb(54, 213, 184);
+}
+
+/* Media Queries cho màn hình nhỏ hơn */
+@media (max-width: 768px) {
+  .searchlistbill, .listbill {
+    flex-direction: column;
+    height: auto;
+    padding: 20px;
   }
-  50% {
-    border-color: transparent;
+
+  .searchlistbill input {
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+    margin: 10px 0;
   }
-  100% {
-    border-color: #000;
+
+  .searchlistbill button {
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+    margin: 10px 0;
   }
 }
-.text{
-  width: 100%; overflow: hidden; white-space: nowrap; animation: marquee 10s linear infinite;
-  @keyframes marquee {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
-    }
-}
-@keyframes scroll-right {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+
+@media (max-width: 480px) {
+  .searchlistbill input, 
+  .searchlistbill button {
+    width: 100%;
+    height: 40px; /* Giảm chiều cao trên màn hình rất nhỏ */
+  }
 }
