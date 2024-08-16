@@ -103,6 +103,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'login'], function () {
 
 
 });
+Route::get('/get-stastic/{year}', [StasticController::class, 'indexApi'])->name('stastics.api');
 Route::get('/get-provinces', [LocationController::class, 'getProvinces'])->name('provinces');
 Route::get('/get-districts/{province_id}', [LocationController::class, 'getDistricts'])->name('districts');
 Route::get('/get-wards/{district_id}', [LocationController::class, 'getWards'])->name('wards');

@@ -1,10 +1,13 @@
 @extends('admin.layout.master')
 @section('content')
     @php
-        function countBook($id)
-        {
-            return \App\Models\Booking::where('tour_id', $id)->count();
+        if (!function_exists('countBook')) {
+            function countBook($id)
+            {
+                return \App\Models\Booking::where('tour_id', $id)->count();
+            }
         }
+
     @endphp
     <div class="container-fluid">
         <div class="row">
@@ -104,10 +107,9 @@
                                         <span>Doanh thu: {{ number_format($total, 0, '.', '.') }} VNĐ</span>
                                     </div>
                                     <form action="{{ route('stastics') }}">
-                                        <select class="card-title mb-0" name='year' onchange="this.form.submit()">
+                                        <select class="card-title mb-0" name='year' id="submit">
                                             @foreach ($years as $val)
-                                                <option @if (request('year') && request('year') == $val->year) selected @endif
-                                                    value="{{ $val->year }}">{{ $val->year }}</option>
+                                                <option value="{{ $val->year }}">{{ $val->year }}</option>
                                             @endforeach
                                         </select>
                                     </form>
@@ -180,7 +182,7 @@
         let dataShow = @json($arr);
         let total = @json($total);
 
-        function show() {
+        function show(dataShow, total) {
             var options = {
                 series: [{
                     name: 'Doanh thu',
@@ -247,7 +249,9 @@
                         formatter: function(val) {
                             return new Intl.NumberFormat('vi-VN').format(val) + " VNĐ";
                         }
-                    }
+
+                    },
+
 
                 },
                 title: {
@@ -257,13 +261,29 @@
                     style: {
                         color: '#444'
                     }
-                }
+                },
             };
 
             var chart = new ApexCharts(document.querySelector("#charts"), options);
             chart.render();
         }
-        show();
+        $(document).ready(function() {
+            show(dataShow, total);
+            $("#submit").on('change', function() {
+                const year = $(this).val();
+                $.ajax({
+                    url: "/get-stastic/" + year,
+                    type: "GET",
+                    success: function(val) {
+                        $("#charts").html('');
+                        show(val.data, val.total);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', status, error);
+                    }
+                })
+            })
+        })
     </script>
 @endsection
 @endsection
