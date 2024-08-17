@@ -13,6 +13,8 @@ import '../App.css'
 import { useNavigate } from 'react-router-dom';
 
 import SearchListBill from "../FunctionComponentContext/Shearchbill.js";
+import Slider from "react-slick";
+import { Slide } from "react-toastify";
 
 const Indextwo = () => {
   const [tourFeature, setToursFeature] = useState<any>([]);
@@ -159,9 +161,7 @@ const Indextwo = () => {
             {/* shape 01 */}
 
             {/* shape 02 */}
-            {/* <div className="shape-two d-none d-lg-block">
-              <img className='' src="/src/assets/category_tour/Hue.jpg" alt="travello" />
-            </div> */}
+         
           </section>
           {/*/ End-of Hero*/}
           {/* Brand S t a r t */}
@@ -191,11 +191,12 @@ const Indextwo = () => {
 
                 <div className="row g-4">
 
-                  {tourNew?.map((tours: any, index: any) => {
+        
+                 {tourNew?.map((tours: any, index: any) => {
                     return (
                       <div className="col-xl-3 col-lg-4 col-sm-6" key={index}>
                         <a href={`/tour-details/${tours.slug}`} className="destination-banner-two h-calc wow fadeInUp" data-wow-delay="0.s">
-                          <img className="image" src={'http://127.0.0.1:8000/' + (tours.images ? tours.images : '')} alt="travello" />
+                          <img className="" src={'http://127.0.0.1:8000/' + (tours.images ? tours.images : '')} alt="travello" />
                           <div className="destination-content-two">
 
                             <div className="destination-info-two">
@@ -212,6 +213,7 @@ const Indextwo = () => {
                       </div>
                     )
                   })}
+              
                 </div>
               </div>
             </div>

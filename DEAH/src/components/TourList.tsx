@@ -133,19 +133,7 @@ const TourList = () => {
 
                       </div>
 
-                      <div className="dropdown-section z-3 rounded-3 position-relative  ">
-                        <FunctionApp />
-                        <div className="    ">
-
-
-
-                          <div className="custom-dropdown custom-date">
-
-
-                          </div>
-                        </div>
-
-                      </div>
+                    
 
                     </div>
 

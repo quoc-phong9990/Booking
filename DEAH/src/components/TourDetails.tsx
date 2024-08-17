@@ -222,11 +222,13 @@ const TourDetails = () => {
                       <div className="includ-exclude-point">
                         <h4 className="title">Thuộc tính</h4>
                         <ul>
-                          {data.tour.attributes?.map((attr: any) => (
+              
+                        {data.tour.attributes?.map((attr: any) => (
                             <li key={attr.id}>
                               <strong> - {attr.attribute}</strong>
                             </li>
                           ))}
+                 
                         </ul>
                       </div>
                       <div className="divider" />

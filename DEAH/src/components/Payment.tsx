@@ -11,9 +11,10 @@ import Payment_PT from '../FunctionComponentContext/Pament_PT';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 const Payment: React.FC = () => {
-    // const data= localStorage.getItem('user')
-    // console.log(data);
+
+
 
     const [username, setUserName] = useState<string>('');
     const [phone, setPhone] = useState<string>('');
@@ -51,6 +52,7 @@ const Payment: React.FC = () => {
         const newTotalPrice = (adults * adultPrice) + (children6To12 * kidPrice) + hotelPrice;
         setTotalPrice(newTotalPrice);
     };
+    // validate
 
 
 
@@ -65,12 +67,34 @@ const Payment: React.FC = () => {
         }
     }, []);
     const Payment = async () => {
+        if (!username) {
+            toast.error("vui lòng nhập họ và tên")
+            return
+        }
+        if (!email) {
+            toast.error("vui lòng nhập trường email")
+            return
+        }
+        if (!hotel) {
+            toast.error("vui lòng chọn khách sạn")
+            return
+        }
+        if (!phone) {
+            toast.error("vui lòng nhập số điện thoại")
+            return
+        }
+
+        if (!adults) {
+            toast.error("vui lòng chọn người")
+            return
+        }
         const user_payment_info = {
             'user_name': username,
             'email': email,
             'phone': phone,
             'start': startDate,
             'end': endDate,
+
         };
         //    console.log(user_payment_info.user_name);
         sessionStorage.setItem('user_payment_info', JSON.stringify(user_payment_info));
@@ -237,14 +261,18 @@ const Payment: React.FC = () => {
                                                         <input type="text" onChange={(e) => setUserName(e.target.value)} value={username} className="form-control" placeholder="Họ và Tên" aria-label="Họ và Tên" />
                                                     </div>
                                                 </div>
-                                                <div className="input-group col mb-4 ">
-                                                    <div className="input-group-text">+84</div>
-                                                    <input type="number" onChange={(e) => setPhone(e.target.value)} value={phone} className="form-control" placeholder="Số điện thoại" />
+                                               <div className='row g-4'>
+                                               <div className=" col mb-4 ">
+                                                    <label htmlFor="name">Số điện thoại</label>
+                                                    <input type="number" onChange={(e) => setPhone(e.target.value)} value={phone} className="form-control" placeholder="+84" />
                                                 </div>
-                                                <div className="mb-4">
+                                               </div>
+                                               <div className='row g-4'>
+                                               <div className="mb-4">
                                                     <label htmlFor="email">Email (Bắt Buộc)</label>
                                                     <input type="email" onChange={(e) => setEmail(e.target.value)} value={email} className="form-control" placeholder="you@example.com" aria-label="email" />
                                                 </div>
+                                               </div>
                                                 <div className="mb-4">
                                                     <label htmlFor="hotel">Chọn khách sạn</label>
                                                     <select className="form-select" onChange={(e) => chooseHotel(e)} style={{ maxHeight: '500px', overflowY: 'auto' }}>

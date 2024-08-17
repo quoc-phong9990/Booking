@@ -24,12 +24,12 @@ const Payment_PT = ({ setPaymentMethod, paymentMethod }) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
-  const handleRadioChange = (event) => {
+  const handleRadioChange = (event:any) => {
     setPaymentMethod(event.target.value);
   }
 
   return (
-    <div>
+    <div className=''>
       <div className="tour-include-exclude m-0 mb-30 radius-6">
         <div className="include-exclude-point">
           <div className="checkbox-group">
@@ -45,8 +45,6 @@ const Payment_PT = ({ setPaymentMethod, paymentMethod }) => {
                   <ul className='limited-width'>
                     {Menus.map((menu, index) => (
                       <li key={index}>
-                        {/* <a href={menu.link}>{menu.name1}</a> */}
-
                         <p className='fs-6'>{menu.name1}</p>
 
                       </li>
@@ -67,8 +65,7 @@ const Payment_PT = ({ setPaymentMethod, paymentMethod }) => {
                   <ul className='limited-width'>
                     {Menus.map((menu, index) => (
                       <li className='' key={index}>
-                        {/* <a href={menu.link}>{menu.name2}</a> */}
-                        {/* <p className='fs-6'>{menu.name2}</p> */}
+                       
                         <div className='fs-6' dangerouslySetInnerHTML={{ __html: menu.name2 }} />
 
                       </li>
