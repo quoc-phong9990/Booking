@@ -27,21 +27,7 @@
                                 method="post">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $id }}">
-                                <div class="mb-3">
-                                    <label class="form-label" for="password-input">Password old<span
-                                            class="text-danger">*</span></label>
-                                    <div class="position-relative auth-pass-inputgroup">
-                                        <input type="password" class="form-control pe-5 password-input"
-                                            name="password_old" placeholder="Enter password" id="password-old">
-
-                                        <div class="invalid-feedback">
-                                            Please enter password
-                                        </div>
-                                    </div>
-                                    @error('password_old')
-                                        <span class="text-danger"><i>{{ $message }}</i></span>
-                                    @enderror
-                                </div>
+                
 
 
 

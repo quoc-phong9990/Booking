@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [2024-08-12 16:15:42] local.ERROR: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it (Connection: mysql, SQL: select * from `tours` where `is_active` = 1 and `tours`.`deleted_at` is null order by `created_at` desc limit 4) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 2002): SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it (Connection: mysql, SQL: select * from `tours` where `is_active` = 1 and `tours`.`deleted_at` is null order by `created_at` desc limit 4) at C:\\Users\\admin\\OneDrive\\Máy tính\\DEAH-Booking-1\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php:829)
 [stacktrace]
 #0 C:\\Users\\admin\\OneDrive\\Máy tính\\DEAH-Booking-1\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(983): Illuminate\\Database\\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
@@ -4572,3 +4573,5 @@ Did you mean this?
 #63 C:\\Users\\admin\\OneDrive\\Máy tính\\DEAH-Booking-1\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(16): require_once('C:\\\\Users\\\\admin\\\\...')
 #64 {main}
 "} 
+=======
+>>>>>>> 6287d5ea61b0fee3d4bb6a11fbcb227c135312a3

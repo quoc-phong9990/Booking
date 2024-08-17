@@ -113,7 +113,7 @@ const Payment: React.FC = () => {
             'hotel_address': hotel ? (hotel.address + ',' + tour.tour.location.province) : '',
             'book_price': totalPrice,
             'promotion_price': 0,
-            'total_price': totalPrice + (hotel ? (hotel.promotion ? Number(hotel.promotion) : hotel.price) : 0),
+            'total_price': totalPrice,
             'people': children2To5 + children6To12 + adults,
             'start': startDate,
             'end': endDate,
@@ -125,14 +125,8 @@ const Payment: React.FC = () => {
             // 'promotion': (tour.tour.price - tour.tour.promotion) + (hotel.price - hotel.promotion ?? 0) ?? 0,
             'adults': adults,
             'user_id': user_id,
-
-            'kids0To5': children2To5,
-            'Kids6To12': children6To12,
-
-
             'children2To5': children2To5,
             'children6To12': children6To12,
-
         }
         switch (paymentMethod) {
             case 'VPGD':
