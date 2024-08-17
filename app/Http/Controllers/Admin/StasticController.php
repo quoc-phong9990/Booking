@@ -52,14 +52,41 @@ class StasticController extends Controller
             ->whereRaw('YEAR(created_at) = ' . $nowYear)
             ->sum('total_price');
 
-            $bookNew = Booking::where('deleted_at',null)->where('status_tour',StatusTour::WAITING)->count();
-            $bookDone = Booking::where('deleted_at',null)->where('status_tour',StatusTour::DONE)->count();
-            $bookCancel = Booking::where('deleted_at',null)->where('status_tour',StatusTour::CANCEL)->count();
-            $dataBook = [
-                'bookNew'=>$bookNew,
-                'bookDone'=>$bookDone,
-                'bookCancel'=>$bookCancel
-            ];
-        return view("admin.stastics.index", compact('title', 'arr', 'total', 'years', 'tours','dataBook'));
+        $bookNew = Booking::where('deleted_at', null)->where('status_tour', StatusTour::WAITING)->count();
+        $bookDone = Booking::where('deleted_at', null)->where('status_tour', StatusTour::DONE)->count();
+        $bookCancel = Booking::where('deleted_at', null)->where('status_tour', StatusTour::CANCEL)->count();
+        $dataBook = [
+            'bookNew' => $bookNew,
+            'bookDone' => $bookDone,
+            'bookCancel' => $bookCancel
+        ];
+        return view("admin.stastics.index", compact('title', 'arr', 'total', 'years', 'tours', 'dataBook'));
+    }
+    public function indexApi(Request $request)
+    {
+        $nowYear = $request->year ?? date("Y");
+        $arr = [];
+        //doanh thu theo tháng của năm
+        for ($i = 1; $i <= 12; $i++) {
+            $query = Booking::query()->where('deleted_at', null)
+                ->where('status_payment', StatusPayment::PAID)
+                ->where('status_tour', StatusTour::DONE)
+                ->whereRaw('MONTH(created_at) = ' . $i)
+                ->whereRaw('YEAR(created_at) = ' . $nowYear)
+                ->sum('total_price');
+            $arr[] = $query;
+        }
+
+
+        //tổng doanh thu năm
+        $total = Booking::query()->where('deleted_at', null)
+            ->where('status_payment', StatusPayment::PAID)
+            ->where('status_tour', StatusTour::DONE)
+            ->whereRaw('YEAR(created_at) = ' . $nowYear)
+            ->sum('total_price');
+        return response()->json([
+            'data' => $arr,
+            'total' => $total
+        ]);
     }
 }
