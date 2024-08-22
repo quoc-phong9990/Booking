@@ -1,14 +1,10 @@
-@extends('admin.layout.master')
-@section('content')
-    @php
-        if (!function_exists('countBook')) {
-            function countBook($id)
-            {
-                return \App\Models\Booking::where('tour_id', $id)->count();
-            }
+<?php $__env->startSection('content'); ?>
+    <?php
+        function countBook($id)
+        {
+            return \App\Models\Booking::where('tour_id', $id)->count();
         }
-
-    @endphp
+    ?>
     <div class="container-fluid">
         <div class="row">
             <div class="col">
@@ -29,7 +25,7 @@
                                     <div class="d-flex align-items-end justify-content-between mt-4">
                                         <div>
                                             <h4 class="fs-22 fw-semibold ff-secondary mb-4">
-                                                {{ $dataBook['bookNew'] }} </h4>
+                                                <?php echo e($dataBook['bookNew']); ?> </h4>
 
                                         </div>
                                         <div class="avatar-sm flex-shrink-0">
@@ -56,7 +52,7 @@
                                     <div class="d-flex align-items-end justify-content-between mt-4">
                                         <div>
                                             <h4 class="fs-22 fw-semibold ff-secondary mb-4">
-                                                {{ $dataBook['bookDone'] }} </h4>
+                                                <?php echo e($dataBook['bookDone']); ?> </h4>
 
 
                                         </div>
@@ -84,7 +80,7 @@
                                     <div class="d-flex align-items-end justify-content-between mt-4">
                                         <div>
                                             <h4 class="fs-22 fw-semibold ff-secondary mb-4">
-                                                {{ $dataBook['bookCancel'] }} </h4>
+                                                <?php echo e($dataBook['bookCancel']); ?> </h4>
 
 
                                         </div>
@@ -104,13 +100,14 @@
                                 <div class="card-header d-flex justify-content-between">
                                     <div>
                                         <h4 class="card-title mb-0">Thống kê doanh thu năm</h4>
-                                        <span>Doanh thu: {{ number_format($total, 0, '.', '.') }} VNĐ</span>
+                                        <span>Doanh thu: <?php echo e(number_format($total, 0, '.', '.')); ?> VNĐ</span>
                                     </div>
-                                    <form action="{{ route('stastics') }}">
-                                        <select class="card-title mb-0" name='year' id="submit">
-                                            @foreach ($years as $val)
-                                                <option value="{{ $val->year }}">{{ $val->year }}</option>
-                                            @endforeach
+                                    <form action="<?php echo e(route('stastics')); ?>">
+                                        <select class="card-title mb-0" name='year' onchange="this.form.submit()">
+                                            <?php $__currentLoopData = $years; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option <?php if(request('year') && request('year') == $val->year): ?> selected <?php endif; ?>
+                                                    value="<?php echo e($val->year); ?>"><?php echo e($val->year); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                     </form>
 
@@ -126,7 +123,7 @@
                                 <div class="card-header d-flex justify-content-between">
                                     <div class="d-flex gap-2">
                                         <h4 class="card-title mb-0">Tour có nhiều lượt đặt </h4><span><a
-                                                href="{{ route('tours.index') }}">[Xem tất cả]</a></span>
+                                                href="<?php echo e(route('tours.index')); ?>">[Xem tất cả]</a></span>
                                     </div>
 
                                 </div><!-- end card header -->
@@ -143,18 +140,18 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($tours as $index => $val)
+                                                <?php $__currentLoopData = $tours; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <tr class="">
-                                                        <td>{{ $index + 1 }}</td>
+                                                        <td><?php echo e($index + 1); ?></td>
 
                                                         <td scope="row" style="width: 60%"><a
-                                                                href="{{ route('tours.show', $val->id) }}">
-                                                                {{ Str::limit($val->title, 60) }} </a>
+                                                                href="<?php echo e(route('tours.show', $val->id)); ?>">
+                                                                <?php echo e(Str::limit($val->title, 60)); ?> </a>
                                                         </td>
-                                                        <td>{{ $val->provinces->name }}</td>
-                                                        <td>{{ countBook($val->id) }}</td>
+                                                        <td><?php echo e($val->provinces->name); ?></td>
+                                                        <td><?php echo e(countBook($val->id)); ?></td>
                                                     </tr>
-                                                @endforeach
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                                             </tbody>
                                         </table>
@@ -177,12 +174,12 @@
         </div>
 
     </div>
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
     <script>
-        let dataShow = @json($arr);
-        let total = @json($total);
+        let dataShow = <?php echo json_encode($arr, 15, 512) ?>;
+        let total = <?php echo json_encode($total, 15, 512) ?>;
 
-        function show(dataShow, total) {
+        function show() {
             var options = {
                 series: [{
                     name: 'Doanh thu',
@@ -249,9 +246,7 @@
                         formatter: function(val) {
                             return new Intl.NumberFormat('vi-VN').format(val) + " VNĐ";
                         }
-
-                    },
-
+                    }
 
                 },
                 title: {
@@ -261,29 +256,15 @@
                     style: {
                         color: '#444'
                     }
-                },
+                }
             };
 
             var chart = new ApexCharts(document.querySelector("#charts"), options);
             chart.render();
         }
-        $(document).ready(function() {
-            show(dataShow, total);
-            $("#submit").on('change', function() {
-                const year = $(this).val();
-                $.ajax({
-                    url: "/get-stastic/" + year,
-                    type: "GET",
-                    success: function(val) {
-                        $("#charts").html('');
-                        show(val.data, val.total);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error:', status, error);
-                    }
-                })
-            })
-        })
+        show();
     </script>
-@endsection
-@endsection
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.layout.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\DATN\resources\views/admin/stastics/index.blade.php ENDPATH**/ ?>
