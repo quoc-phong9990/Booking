@@ -11,7 +11,7 @@ body {
   /* max-width: 100%; */
   margin-left: auto;
   margin-right: auto;
-width: 1320px;
+  width: 1320px;
 
   /* Ensures content doesn't overflow */
 }
@@ -324,265 +324,266 @@ width: 1320px;
 }
 
 
-  @keyframes spin {
-    0% {
-      transform: rotate(0);
-    }
-
-    100% {
-      transform: rotate(360deg);
-    }
+@keyframes spin {
+  0% {
+    transform: rotate(0);
   }
 
-  .spinner {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1003;
-    background: #000000;
-    overflow: hidden;
+  100% {
+    transform: rotate(360deg);
   }
+}
 
-  .spinner div:first-child {
-    display: block;
-    position: relative;
-    left: 50%;
-    top: 50%;
-    width: 150px;
-    height: 150px;
-    margin: -75px 0 0 -75px;
-    border-radius: 50%;
-    box-shadow: 0 3px 3px 0 rgba(255, 56, 106, 1);
-    transform: translate3d(0, 0, 0);
-    animation: spin 2s linear infinite;
-  }
+.spinner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1003;
+  background: #000000;
+  overflow: hidden;
+}
 
-  .spinner div:first-child:after,
-  .spinner div:first-child:before {
-    content: "";
-    position: absolute;
-    border-radius: 50%;
-  }
+.spinner div:first-child {
+  display: block;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border-radius: 50%;
+  box-shadow: 0 3px 3px 0 rgba(255, 56, 106, 1);
+  transform: translate3d(0, 0, 0);
+  animation: spin 2s linear infinite;
+}
 
-  .spinner div:first-child:before {
-    top: 5px;
-    left: 5px;
-    right: 5px;
-    bottom: 5px;
-    box-shadow: 0 3px 3px 0 rgb(255, 228, 32);
-    -webkit-animation: spin 3s linear infinite;
-    animation: spin 3s linear infinite;
-  }
+.spinner div:first-child:after,
+.spinner div:first-child:before {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
 
-  .spinner div:first-child:after {
-    top: 15px;
-    left: 15px;
-    right: 15px;
-    bottom: 15px;
-    box-shadow: 0 3px 3px 0 rgba(61, 175, 255, 1);
-    animation: spin 1.5s linear infinite;
-  }
+.spinner div:first-child:before {
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  box-shadow: 0 3px 3px 0 rgb(255, 228, 32);
+  -webkit-animation: spin 3s linear infinite;
+  animation: spin 3s linear infinite;
+}
 
-  /* slideshowpost */
-  /* App.css */
-  /* App.css */
+.spinner div:first-child:after {
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  box-shadow: 0 3px 3px 0 rgba(61, 175, 255, 1);
+  animation: spin 1.5s linear infinite;
+}
 
-  .slide-container {
-    width: 100%;
-    margin: auto;
-  }
+/* slideshowpost */
+/* App.css */
+/* App.css */
 
-  .slide-container .each-slide {
-    display: flex;
-    justify-content: space-between;
-    /* Đảm bảo khoảng cách đều nhau giữa các ảnh */
-    align-items: center;
-  }
+.slide-container {
+  width: 100%;
+  margin: auto;
+}
 
-  .slide-container .each-slide div {
-    flex: 1;
-    /* Mỗi div con sẽ chiếm một phần bằng nhau của hàng */
-    display: flex;
-    justify-content: center;
-    /* Căn giữa nội dung bên trong div */
-  }
+.slide-container .each-slide {
+  display: flex;
+  justify-content: space-between;
+  /* Đảm bảo khoảng cách đều nhau giữa các ảnh */
+  align-items: center;
+}
 
-  .slide-container .each-slide img {
-    width: 90%;
-    /* Đảm bảo ảnh không chiếm toàn bộ không gian của div */
-    height: auto;
-    border-radius: 8px;
-    /* Tùy chỉnh để có góc bo tròn nếu muốn */
-    transition: transform 0.3s ease;
-    /* Tạo hiệu ứng khi hover */
-  }
+.slide-container .each-slide div {
+  flex: 1;
+  /* Mỗi div con sẽ chiếm một phần bằng nhau của hàng */
+  display: flex;
+  justify-content: center;
+  /* Căn giữa nội dung bên trong div */
+}
 
-  .slide-container .each-slide img:hover {
-    transform: scale(1.05);
-    /* Tạo hiệu ứng phóng to khi hover */
-  }
+.slide-container .each-slide img {
+  width: 90%;
+  /* Đảm bảo ảnh không chiếm toàn bộ không gian của div */
+  height: auto;
+  border-radius: 8px;
+  /* Tùy chỉnh để có góc bo tròn nếu muốn */
+  transition: transform 0.3s ease;
+  /* Tạo hiệu ứng khi hover */
+}
 
-  .news-content {
-    padding: 10px;
-  }
+.slide-container .each-slide img:hover {
+  transform: scale(1.05);
+  /* Tạo hiệu ứng phóng to khi hover */
+}
 
-  .news-card-two {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
+.news-content {
+  padding: 10px;
+}
 
-  .news-card-two:hover {
-    transform: translateY(-10px);
-    /* Tạo hiệu ứng nổi lên khi hover */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
+.news-card-two {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-  .heading-pera {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-  }
+.news-card-two:hover {
+  transform: translateY(-10px);
+  /* Tạo hiệu ứng nổi lên khi hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
 
-  .title {
-    font-size: 14px;
-    color: #666;
-  }
+.heading-pera {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
 
-  .news-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+.title {
+  font-size: 14px;
+  color: #666;
+}
 
-  .news-info .all-user {
-    display: flex;
-  }
+.news-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  .news-info .happy-user {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin-right: 5px;
-  }
+.news-info .all-user {
+  display: flex;
+}
 
-  .news-info .happy-user img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+.news-info .happy-user {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 5px;
+}
 
-  .time {
-    font-size: 12px;
-    color: #999;
-  }
+.news-info .happy-user img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-  /* payment */
-  /* Basic styling */
+.time {
+  font-size: 12px;
+  color: #999;
+}
+
+/* payment */
+/* Basic styling */
+.tour-include-exclude {
+  border-radius: 6px;
+  margin-bottom: 30px;
+  padding: 15px;
+  /* background-color: #f8f9fa; Ví dụ về màu nền, thay đổi theo nhu cầu */
+}
+
+.include-exclude-point {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 1.25rem;
+  margin-bottom: 15px;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* Khoảng cách giữa các checkbox */
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  /* Kích thước chữ cho checkbox */
+  width: 750px;
+  border: 1px solid gray;
+
+}
+
+.checkbox-group input[type="radio"] {
+  margin-right: 20px;
+  /* Khoảng cách giữa checkbox và văn bản */
+  width: 20px;
+
+
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
   .tour-include-exclude {
-    border-radius: 6px;
-    margin-bottom: 30px;
-    padding: 15px;
-    /* background-color: #f8f9fa; Ví dụ về màu nền, thay đổi theo nhu cầu */
-  }
-
-  .include-exclude-point {
-    display: flex;
-    flex-direction: column;
+    padding: 10px;
+    margin-bottom: 20px;
   }
 
   .title {
-    font-size: 1.25rem;
-    margin-bottom: 15px;
+    font-size: 1rem;
+    margin-bottom: 10px;
   }
 
   .checkbox-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    /* Khoảng cách giữa các checkbox */
+    gap: 8px;
+    /* Giảm khoảng cách giữa các checkbox trên màn hình nhỏ */
   }
 
   .checkbox-group label {
-    display: flex;
-    align-items: center;
+    font-size: 0.8rem;
+    /* Kích thước chữ nhỏ hơn trên màn hình nhỏ */
+  }
+}
+
+@media (max-width: 480px) {
+  .tour-include-exclude {
+    padding: 5px;
+    margin-bottom: 15px;
+  }
+
+  .title {
     font-size: 0.875rem;
-    /* Kích thước chữ cho checkbox */
-    width: 750px;
-    border: 1px solid gray;
-
+    margin-bottom: 5px;
   }
 
-  .checkbox-group input[type="radio"] {
-    margin-right: 20px;
-    /* Khoảng cách giữa checkbox và văn bản */
-    width: 20px;
-
-
+  .checkbox-group {
+    gap: 6px;
+    /* Giảm khoảng cách giữa các checkbox thêm nữa trên màn hình rất nhỏ */
   }
 
-  /* Responsive styles */
-  @media (max-width: 768px) {
-    .tour-include-exclude {
-      padding: 10px;
-      margin-bottom: 20px;
-    }
-
-    .title {
-      font-size: 1rem;
-      margin-bottom: 10px;
-    }
-
-    .checkbox-group {
-      gap: 8px;
-      /* Giảm khoảng cách giữa các checkbox trên màn hình nhỏ */
-    }
-
-    .checkbox-group label {
-      font-size: 0.8rem;
-      /* Kích thước chữ nhỏ hơn trên màn hình nhỏ */
-    }
+  .checkbox-group label {
+    font-size: 0.75rem;
+    /* Kích thước chữ nhỏ hơn nữa trên màn hình rất nhỏ */
   }
+}
 
-  @media (max-width: 480px) {
-    .tour-include-exclude {
-      padding: 5px;
-      margin-bottom: 15px;
-    }
+/* paymentyPT */
+.limited-width {
+  max-width: 750px;
+  /* Thay đổi giá trị này theo ý muốn của bạn */
+  /* Để căn giữa thẻ ul */
+  margin-left: 20px;
+  margin-top: 20px;
 
-    .title {
-      font-size: 0.875rem;
-      margin-bottom: 5px;
-    }
+}
 
-    .checkbox-group {
-      gap: 6px;
-      /* Giảm khoảng cách giữa các checkbox thêm nữa trên màn hình rất nhỏ */
-    }
-
-    .checkbox-group label {
-      font-size: 0.75rem;
-      /* Kích thước chữ nhỏ hơn nữa trên màn hình rất nhỏ */
-    }
-  }
-
-  /* paymentyPT */
-  .limited-width {
-    max-width: 750px;
-    /* Thay đổi giá trị này theo ý muốn của bạn */
-    /* Để căn giữa thẻ ul */
-    margin-left: 20px;
-    margin-top: 20px;
-
-  }
-  /* Ok */
-.hi{
+/* Ok */
+.hi {
   z-index: 9999;
   position: absolute;
 }
@@ -660,14 +661,69 @@ main .table {
   outline: none;
 }
 
+/* search header */
+main .table {
+  height: 90vh;
+  background-color: #fff5;
+
+  backdrop-filter: blur(7px);
+  box-shadow: 0 .4rem .8rem #0005;
+  border-radius: .8rem;
+
+}
+
+.header {
+  width: 100%;
+  height: 10%;
+  background-color: #fff4;
+  padding: .5rem 0.5rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header .input-header {
+  width: 100%;
+  height: 100%;
+  background-color: #fff5;
+  padding: 0 .8rem;
+  border-radius: 2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: .3s;
+}
+
+/* .header .input-header:hover {
+  width: 35%;
+  background-color: #fff8;
+  box-shadow: 0 .1rem .4rem #0002;
+} */
+
+.header .input-header img {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.header .input-header input {
+  width: 100%;
+  padding: 0 .5rem 0 .3rem;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
 .table__body {
-  
+
   max-height: calc(89% - 1.6rem);
   background-color: #fffb;
   font-size: 0.8rem;
   margin: .8rem auto;
   border-radius: .6rem;
- 
+
 }
 
 
@@ -688,7 +744,7 @@ main .table {
 
 
 table {
-  width: 75%;
+  width: 100%;
 }
 
 td img {
@@ -895,8 +951,8 @@ tbody td.active {
 .export__file .export__file-options img {
   width: 2rem;
   height: auto;
-<<<<<<< HEAD
 }
+
 /* lichtrinh */
 /* .schedule{
   width: 1000px;
@@ -916,7 +972,9 @@ margin-right: 200px;
 
 }
 
-.schedule-header, .schedule-body, .schedule-footer {
+.schedule-header,
+.schedule-body,
+.schedule-footer {
   background-color: white;
   /* background-color: #000000; */
   /* width: 830px; */
@@ -937,85 +995,369 @@ margin-right: 200px;
 @media (min-width: 1200px) {
   .custom-modal-width .modal-dialog {
     max-width: 100%;
-   
+
   }
+
   /* rate_tourdetail */
   /* Default styles for larger screens */
-.rating-section {
-  display: flex;
-  /* justify-content: center; */
-  align-items: center;
-  margin: 20px 0;
-}
-
-.rating-checkbox {
-  position: relative;
-  margin: 0 5px;
-}
-
-.rating-checkbox input {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.rating-checkbox label {
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.rating-checkbox label svg {
-  width: 24px;
-  height: 24px;
-}
-
-/* Styles for tablets (width less than 768px) */
-@media (max-width: 768px) {
   .rating-section {
-    flex-direction: row;
-    justify-content: center;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    margin: 20px 0;
   }
 
   .rating-checkbox {
-    margin: 0 3px;
+    position: relative;
+    margin: 0 5px;
   }
 
-  .rating-checkbox label svg {
-    width: 20px;
-    height: 20px;
+  .rating-checkbox input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
   }
-}
 
-/* Styles for mobile phones (width less than 480px) */
-@media (max-width: 480px) {
-  .rating-section {
-    flex-direction: row;
+  .rating-checkbox label {
+    cursor: pointer;
+    display: flex;
     justify-content: center;
-  }
-
-  .rating-checkbox {
-    margin: 0 2px;
+    align-items: center;
   }
 
   .rating-checkbox label svg {
-    width: 18px;
-    height: 18px;
+    width: 24px;
+    height: 24px;
   }
-}
+
+  /* Styles for tablets (width less than 768px) */
+  @media (max-width: 768px) {
+    .rating-section {
+      flex-direction: row;
+      justify-content: center;
+    }
+
+    .rating-checkbox {
+      margin: 0 3px;
+    }
+
+    .rating-checkbox label svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  /* Styles for mobile phones (width less than 480px) */
+  @media (max-width: 480px) {
+    .rating-section {
+      flex-direction: row;
+      justify-content: center;
+    }
+
+    .rating-checkbox {
+      margin: 0 2px;
+    }
+
+    .rating-checkbox label svg {
+      width: 18px;
+      height: 18px;
+    }
+
+  }
 
 }
-.link-muted { color: #aaa; } .link-muted:hover { color: #1266f1; }
-.comments{
-background-color: #edfaf8;
-border-radius: 20px;
-width: 1300px;
-box-shadow: 100px;
+
+.link-muted {
+  color: #aaa;
+}
+
+.link-muted:hover {
+  color: #1266f1;
+}
+
+.comments {
+  background-color: #edfaf8;
+  border-radius: 20px;
+  width: 1300px;
+  box-shadow: 100px;
 
 }
-/* responsive payment_PT */
-=======
+
+@media only screen and (max-width: 768px) {
+  .showing-result {
+    background-color: #f7f7f7; /* Light grey background */
+    padding: 20px; /* Add padding for better spacing */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    font-family: 'Roboto', sans-serif; /* Clean and modern font */
 }
->>>>>>> 6287d5ea61b0fee3d4bb6a11fbcb227c135312a3
+
+/* Title Styling */
+.showing-result .title {
+    font-size: 1.5rem; /* Larger title size */
+    color: #333; /* Darker text color */
+    margin-bottom: 15px; /* Spacing below title */
+}
+
+/* Dropdown Section Styling */
+.select-dropdown-section {
+    margin-bottom: 15px; /* Space between dropdowns */
+}
+
+.select-dropdown-section .d-flex {
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px; /* Space below icons and labels */
+}
+
+.select2-title {
+    font-size: 1rem;
+    color: #555; /* Grey text for labels */
+}
+
+.destination-dropdown {
+
+    width: 100%;
+    padding: 10px; /* Add padding inside the dropdown */
+    border: 1px solid #ccc; /* Border around dropdown */
+    border-radius: 8px; 
+    background-color: #fff; /* White background */
+    font-size: 1rem;
+    color: #333; /* Text color */
+    transition: border-color 0.3s ease; /* Smooth border color change */
+}
+
+.destination-dropdown:focus {
+    border-color: #007bff; /* Blue border on focus */
+    outline: none;
+}
+
+/* Rating Section Styling */
+.ratting-section {
+    display: flex;
+   justify-content: space-between;
+    margin-top: 15px;
+ 
+    width: 400px;
+}
+
+.ratting-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 40px;
+    cursor: pointer;
+  
+}
+.ratting-checkbox i {
+
+color: #ffb400;
+}
+
+
+.ratting-checkbox input[type="checkbox"] {
+    accent-color: #ffb400; 
+    cursor: pointer;
+   
+}
+
+.ratting-checkbox svg {
+    fill: #ffb400; /* Star color */
+    margin-top: 10px;
+}
+
+.ratting-checkbox span {
+    font-size: 1rem;
+    color: #333; /* Text color */
+}
+.checkbox{
+  background-color: #000000;
+}
+
+/* Expand Icon Styling */
+.expand-icon {
+    margin-left: auto; /* Push icon to the right */
+}
+
+.expand-icon svg {
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Smooth icon animation */
+}
+
+.expand-icon svg:hover {
+    transform: rotate(90deg); /* Rotate on hover */
+}
+.showing-result {
+  padding: 15px; /* Reduce padding on smaller screens */
+}
+
+.title {
+  font-size: 1.25rem; /* Slightly smaller title */
+}
+
+.destination-dropdown {
+  font-size: 0.9rem; /* Slightly smaller font */
+}
+
+.ratting-section {
+  flex-wrap: wrap; /* Wrap rating items on smaller screens */
+  gap: 8px; /* Adjust gap */
+}
+
+.ratting-checkbox span {
+  font-size: 0.9rem; /* Slightly smaller rating text */
+}
+
+
+
+
+
+ 
+
+ 
+
+
+
+
+
+
+ 
+
+  
+}
+
+@media only screen and (max-width: 480px) {
+  .showing-result {
+    background-color: #f7f7f7; /* Light grey background */
+    padding: 20px; /* Add padding for better spacing */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    font-family: 'Roboto', sans-serif; /* Clean and modern font */
+}
+
+/* Title Styling */
+.showing-result .title {
+    font-size: 1.5rem; /* Larger title size */
+    color: #333; /* Darker text color */
+    margin-bottom: 15px; /* Spacing below title */
+}
+
+/* Dropdown Section Styling */
+.select-dropdown-section {
+    margin-bottom: 15px; /* Space between dropdowns */
+
+  }
+
+.select-dropdown-section .d-flex {
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px; /* Space below icons and labels */
+}
+
+.select2-title {
+    font-size: 1rem;
+    color: #555; /* Grey text for labels */
+}
+
+.destination-dropdown {
+
+    width: 100%;
+    padding: 10px; /* Add padding inside the dropdown */
+    border: 1px solid #ccc; /* Border around dropdown */
+    border-radius: 30px; 
+    background-color: #fff; /* White background */
+    font-size: 1rem;
+    color: #333; /* Text color */
+    transition: border-color 0.3s ease; /* Smooth border color change */
+}
+
+.destination-dropdown:focus {
+    border-color: #007bff; /* Blue border on focus */
+    outline: none;
+}
+
+/* Rating Section Styling */
+.ratting-section {
+    display: flex;
+   justify-content: space-between;
+    margin-top: 15px;
+ 
+    width: 350px;
+}
+
+.ratting-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 40px;
+    cursor: pointer;
+  
+}
+.ratting-checkbox i {
+
+color: #ffb400;
+}
+
+
+.ratting-checkbox input[type="checkbox"] {
+    accent-color: #ffb400; 
+    cursor: pointer;
+   
+}
+
+.ratting-checkbox svg {
+    fill: #ffb400; /* Star color */
+    margin-top: 10px;
+}
+
+.ratting-checkbox span {
+    font-size: 1rem;
+    color: #333; /* Text color */
+}
+.checkbox{
+  background-color: #000000;
+}
+
+/* Expand Icon Styling */
+.expand-icon {
+    margin-left: auto; /* Push icon to the right */
+}
+
+.expand-icon svg {
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Smooth icon animation */
+}
+
+.expand-icon svg:hover {
+    transform: rotate(90deg); /* Rotate on hover */
+}
+.showing-result {
+  padding: 15px; /* Reduce padding on smaller screens */
+}
+
+.title {
+  font-size: 1.25rem; /* Slightly smaller title */
+}
+
+.destination-dropdown {
+  font-size: 0.9rem; /* Slightly smaller font */
+}
+
+.ratting-section {
+  flex-wrap: wrap; /* Wrap rating items on smaller screens */
+  gap: 8px; /* Adjust gap */
+}
+
+.ratting-checkbox span {
+  font-size: 0.9rem; /* Slightly smaller rating text */
+}
+
+
+
+}
+
+.select-dropdown-section{
+width: 230px;
+
+}

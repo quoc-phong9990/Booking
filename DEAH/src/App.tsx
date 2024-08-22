@@ -20,17 +20,14 @@ import SlideShow from './FunctionComponentContext/SlideShow';
 import ProfileUser from './AuthForm/ProfileUser';
 import PaymentSuccess from './components/PaymentSuccess';
 import Password from './AuthForm/Password';
-
-import Test from './FunctionComponentContext/Longtour';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PaymentPage from './components/PaymentPage';
 import PaymentBanking from './components/PaymentBanking';
 import Loading from './FunctionComponentContext/Loading';
 import Lisbill2 from './components/Lisbill2';
-import Hi from './FunctionComponentContext/Hi';
 
-import Ab from './Test/Ab';
+
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -58,7 +55,6 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-pass" element={<Forgot />} />
-       
         <Route path="/new-password/:token" element={<NewPassword />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
@@ -73,10 +69,9 @@ function App() {
         <Route path="/profile" element={<ProfileUser />} />
         <Route path="/listbill" element={<Lisbill2/>} />
         <Route path="/pass" element={<Password />} />
-        <Route path="/t" element={<Test/>} />
-        <Route path="/c" element={<Hi/>} />
-        {/* <Route path="/test" element={<Ap />} /> */}
-        <Route path="/test1" element={<Ab />} />
+      
+ 
+    
       </Routes>
       <ToastContainer />
     </>

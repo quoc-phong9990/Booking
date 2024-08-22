@@ -1,4 +1,4 @@
-import "../assets/js/main.js";
+import "../Style/main.js";
 import "react-slideshow-image/dist/styles.css";
 import "../App.css";
 import Header from "./Header.js";
@@ -6,7 +6,7 @@ import Footer from "./Footer.js";
 const About = () => {
     return (
         <div>
-            <Header />
+            <Header status={undefined} />
             <main>
                 <section className="breadcrumbs-area breadcrumb-bg">
                     <div className="container">

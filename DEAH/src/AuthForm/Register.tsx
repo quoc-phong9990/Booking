@@ -167,23 +167,7 @@ const Register = () => {
                         </p>
                       </div>
                     </div>
-                    <div className="sign-with">
-                      <p className="text-paragraph">Hoặc đăng nhập với </p>
-                      <ul className="icon-login-section">
-                        <li className="icon-login">
-                          <a href="#"><i className="ri-mail-line" /></a>
-                        </li>
-                        <li className="icon-login">
-                          <a href="#"><i className="ri-facebook-fill" /></a>
-                        </li>
-                        <li className="icon-login">
-                          <a href="#"><i className="ri-twitter-fill" /></a>
-                        </li>
-                        <li className="icon-login">
-                          <a href="#"> <i className="ri-linkedin-fill" /></a>
-                        </li>
-                      </ul>
-                    </div>
+                  
                   </div>
                 </div>
               </div>

@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import FunctionApp from "../FunctionComponentContext/Date.js"
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import Header from './Header.js';
@@ -8,24 +7,32 @@ import Footer from './Footer.js';
 import CurrencyFormatter from '../FunctionComponentContext/CurrencyFormatter.js';
 import Longtour from '../FunctionComponentContext/Longtour.js';
 import { useLocation } from 'react-router-dom';
+import '../App1.css'
+
+
 const TourList = () => {
   const location = useLocation();
+
   const { province, type_id } = location.state || {};
   const [selectedProvince, setSelectedProvince] = useState<any>(province ? province : null);
   const [selectedType, setSelectedType] = useState<any>(type_id ? type_id : null);
   const [tour, setTour] = useState<any>([]);
   const [sortOder, setSortOder] = useState<string>('')
   const [arrRate, setArrRate] = useState<any>([])
+  const [showFilters, setShowFilters] = useState(true)
+  const toggleFilters = () => {
+    setShowFilters(!showFilters)
 
-  const handleRate = (e:any) => {
+  }
+  const handleRate = (e: any) => {
     console.log(e.target);
     if (e.target.checked) {
-      setArrRate([...arrRate ,e.target.value])
-    }else{
-      setArrRate((arrRate:any) => arrRate.filter((item:any) => item !== e.target.value));
+      setArrRate([...arrRate, e.target.value])
+    } else {
+      setArrRate((arrRate: any) => arrRate.filter((item: any) => item !== e.target.value));
     }
     console.log(arrRate);
-    
+
 
   }
 
@@ -36,8 +43,8 @@ const TourList = () => {
           type_id: selectedType,
           province: selectedProvince,
           hightprice: sortOder,
-          rate:arrRate
-          
+          rate: arrRate
+
         });
         // console.log();
         const data = response.data.data.tours
@@ -62,7 +69,7 @@ const TourList = () => {
     };
     fetchData();
 
-  }, [selectedProvince, selectedType, sortOder,arrRate]);
+  }, [selectedProvince, selectedType, sortOder, arrRate]);
 
 
   return (
@@ -70,6 +77,7 @@ const TourList = () => {
       <div>
         <Header status={undefined} />
         <main>
+
           {/* Breadcrumbs S t a r t */}
           <section className="breadcrumbs-area breadcrumb-bg">
             <div className="container">
@@ -86,61 +94,186 @@ const TourList = () => {
           </section>
           {/*/ End-of Breadcrumbs*/}
           {/* Destination area S t a r t */}
+          
           <section className="tour-list-section section-padding2">
             <div className="container">
               <div className="row g-4">
-                <div className="col-xl-3">
+                <div className="col-xl-3 col-3">
                   <div className="search-filter-section">
                     <div className="expand-icon close-btn block d-xl-none">
                       <i className="ri-arrow-left-double-line" />
                     </div>
+                    
                     <div className="heading">
-                      <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none">
+
+                      <svg onClick={toggleFilters} xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none">
                         <path d="M3 7H10M10 7C10 8.65685 11.3431 10 13 10H14C15.6569 10 17 8.65685 17 7C17 5.34315 15.6569 4 14 4H13C11.3431 4 10 5.34315 10 7ZM16 17H21M20 7H21M3 17H6M6 17C6 18.6569 7.34315 20 9 20H10C11.6569 20 13 18.6569 13 17C13 15.3431 11.6569 14 10 14H9C7.34315 14 6 15.3431 6 17Z" stroke="#071516" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                       <h4 className="title">Tìm kiếm theo bộ lọc</h4>
                     </div>
-                    <div className="tour-search">
-                      <div className="select-dropdown-section">
-                        <div className="d-flex gap-10 align-items-center">
-                          <i className="ri-map-pin-line" />
-                          <h4 className="select2-title">Điểm đến</h4>
+                   
+                    {showFilters && (
+                      <div className="tour-search">
+                        <div className="select-dropdown-section">
+                          <div className="d-flex gap-10 align-items-center">
+                            <i className="ri-map-pin-line" />
+                            <h4 className="select2-title">Điểm đến</h4>
+                          </div>
+                          <select className="destination-dropdown rounded" onChange={(e) => setSelectedProvince(e.target.value)}>
+                            <option className='rounded' value=''>Lọc theo điểm đến</option>
+                            {tour.provinces?.map((province: any) => {
+                              return (
+                                <option selected={province.id == selectedProvince ? true : false} value={province.id}>{province.name}</option>
+
+                              )
+                            })}
+                          </select>
                         </div>
-                        <select className="destination-dropdown rounded" onChange={(e) => setSelectedProvince(e.target.value)}>
-                          <option className='rounded' value=''>Lọc theo điểm đến</option>
-                          {tour.provinces?.map((province: any) => {
-                            return (
-                              <option selected={province.id == selectedProvince ? true : false} value={province.id}>{province.name}</option>
+                        <div className="select-dropdown-section">
+                          <div className="d-flex gap-10 align-items-center">
+                            <i className="ri-flight-takeoff-fill" />
+                            <h4 className="select2-title">Loại du lịch </h4>
+                          </div>
+                          <select className="destination-dropdown rounded" onChange={(e) => setSelectedType(e.target.value)}>
+                            <option value='rounded'>Lọc theo loại du lịch</option>
+                            {tour.types?.map((type: any) => {
+                              return (
+                                <option selected={type.id == selectedType ? true : false} value={type.id}>{type.name_type}</option>
+                              )
+                            })}
 
-                            )
-                          })}
-                        </select>
-                      </div>
-                      <div className="select-dropdown-section">
-                        <div className="d-flex gap-10 align-items-center">
-                          <i className="ri-flight-takeoff-fill" />
-                          <h4 className="select2-title">Loại du lịch </h4>
+                          </select>
+
                         </div>
-                        <select className="destination-dropdown rounded" onChange={(e) => setSelectedType(e.target.value)}>
-                          <option value=''>Lọc theo loại du lịch</option>
-                          {tour.types?.map((type: any) => {
-                            return (
-                              <option selected={type.id == selectedType ? true : false} value={type.id}>{type.name_type}</option>
-                            )
-                          })}
 
-                        </select>
+                        <div className="ratting-section rating">
+                        <div className="ratting-checkbox">
+                          <input type="checkbox" id="{1}" onChange={(e) => handleRate(e)} value={1} />
+                          <div>
+                            <span>
+                              <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
+                                <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
+                              </svg>
+                              1
+                            </span>
+                          </div>
+                        </div>
+                        <div className="ratting-checkbox">
+                          <input type="checkbox" id="{2}" onChange={(e) => handleRate(e)} value={2} />
 
+                          <div>
+                            <span>
+                              <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
+                                <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
+                              </svg>
+                              2
+                            </span>
+                          </div>
+                        </div>
+                        <div className="ratting-checkbox">
+                          <input type="checkbox" id="{3}" onChange={(e) => handleRate(e)} value={3} />
+
+                          <div>
+                            <span>
+                              <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
+                                <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
+                              </svg>
+                              3
+                            </span>
+                          </div>
+                        </div>
+                        <div className="ratting-checkbox">
+                          <input type="checkbox" id="{4}" onChange={(e) => handleRate(e)} value={4} />
+                          <div>
+                            <span>
+                              <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
+                                <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
+                              </svg>
+                              4
+                            </span>
+                          </div>
+                        </div>
+                        <div className="ratting-checkbox">
+                          <input type="checkbox" id="{5}" onChange={(e) => handleRate(e)} value={5} />
+
+                          <div>
+                            <span>
+                              <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
+                                <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
+                              </svg>
+                              5
+                            </span>
+                          </div>
+                        </div>
+                      </div>       
                       </div>
-
-                    
-
-                    </div>
+                    )}
 
                     <div className="price-range-slider">
                       {/* <div id="slider-range" className="range-bar" /> */}
                       <div className="d-flex justify-content-between align-items-center">
+                      {/* {showFilters && (
+                      <div className="ratting-section rating">
+                        <div className="ratting-checkbox">
+                          <input type="checkbox" id="{1}" onChange={(e) => handleRate(e)} value={1} />
+                          <div>
+                            <span>
+                              <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
+                                <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
+                              </svg>
+                              1
+                            </span>
+                          </div>
+                        </div>
+                        <div className="ratting-checkbox">
+                          <input type="checkbox" id="{2}" onChange={(e) => handleRate(e)} value={2} />
 
+                          <div>
+                            <span>
+                              <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
+                                <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
+                              </svg>
+                              2
+                            </span>
+                          </div>
+                        </div>
+                        <div className="ratting-checkbox">
+                          <input type="checkbox" id="{3}" onChange={(e) => handleRate(e)} value={3} />
+
+                          <div>
+                            <span>
+                              <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
+                                <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
+                              </svg>
+                              3
+                            </span>
+                          </div>
+                        </div>
+                        <div className="ratting-checkbox">
+                          <input type="checkbox" id="{4}" onChange={(e) => handleRate(e)} value={4} />
+                          <div>
+                            <span>
+                              <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
+                                <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
+                              </svg>
+                              4
+                            </span>
+                          </div>
+                        </div>
+                        <div className="ratting-checkbox">
+                          <input type="checkbox" id="{5}" onChange={(e) => handleRate(e)} value={5} />
+
+                          <div>
+                            <span>
+                              <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
+                                <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
+                              </svg>
+                              5
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    )} */}
                       </div>
                     </div>
                     <div className="heading">
@@ -149,90 +282,98 @@ const TourList = () => {
                       </svg>
                       <h4 className="title">Đánh giá du lịch </h4>
                     </div>
-                    <div className="ratting-section">
-                      <div className="ratting-checkbox">
-                        <input type="checkbox" id="{1}" onChange={(e) => handleRate(e)} value={1} />
-
-                        <div>
-                          <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
-                              <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
-                            </svg>
-                            1
-                          </span>
-                        </div>
-                      </div>
-                      <div className="ratting-checkbox">
-                        <input type="checkbox" id="{2}" onChange={(e) => handleRate(e)} value={2} />
-
-                        <div>
-                          <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
-                              <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
-                            </svg>
-                            2
-                          </span>
-                        </div>
-                      </div>
-                      <div className="ratting-checkbox">
-                        <input type="checkbox" id="{3}" onChange={(e) => handleRate(e)} value={3} />
-
-                        <div>
-                          <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
-                              <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
-                            </svg>
-                            3
-                          </span>
-                        </div>
-                      </div>
-                      <div className="ratting-checkbox">
-                        <input type="checkbox" id="{4}" onChange={(e) => handleRate(e)} value={4} />
-
-
-
-                        <div>
-                          <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
-                              <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
-                            </svg>
-                            4
-                          </span>
-                        </div>
-                      </div>
-                      <div className="ratting-checkbox">
-                        <input type="checkbox" id="{5}" onChange={(e) => handleRate(e)} value={5} />
-
-                        <div>
-                          <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
-                              <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
-                            </svg>
-                            5
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+                
                   </div>
-                  <div className="cover" />
+          
 
                 </div>
                 <div className="col-xl-9">
                   <div className="showing-result">
                     <h4 className="title"><Longtour /></h4>
+                    {showFilters && (
+                      <div className="tour-search lg:hidden">
+                        <div className="select-dropdown-section">
+                          <div className="d-flex gap-10 align-items-center">
+                            <i className="ri-map-pin-line" />
+                            <h4 className="select2-title">Điểm đến</h4>
+                          </div>
+                          <select className="destination-dropdown rounded" onChange={(e) => setSelectedProvince(e.target.value)}>
+                            <option className='rounded' value=''>Lọc theo điểm đến</option>
+                            {tour.provinces?.map((province: any) => {
+                              return (
+                                <option selected={province.id == selectedProvince ? true : false} value={province.id}>{province.name}</option>
 
+                              )
+                            })}
+                          </select>
+                        </div>
+                        <div className="select-dropdown-section">
+                          <div className="d-flex gap-10 align-items-center">
+                            <i className="ri-flight-takeoff-fill" />
+                            <h4 className="select2-title">Loại du lịch </h4>
+                          </div>
+                          <select className="destination-dropdown rounded" onChange={(e) => setSelectedType(e.target.value)}>
+                            <option  value=''>Lọc theo loại du lịch</option>
+                            {tour.types?.map((type: any) => {
+                              return (
+                                <option selected={type.id == selectedType ? true : false} value={type.id}>{type.name_type}</option>
+                              )
+                            })}
+
+                          </select>
+
+                        </div>
+
+
+                        <div className="ratting-section rating">
+                        <div className="ratting-checkbox">
+                          <input  type="checkbox" id="{1}" onChange={(e) => handleRate(e)} value={1}  />
+                          <div>
+                          <i className='bi bi-star-fill'></i>
+                          </div>
+                        </div>
+                        <div className="ratting-checkbox">
+                          <input type="checkbox" id="{2}" onChange={(e) => handleRate(e)} value={2} />
+
+                          <div>
+                          <i className='bi bi-star-fill'></i>
+                          </div>
+                        </div>
+                        <div className="ratting-checkbox">
+                          <input type="checkbox" id="{3}" onChange={(e) => handleRate(e)} value={3} />
+
+                          <div>
+                          <i className='bi bi-star-fill'></i>
+                          </div>
+                        </div>
+                        <div className="ratting-checkbox">
+                          <input type="checkbox" id="{4}" onChange={(e) => handleRate(e)} value={4} />
+                          <div>
+                          <i className='bi bi-star-fill'></i>
+                          </div>
+                        </div>
+                        <div className="ratting-checkbox">
+                          <input type="checkbox" id="{5}" onChange={(e) => handleRate(e)} value={5} />
+
+                          <div>
+                          <i className='bi bi-star-fill '></i>
+                          </div>
+                        </div>
+                      </div>
+
+                      </div>
+                    )}
                     <div className="d-flex gap-10 align-items-center">
-                      <div className="expand-icon hamburger block d-xl-none" id="hamburger">
-                        <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none">
+                      <div className="expand-icon hamburger block d-xl-none ml-" >
+                        <svg onClick={toggleFilters} xmlns="http://www.w3.org/2000/svg" width={30} height={30} viewBox="0 0 24 24" fill="none">
                           <path d="M3 7H10M10 7C10 8.65685 11.3431 10 13 10H14C15.6569 10 17 8.65685 17 7C17 5.34315 15.6569 4 14 4H13C11.3431 4 10 5.34315 10 7ZM16 17H21M20 7H21M3 17H6M6 17C6 18.6569 7.34315 20 9 20H10C11.6569 20 13 18.6569 13 17C13 15.3431 11.6569 14 10 14H9C7.34315 14 6 15.3431 6 17Z" stroke="#071516" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </div>
-                      <div className="sorting-dropdown">
-                        <select onChange={(e) => setSortOder(e.target.value)} className="select2">
+                      <div className="sorting-dropdown ">
+                        <select onChange={(e) => setSortOder(e.target.value)} className="select2 rounded">
                           <option value="null"> Tour  mới nhất </option>
                           <option value="low_price">Giá thấp đến cao</option>
                           <option value="high_price">Giá cao đến thấp </option>
-
                         </select>
                       </div>
                     </div>

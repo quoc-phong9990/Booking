@@ -1,5 +1,5 @@
 
-import "../assets/js/main.js"
+import "../Style/main.js"
 
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
@@ -13,8 +13,7 @@ import '../App.css'
 import { useNavigate } from 'react-router-dom';
 
 import SearchListBill from "../FunctionComponentContext/Shearchbill.js";
-import Slider from "react-slick";
-import { Slide } from "react-toastify";
+
 
 const Indextwo = () => {
   const [tourFeature, setToursFeature] = useState<any>([]);
@@ -91,7 +90,6 @@ const Indextwo = () => {
 
             <div className="container">
               <SearchListBill />
-
               <div className="row  g-4 align-items-center justify-content-between position-relative">
                 <div className="col-xl-7 col-lg-6">
                   <div className="hero-caption-two position-relative">
