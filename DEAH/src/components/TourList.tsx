@@ -17,12 +17,28 @@ const TourList = () => {
   const [selectedProvince, setSelectedProvince] = useState<any>(province ? province : null);
   const [selectedType, setSelectedType] = useState<any>(type_id ? type_id : null);
   const [tour, setTour] = useState<any>([]);
+  const [provinces, setProvinces] = useState<any>([]);
+  const [types, setType] = useState<any>([]);
   const [sortOder, setSortOder] = useState<string>('')
   const [arrRate, setArrRate] = useState<any>([])
   const [showFilters, setShowFilters] = useState(true)
+  // 
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPageBills, setCurrentPageBills] = useState<any[]>([]);
+  const perpage = 6;
+  const [totalPages, setTotalPages] = useState<number>(0);
+
+  const changePage = (page: number) => {
+
+    const start = (page - 1) * perpage;
+    const end = start + perpage;
+    setCurrentPageBills(tour.slice(start, end));
+    setCurrentPage(page);
+
+  };
+
   const toggleFilters = () => {
     setShowFilters(!showFilters)
-
   }
   const handleRate = (e: any) => {
     console.log(e.target);
@@ -48,28 +64,33 @@ const TourList = () => {
         });
         // console.log();
         const data = response.data.data.tours
+        const provinces = response.data.data.provinces
+        const types = response.data.data.types
 
-        let sortedTour = data
+        const sortedTour = data
+
+
 
         if (sortOder === 'low_price') {
-          sortedTour.sort((a: any, b: any) => a.promotion - b.promotion)
-        }
-        else if (sortOder === 'high_price') {
-          sortedTour.sort((a: any, b: any) => b.promotion - a.promotion)
-        } else if (sortOder === 'null') {
-          setTour(response.data.data,);
+          sortedTour.sort((a: any, b: any) => a.promotion - b.promotion);
+        } else if (sortOder === 'high_price') {
+          sortedTour.sort((a: any, b: any) => b.promotion - a.promotion);
         }
 
-
-
-        setTour(response.data.data,);
+        setTour(sortedTour); // Set the state to the sorted tour array
+        setTotalPages(Math.ceil(sortedTour.length / perpage));
+        setCurrentPageBills(sortedTour.slice(0, perpage));
+        setProvinces(provinces)
+        setType(types)
       } catch (error) {
-        if (error) return <div>loi...</div>
+        console.error('Error fetching data:', error);
       }
     };
-    fetchData();
 
+    fetchData();
   }, [selectedProvince, selectedType, sortOder, arrRate]);
+  console.log(selectedProvince);
+
 
 
   return (
@@ -94,7 +115,7 @@ const TourList = () => {
           </section>
           {/*/ End-of Breadcrumbs*/}
           {/* Destination area S t a r t */}
-          
+
           <section className="tour-list-section section-padding2">
             <div className="container">
               <div className="row g-4">
@@ -103,7 +124,7 @@ const TourList = () => {
                     <div className="expand-icon close-btn block d-xl-none">
                       <i className="ri-arrow-left-double-line" />
                     </div>
-                    
+
                     <div className="heading">
 
                       <svg onClick={toggleFilters} xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none">
@@ -111,7 +132,7 @@ const TourList = () => {
                       </svg>
                       <h4 className="title">Tìm kiếm theo bộ lọc</h4>
                     </div>
-                   
+
                     {showFilters && (
                       <div className="tour-search">
                         <div className="select-dropdown-section">
@@ -121,7 +142,7 @@ const TourList = () => {
                           </div>
                           <select className="destination-dropdown rounded" onChange={(e) => setSelectedProvince(e.target.value)}>
                             <option className='rounded' value=''>Lọc theo điểm đến</option>
-                            {tour.provinces?.map((province: any) => {
+                            {provinces?.map((province: any) => {
                               return (
                                 <option selected={province.id == selectedProvince ? true : false} value={province.id}>{province.name}</option>
 
@@ -136,7 +157,7 @@ const TourList = () => {
                           </div>
                           <select className="destination-dropdown rounded" onChange={(e) => setSelectedType(e.target.value)}>
                             <option value='rounded'>Lọc theo loại du lịch</option>
-                            {tour.types?.map((type: any) => {
+                            {types?.map((type: any) => {
                               return (
                                 <option selected={type.id == selectedType ? true : false} value={type.id}>{type.name_type}</option>
                               )
@@ -147,72 +168,72 @@ const TourList = () => {
                         </div>
 
                         <div className="ratting-section rating">
-                        <div className="ratting-checkbox">
-                          <input type="checkbox" id="{1}" onChange={(e) => handleRate(e)} value={1} />
-                          <div>
-                            <span>
-                              <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
-                                <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
-                              </svg>
-                              1
-                            </span>
+                          <div className="ratting-checkbox">
+                            <input type="checkbox" id="{1}" onChange={(e) => handleRate(e)} value={1} />
+                            <div>
+                              <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
+                                  <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
+                                </svg>
+                                1
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                        <div className="ratting-checkbox">
-                          <input type="checkbox" id="{2}" onChange={(e) => handleRate(e)} value={2} />
+                          <div className="ratting-checkbox">
+                            <input type="checkbox" id="{2}" onChange={(e) => handleRate(e)} value={2} />
 
-                          <div>
-                            <span>
-                              <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
-                                <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
-                              </svg>
-                              2
-                            </span>
+                            <div>
+                              <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
+                                  <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
+                                </svg>
+                                2
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                        <div className="ratting-checkbox">
-                          <input type="checkbox" id="{3}" onChange={(e) => handleRate(e)} value={3} />
+                          <div className="ratting-checkbox">
+                            <input type="checkbox" id="{3}" onChange={(e) => handleRate(e)} value={3} />
 
-                          <div>
-                            <span>
-                              <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
-                                <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
-                              </svg>
-                              3
-                            </span>
+                            <div>
+                              <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
+                                  <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
+                                </svg>
+                                3
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                        <div className="ratting-checkbox">
-                          <input type="checkbox" id="{4}" onChange={(e) => handleRate(e)} value={4} />
-                          <div>
-                            <span>
-                              <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
-                                <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
-                              </svg>
-                              4
-                            </span>
+                          <div className="ratting-checkbox">
+                            <input type="checkbox" id="{4}" onChange={(e) => handleRate(e)} value={4} />
+                            <div>
+                              <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
+                                  <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
+                                </svg>
+                                4
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                        <div className="ratting-checkbox">
-                          <input type="checkbox" id="{5}" onChange={(e) => handleRate(e)} value={5} />
+                          <div className="ratting-checkbox">
+                            <input type="checkbox" id="{5}" onChange={(e) => handleRate(e)} value={5} />
 
-                          <div>
-                            <span>
-                              <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
-                                <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
-                              </svg>
-                              5
-                            </span>
+                            <div>
+                              <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
+                                  <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
+                                </svg>
+                                5
+                              </span>
+                            </div>
                           </div>
                         </div>
-                      </div>       
                       </div>
                     )}
 
                     <div className="price-range-slider">
                       {/* <div id="slider-range" className="range-bar" /> */}
                       <div className="d-flex justify-content-between align-items-center">
-                      {/* {showFilters && (
+                        {/* {showFilters && (
                       <div className="ratting-section rating">
                         <div className="ratting-checkbox">
                           <input type="checkbox" id="{1}" onChange={(e) => handleRate(e)} value={1} />
@@ -282,9 +303,9 @@ const TourList = () => {
                       </svg>
                       <h4 className="title">Đánh giá du lịch </h4>
                     </div>
-                
+
                   </div>
-          
+
 
                 </div>
                 <div className="col-xl-9">
@@ -299,7 +320,7 @@ const TourList = () => {
                           </div>
                           <select className="destination-dropdown rounded" onChange={(e) => setSelectedProvince(e.target.value)}>
                             <option className='rounded' value=''>Lọc theo điểm đến</option>
-                            {tour.provinces?.map((province: any) => {
+                            {provinces?.map((province: any) => {
                               return (
                                 <option selected={province.id == selectedProvince ? true : false} value={province.id}>{province.name}</option>
 
@@ -313,8 +334,8 @@ const TourList = () => {
                             <h4 className="select2-title">Loại du lịch </h4>
                           </div>
                           <select className="destination-dropdown rounded" onChange={(e) => setSelectedType(e.target.value)}>
-                            <option  value=''>Lọc theo loại du lịch</option>
-                            {tour.types?.map((type: any) => {
+                            <option value=''>Lọc theo loại du lịch</option>
+                            {types?.map((type: any) => {
                               return (
                                 <option selected={type.id == selectedType ? true : false} value={type.id}>{type.name_type}</option>
                               )
@@ -326,40 +347,65 @@ const TourList = () => {
 
 
                         <div className="ratting-section rating">
-                        <div className="ratting-checkbox">
-                          <input  type="checkbox" id="{1}" onChange={(e) => handleRate(e)} value={1}  />
-                          <div>
-                          <i className='bi bi-star-fill'></i>
+                          <div className="ratting-checkbox">
+                            <input type="checkbox" id="{1}" onChange={(e) => handleRate(e)} value={1} />
+                            <div>
+                              <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
+                                  <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
+                                </svg>
+                                1
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                        <div className="ratting-checkbox">
-                          <input type="checkbox" id="{2}" onChange={(e) => handleRate(e)} value={2} />
+                          <div className="ratting-checkbox">
+                            <input type="checkbox" id="{2}" onChange={(e) => handleRate(e)} value={2} />
 
-                          <div>
-                          <i className='bi bi-star-fill'></i>
+                            <div>
+                              <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
+                                  <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
+                                </svg>
+                                2
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                        <div className="ratting-checkbox">
-                          <input type="checkbox" id="{3}" onChange={(e) => handleRate(e)} value={3} />
+                          <div className="ratting-checkbox">
+                            <input type="checkbox" id="{3}" onChange={(e) => handleRate(e)} value={3} />
 
-                          <div>
-                          <i className='bi bi-star-fill'></i>
+                            <div>
+                              <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
+                                  <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
+                                </svg>
+                                3
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                        <div className="ratting-checkbox">
-                          <input type="checkbox" id="{4}" onChange={(e) => handleRate(e)} value={4} />
-                          <div>
-                          <i className='bi bi-star-fill'></i>
+                          <div className="ratting-checkbox">
+                            <input type="checkbox" id="{4}" onChange={(e) => handleRate(e)} value={4} />
+                            <div>
+                              <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
+                                  <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
+                                </svg>
+                                4
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                        <div className="ratting-checkbox">
-                          <input type="checkbox" id="{5}" onChange={(e) => handleRate(e)} value={5} />
+                          <div className="ratting-checkbox">
+                            <input type="checkbox" id="{5}" onChange={(e) => handleRate(e)} value={5} />
 
-                          <div>
-                          <i className='bi bi-star-fill '></i>
+                            <div>
+                              <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width={14} height={13} viewBox="0 0 14 13" fill="none">
+                                  <path d="M6.09749 0.891366C6.45972 0.132244 7.54028 0.132244 7.90251 0.891366L9.07038 3.33882C9.21616 3.64433 9.5066 3.85534 9.84221 3.89958L12.5308 4.25399C13.3647 4.36391 13.6986 5.39158 13.0885 5.97067L11.1218 7.83768C10.8763 8.07073 10.7653 8.41217 10.827 8.74502L11.3207 11.4115C11.4739 12.2386 10.5997 12.8737 9.86041 12.4725L7.47702 11.1789C7.1795 11.0174 6.8205 11.0174 6.52298 11.1789L4.13959 12.4725C3.40033 12.8737 2.52614 12.2386 2.67929 11.4115L3.17304 8.74502C3.23467 8.41217 3.12373 8.07073 2.87823 7.83768L0.911452 5.97067C0.301421 5.39158 0.635332 4.36391 1.46924 4.25399L4.15779 3.89958C4.4934 3.85534 4.78384 3.64433 4.92962 3.33882L6.09749 0.891366Z" fill="#FFB400" />
+                                </svg>
+                                5
+                              </span>
+                            </div>
                           </div>
                         </div>
-                      </div>
 
                       </div>
                     )}
@@ -380,7 +426,7 @@ const TourList = () => {
                   </div>
                   <div className="all-tour-list">
                     <div className="row g-4">
-                      {tour.tours?.map((tour: any, index: number) => {
+                      {currentPageBills?.map((tour: any, index: number) => {
                         return (
 
                           <div className="col-xl-4 col-lg-4 col-sm-6" key={index}>
@@ -422,7 +468,19 @@ const TourList = () => {
                     </div>
                     {/* nsdkjasn */}
 
-
+                    <ul className="pagination">
+                      {Array.from({ length: totalPages }, (_, index) => (
+                        <li className="page-item m-1" key={index + 1}>
+                          <button
+                            className="page-link btn"
+                            disabled={index + 1 === currentPage}
+                            onClick={() => changePage(index + 1)}
+                          >
+                            {index + 1}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
               </div>

@@ -1124,7 +1124,6 @@ margin-right: 200px;
 
 }
 
-
 .link-muted {
   color: #aaa;
 }
@@ -1140,350 +1139,216 @@ margin-right: 200px;
   box-shadow: 100px;
 
 }
-@media only screen and (min-width: 1200px) {
-  .select-dropdown-section {
-
-    width: 230px;
-    /* Space between dropdowns */
-  }
+/* Global Styling */
+.showing-result {
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto', sans-serif;
 }
-@media only screen and (max-width: 768px) {
-  .showing-result {
-    background-color: #f7f7f7;
-    /* Light grey background */
-    padding: 20px;
-    /* Add padding for better spacing */
-    border-radius: 10px;
-    /* Rounded corners */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    /* Subtle shadow for depth */
-    font-family: 'Roboto', sans-serif;
-    /* Clean and modern font */
-  }
 
-  /* Title Styling */
-  .showing-result .title {
-    font-size: 1.5rem;
-    /* Larger title size */
-    color: #333;
-    /* Darker text color */
-    margin-bottom: 15px;
-    /* Spacing below title */
-  }
+.showing-result .title {
+  font-size: 0.7rem;
+  color: #333;
+  margin-bottom: 15px;
+}
 
-  /* Dropdown Section Styling */
-  .select-dropdown-section {
-    margin-bottom: 15px;
-    
-    /* Space between dropdowns */
-  }
+.select-dropdown-section {
+  margin-bottom: 15px;
+}
 
-  .select-dropdown-section .d-flex {
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
-    /* Space below icons and labels */
-  }
+.select-dropdown-section .d-flex {
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
 
-  .select2-title {
-    font-size: 1rem;
-    color: #555;
-    /* Grey text for labels */
-  }
+.select2-title {
+  font-size: 1rem;
+  color: #555;
+}
 
-  .destination-dropdown {
+.destination-dropdown {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  font-size: 0.8rem;
+  color: #333;
+  transition: border-color 0.3s ease;
 
-    width: 100%;
-    padding: 10px;
-    /* Add padding inside the dropdown */
-    border: 1px solid #ccc;
-    /* Border around dropdown */
-    border-radius: 8px;
-    background-color: #fff;
-    /* White background */
-    font-size: 1rem;
-    color: #333;
-    /* Text color */
-    transition: border-color 0.3s ease;
-    /* Smooth border color change */
-  }
+}
 
-  .destination-dropdown:focus {
-    border-color: #007bff;
-    /* Blue border on focus */
-    outline: none;
-  }
+.destination-dropdown:focus {
+  border-color: #007bff;
+  outline: none;
+}
 
-  /* Rating Section Styling */
-  .ratting-section {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
+.ratting-section {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 
-    width: 400px;
-  }
+.ratting-checkbox {
+  position: relative;
+  float: left;
+  border: 1px solid var(--tertiary-border);
+  border-radius: 4px;
+  background-color: #ffffff;
+  transition: background-color 0.5s ease;
+}
 
-  .ratting-checkbox {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    width: 40px;
-    cursor: pointer;
+.ratting-checkbox span {
+  padding: 4px 10px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--primary-paragraph);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-  }
+.ratting-checkbox div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 25px;
+}
 
-  .ratting-checkbox i {
+.ratting-checkbox input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
 
-    color: #ffb400;
-  }
+.ratting-checkbox input[type="checkbox"]:checked + div {
+  background-color: var(--primary-color);
+  border-radius: 4px;
+}
 
+.ratting-checkbox input[type="checkbox"]:checked + div span {
+  color: var(--white);
+}
 
-  .ratting-checkbox input[type="checkbox"] {
-    accent-color: #ffb400;
-    cursor: pointer;
+.expand-icon {
+  margin-left: auto;
+}
 
-  }
+.expand-icon svg {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
 
-  .ratting-checkbox svg {
-    fill: #ffb400;
-    /* Star color */
-    margin-top: 10px;
-  }
+.expand-icon svg:hover {
+  transform: rotate(90deg);
+}
 
-  .ratting-checkbox span {
-    font-size: 1rem;
-    color: #333;
-    /* Text color */
-  }
-
-  .checkbox {
-    background-color: #000000;
-  }
-
-  /* Expand Icon Styling */
-  .expand-icon {
-    margin-left: auto;
-    /* Push icon to the right */
-  }
-
-  .expand-icon svg {
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    /* Smooth icon animation */
-  }
-
-  .expand-icon svg:hover {
-    transform: rotate(90deg);
-    /* Rotate on hover */
-  }
-
+/* Medium Screen Styles (max-width: 1200px) */
+@media only screen and (max-width: 1200px) {
   .showing-result {
     padding: 15px;
-    /* Reduce padding on smaller screens */
   }
 
+  
   .title {
     font-size: 1.25rem;
-    /* Slightly smaller title */
   }
 
   .destination-dropdown {
-    font-size: 0.9rem;
-    /* Slightly smaller font */
-  }
 
-  .ratting-section {
-    flex-wrap: wrap;
-    /* Wrap rating items on smaller screens */
-    gap: 8px;
-    /* Adjust gap */
+    font-size: 0.9rem;
   }
 
   .ratting-checkbox span {
     font-size: 0.9rem;
-    /* Slightly smaller rating text */
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
-@media only screen and (max-width: 480px) {
-  .showing-result {
-    background-color: #f7f7f7;
-    /* Light grey background */
-    padding: 20px;
-    /* Add padding for better spacing */
-    border-radius: 10px;
-    /* Rounded corners */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    /* Subtle shadow for depth */
-    font-family: 'Roboto', sans-serif;
-    /* Clean and modern font */
-  }
-
-  /* Title Styling */
-  .showing-result .title {
-    font-size: 1.5rem;
-    /* Larger title size */
-    color: #333;
-    /* Darker text color */
-    margin-bottom: 15px;
-    /* Spacing below title */
-  }
-
-  /* Dropdown Section Styling */
-  .select-dropdown-section {
-    margin-bottom: 15px;
-    /* Space between dropdowns */
-
-  }
-
-  .select-dropdown-section .d-flex {
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
-    /* Space below icons and labels */
-  }
-
-  .select2-title {
-    font-size: 1rem;
-    color: #555;
-    /* Grey text for labels */
-  }
-
+/* Tablet Styles (max-width: 980px) */
+@media only screen and (max-width: 980px) {
   .destination-dropdown {
-
     width: 100%;
-    padding: 10px;
-    /* Add padding inside the dropdown */
-    border: 1px solid #ccc;
-    /* Border around dropdown */
     border-radius: 30px;
-    background-color: #fff;
-    /* White background */
-    font-size: 1rem;
-    color: #333;
-    /* Text color */
-    transition: border-color 0.3s ease;
-    /* Smooth border color change */
   }
 
-  .destination-dropdown:focus {
-    border-color: #007bff;
-    /* Blue border on focus */
-    outline: none;
-  }
-
-  /* Rating Section Styling */
   .ratting-section {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-
     width: 350px;
   }
 
   .ratting-checkbox {
-    display: flex;
-    align-items: center;
-    gap: 5px;
     width: 40px;
     cursor: pointer;
-
   }
 
   .ratting-checkbox i {
-
     color: #ffb400;
   }
 
-
   .ratting-checkbox input[type="checkbox"] {
     accent-color: #ffb400;
-    cursor: pointer;
-
   }
 
   .ratting-checkbox svg {
     fill: #ffb400;
-    /* Star color */
     margin-top: 10px;
   }
 
   .ratting-checkbox span {
     font-size: 1rem;
     color: #333;
-    /* Text color */
+  }
+}
+
+/* Small Screen Styles (max-width: 768px) */
+@media only screen and (max-width: 768px) {
+  .showing-result {
+    padding: 15px;
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .destination-dropdown {
+    font-size: 0.9rem;
+  }
+
+  .ratting-checkbox span {
+    font-size: 0.9rem;
+  }
+}
+
+/* Extra Small Screen Styles (max-width: 480px) */
+@media only screen and (max-width: 480px) {
+  .destination-dropdown {
+    width: 100%;
+    border-radius: 30px;
+  }
+
+  .ratting-section {
+    width: 300px;
+  }
+
+  .ratting-checkbox {
+    gap: 5px;
   }
 
   .checkbox {
     background-color: #000000;
   }
-
-  /* Expand Icon Styling */
-  .expand-icon {
-    margin-left: auto;
-    /* Push icon to the right */
-  }
-
-  .expand-icon svg {
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    /* Smooth icon animation */
-  }
-
-  .expand-icon svg:hover {
-    transform: rotate(90deg);
-    /* Rotate on hover */
-  }
-
-  .showing-result {
-    padding: 15px;
-    /* Reduce padding on smaller screens */
-  }
-
-  .title {
-    font-size: 1.25rem;
-    /* Slightly smaller title */
-  }
-
-  .destination-dropdown {
-    font-size: 0.9rem;
-    /* Slightly smaller font */
-  }
-
-  .ratting-section {
-    flex-wrap: wrap;
-    /* Wrap rating items on smaller screens */
-    gap: 8px;
-    /* Adjust gap */
-  }
-
-  .ratting-checkbox span {
-    font-size: 0.9rem;
-    /* Slightly smaller rating text */
-  }
 }
 
-.select-dropdown-section {
-
-
-}
 
 .link-muted {
   color: #aaa;
